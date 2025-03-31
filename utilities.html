@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRM Utilities, Settings & Permissions</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="utilities.css">
+</head>
+<body>
+    <div class="wrapper">
+        <!-- Sidebar -->
+        <nav id="sidebar" class="sidebar">
+            <div class="sidebar-header">
+                <h3>Management System</h3>
+                <button type="button" id="sidebarCollapse" class="btn d-md-none">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+
+            <ul class="list-unstyled components">
+                <li class="active">
+                    <a href="#" onclick="loadContent('dashboard')">
+                        <i class="fas fa-tachometer-alt"></i> Dashboard
+                    </a>
+                </li>
+                <li>
+                    <!-- <a href="#crmSubmenu" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        <i class="fas fa-users"></i> CRM Module -->
+                        <a href="#" class="dropdown-toggle" onclick="toggleDropdown(event)">
+                            <i class="fas fa-users"></i> CRM Module
+                    </a>
+                    <ul id="crmSubmenu" class="submenu">
+                        <li><a href="remainder.html">Customer Management & Reminders</a></li>
+                        <!-- <li><a href="proposal.html">2. Proposal Management</a></li> -->
+                        <li><a href="sales.html">Sales Management Reports</a></li>
+                        <li><a href="contracts.html">Contracts</a></li>
+                        <li><a href="project-management.html">Projects & Task Management</a></li>
+                        <!-- <li><a href="project-management.html">Task Management</a></li> -->
+                        <li><a href="utilities.html">Utilities</a></li>
+                        <li><a href="support.html">Support System & Expenses</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#inventorySubmenu" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        <i class="fas fa-boxes"></i> Inventory Module
+                    </a>
+
+                </li>
+                <li>
+                    <a href="#purchaseSubmenu" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        <i class="fas fa-shopping-cart"></i> Purchase Module
+                    </a>
+
+                </li>
+                <li>
+                    <a href="#salesSubmenu" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        <i class="fas fa-chart-line"></i> Sales Module
+                    </a>
+                    <ul class="collapse list-unstyled" id="salesSubmenu">
+                         <li><a href="Sales-Module/TrialQuotation.html"><i class="fas fa-file-alt"></i> Quotation </a></li>
+                             <li><a href="Sales-Module/orders_page.html"><i class="fas fa-shopping-cart"></i> Orders</a></li>
+                             <li><a href="Sales-Module/dispatch-page.html"><i class="fas fa-truck"></i> Dispatch</a></li>
+                             <li><a href="Sales-Module/invoice-page.html"><i class="fas fa-file-invoice"></i> Invoice </a></li>
+                             <li><a href="Sales-Module/crm.html"><i class="fas fa-chart-bar"></i> CRM and Reports</a></li>
+                             <!-- <li><a href="Sales-Module/Trial_quotation-list .html"><i class="fas fa-chart-bar"></i> Performance</a></li> -->
+                  </ul>
+                </li>
+                    
+                <li>
+                    <a href="#" onclick="loadContent('settings')">
+                        <i class="fas fa-cog"></i> Settings
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- Page Content -->
+        <div id="content">
+            <!-- Top Navigation -->
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <div class="container-fluid">
+                    <button type="button" id="sidebarCollapseBtn" class="btn">
+                        <i class="fas fa-align-left"></i>
+                    </button>
+                    <div class="ms-auto d-flex">
+                        <div class="dropdown me-3">
+                            <button class="btn position-relative" type="button" id="notificationDropdown"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fas fa-bell"></i>
+                                <span
+                                    class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                    3
+                                </span>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="notificationDropdown">
+                                <li><a class="dropdown-item" href="#">New calendar event added</a></li>
+                                <li><a class="dropdown-item" href="#">System update scheduled</a></li>
+                                <li><a class="dropdown-item" href="#">New announcement posted</a></li>
+                            </ul>
+                        </div>
+                        <div class="dropdown">
+                            <button class="btn d-flex align-items-center" type="button" id="userDropdown"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                <img src="https://via.placeholder.com/30" class="rounded-circle me-2">
+                                <span>Admin</span>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                                <li><a class="dropdown-item" href="#">Profile</a></li>
+                                <li><a class="dropdown-item" href="#">Settings</a></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li><a class="dropdown-item" href="#">Logout</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+
+            <!-- Main Content Area -->
+            <div id="main-content" class="container-fluid">
+                <!-- Notification -->
+                <div class="crm-notification" id="crmNotification"></div>
+
+                <!-- Header -->
+                <header class="crm-header">
+                    <h1>CRM Utilities, Settings & Permissions</h1>
+                </header>
+
+                <div class="crm-container" id="crmMainContent">
+                    <!-- Navigation Tabs -->
+                    <div class="crm-nav-tabs">
+                        <div class="crm-nav-tab active" data-tab="calendar">Calendar</div>
+                        <div class="crm-nav-tab" data-tab="export">Export</div>
+                        <div class="crm-nav-tab" data-tab="logs">Logs</div>
+                        <div class="crm-nav-tab" data-tab="announcements">Announcements</div>
+                        <div class="crm-nav-tab" data-tab="settings">Settings & Permissions</div>
+                    </div>
+
+                    <!-- Calendar Section -->
+                    <section id="calendar-section" class="crm-section">
+                        <div class="crm-calendar-container">
+                            <div class="crm-calendar-header">
+                                <div class="crm-calendar-title" id="calendarTitle">March 2025</div>
+                                <div class="crm-calendar-nav">
+                                    <button class="crm-btn crm-btn-outline crm-btn-sm" id="prevBtn">Previous</button>
+                                    <button class="crm-btn crm-btn-outline crm-btn-sm" id="todayBtn">Today</button>
+                                    <button class="crm-btn crm-btn-outline crm-btn-sm" id="nextBtn">Next</button>
+                                </div>
+                            </div>
+                            
+                            <div class="crm-calendar-view-options">
+                                <button class="crm-btn crm-btn-primary crm-btn-sm" data-view="month">Month</button>
+                                <button class="crm-btn crm-btn-outline crm-btn-sm" data-view="week">Week</button>
+                                <button class="crm-btn crm-btn-outline crm-btn-sm" data-view="day">Day</button>
+                                <button class="crm-btn crm-btn-outline crm-btn-sm" id="addEventBtn">Add Event</button>
+                            </div>
+                            
+                            <!-- Monthly View (Default) -->
+                            <div id="monthView" class="crm-calendar-view">
+                                <div class="crm-calendar-grid">
+                                    <div class="crm-calendar-day-header">Sun</div>
+                                    <div class="crm-calendar-day-header">Mon</div>
+                                    <div class="crm-calendar-day-header">Tue</div>
+                                    <div class="crm-calendar-day-header">Wed</div>
+                                    <div class="crm-calendar-day-header">Thu</div>
+                                    <div class="crm-calendar-day-header">Fri</div>
+                                    <div class="crm-calendar-day-header">Sat</div>
+                                    
+                                    <!-- Calendar days will be dynamically inserted here -->
+                                </div>
+                            </div>
+                            
+                            <!-- Weekly View -->
+                            <div id="weekView" class="crm-calendar-view crm-hidden">
+                                <div class="crm-calendar-week">
+                                    <div class="crm-calendar-day-header"></div>
+                                    <div class="crm-calendar-day-header">Sun</div>
+                                    <div class="crm-calendar-day-header">Mon</div>
+                                    <div class="crm-calendar-day-header">Tue</div>
+                                    <div class="crm-calendar-day-header">Wed</div>
+                                    <div class="crm-calendar-day-header">Thu</div>
+                                    <div class="crm-calendar-day-header">Fri</div>
+                                    <div class="crm-calendar-day-header">Sat</div>
+                                    
+                                    <!-- Time slots will be dynamically inserted here -->
+                                </div>
+                            </div>
+                            
+                            <!-- Daily View -->
+                            <div id="dayView" class="crm-calendar-view crm-hidden">
+                                <div class="crm-calendar-daily">
+                                    <!-- Time slots will be dynamically inserted here -->
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Export Section -->
+                    <section id="export-section" class="crm-section crm-hidden">
+                        <div class="crm-card">
+                            <div class="crm-card-header">
+                                <h2 class="crm-card-title">Export Data</h2>
+                            </div>
+                            <div class="crm-card-content">
+                                <div class="crm-export-options">
+                                    <div class="crm-export-option">
+                                        <div class="crm-export-option-header">Customer Lists</div>
+                                        <p class="crm-text-sm crm-text-muted">Export your customer database with contact information and details.</p>
+                                        <div class="crm-export-formats">
+                                            <button class="crm-btn crm-btn-sm crm-btn-outline" onclick="exportData('customers', 'pdf')">PDF</button>
+                                            <button class="crm-btn crm-btn-sm crm-btn-outline" onclick="exportData('customers', 'excel')">Excel</button>
+                                            <button class="crm-btn crm-btn-sm crm-btn-outline" onclick="exportData('customers', 'csv')">CSV</button>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="crm-export-option">
+                                        <div class="crm-export-option-header">Proposals</div>
+                                        <p class="crm-text-sm crm-text-muted">Export all proposals with status, dates, and client information.</p>
+                                        <div class="crm-export-formats">
+                                            <button class="crm-btn crm-btn-sm crm-btn-outline" onclick="exportData('proposals', 'pdf')">PDF</button>
+                                            <button class="crm-btn crm-btn-sm crm-btn-outline" onclick="exportData('proposals', 'excel')">Excel</button>
+                                            <button class="crm-btn crm-btn-sm crm-btn-outline" onclick="exportData('proposals', 'csv')">CSV</button>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="crm-export-option">
+                                        <div class="crm-export-option-header">Reports</div>
+                                        <p class="crm-text-sm crm-text-muted">Export system reports, analytics, and performance metrics.</p>
+                                        <div class="crm-export-formats">
+                                            <button class="crm-btn crm-btn-sm crm-btn-outline" onclick="exportData('reports', 'pdf')">PDF</button>
+                                            <button class="crm-btn crm-btn-sm crm-btn-outline" onclick="exportData('reports', 'excel')">Excel</button>
+                                            <button class="crm-btn crm-btn-sm crm-btn-outline" onclick="exportData('reports', 'csv')">CSV</button>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="crm-export-option">
+                                        <div class="crm-export-option-header">Invoices</div>
+                                        <p class="crm-text-sm crm-text-muted">Export invoices with payment status, dates, and client details.</p>
+                                        <div class="crm-export-formats">
+                                            <button class="crm-btn crm-btn-sm crm-btn-outline" onclick="exportData('invoices', 'pdf')">PDF</button>
+                                            <button class="crm-btn crm-btn-sm crm-btn-outline" onclick="exportData('invoices', 'excel')">Excel</button>
+                                            <button class="crm-btn crm-btn-sm crm-btn-outline" onclick="exportData('invoices', 'csv')">CSV</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="crm-card">
+                                    <div class="crm-card-header">
+                                        <h3 class="crm-card-title">Custom Export</h3>
+                                    </div>
+                                    <div class="crm-card-content">
+                                        <form id="customExportForm">
+                                            <div class="crm-form-group">
+                                                <label class="crm-form-label">Data Type</label>
+                                                <select class="crm-form-select" id="exportDataType">
+                                                    <option value="customers">Customers</option>
+                                                    <option value="proposals">Proposals</option>
+                                                    <option value="reports">Reports</option>
+                                                    <option value="invoices">Invoices</option>
+                                                    <option value="activities">Activities</option>
+                                                    <option value="tasks">Tasks</option>
+                                                </select>
+                                            </div>
+                                            
+                                            <div class="crm-form-group">
+                                                <label class="crm-form-label">Date Range</label>
+                                                <div class="crm-d-flex crm-gap-2">
+                                                    <input type="date" class="crm-form-control" id="exportStartDate">
+                                                    <input type="date" class="crm-form-control" id="exportEndDate">
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="crm-form-group">
+                                                <label class="crm-form-label">Format</label>
+                                                <select class="crm-form-select" id="exportFormat">
+                                                    <option value="pdf">PDF</option>
+                                                    <option value="excel">Excel</option>
+                                                    <option value="csv">CSV</option>
+                                                </select>
+                                            </div>
+                                            
+                                            <div class="crm-form-group">
+                                                <label class="crm-form-label">Fields to Include</label>
+                                                <div id="exportFields">
+                                                    <!-- Fields will be dynamically populated based on data type -->
+                                                </div>
+                                            </div>
+                                            
+                                            <button type="button" class="crm-btn crm-btn-primary" onclick="customExport()">Generate Export</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Logs Section -->
+                    <section id="logs-section" class="crm-section crm-hidden">
+                        <div class="crm-card">
+                            <div class="crm-card-header">
+                                <h2 class="crm-card-title">System Logs</h2>
+                                <button class="crm-btn crm-btn-outline" id="refreshLogsBtn">Refresh</button>
+                            </div>
+                            <div class="crm-card-content">
+                                <div class="crm-logs-filters">
+                                    <div class="crm-form-group">
+                                        <label class="crm-form-label">Log Type</label>
+                                        <select class="crm-form-select" id="logTypeFilter">
+                                            <option value="all">All</option>
+                                            <option value="login">Login</option>
+                                            <option value="data">Data Changes</option>
+                                            <option value="report">Report Generation</option>
+                                            <option value="export">Exports</option>
+                                            <option value="system">System</option>
+                                        </select>
+                                    </div>
+                                    
+                                    <div class="crm-form-group">
+                                        <label class="crm-form-label">User</label>
+                                        <select class="crm-form-select" id="logUserFilter">
+                                            <option value="all">All Users</option>
+                                            <option value="admin">Admin</option>
+                                            <option value="john.doe">John Doe</option>
+                                            <option value="jane.smith">Jane Smith</option>
+                                            <option value="mike.johnson">Mike Johnson</option>
+                                        </select>
+                                    </div>
+                                    
+                                    <div class="crm-form-group">
+                                        <label class="crm-form-label">Date Range</label>
+                                        <div class="crm-d-flex crm-gap-2">
+                                            <input type="date" class="crm-form-control" id="logStartDate">
+                                            <input type="date" class="crm-form-control" id="logEndDate">
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="crm-form-group">
+                                        <label class="crm-form-label">Search</label>
+                                        <input type="text" class="crm-form-control" id="logSearch" placeholder="Search logs...">
+                                    </div>
+                                </div>
+                                
+                                <div class="crm-table-container">
+                                    <table class="crm-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Date & Time</th>
+                                                <th>User</th>
+                                                <th>Type</th>
+                                                <th>Action</th>
+                                                <th>Details</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="logsTableBody">
+                                            <!-- Log entries will be dynamically inserted here -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Announcements Section -->
+                    <section id="announcements-section" class="crm-section crm-hidden">
+                        <div class="crm-d-flex crm-justify-between crm-align-center crm-mb-4">
+                            <h2>Company Announcements</h2>
+                            <button class="crm-btn crm-btn-primary" id="addAnnouncementBtn">Add Announcement</button>
+                        </div>
+                        
+                        <div id="announcementsList">
+                            <!-- Announcements will be dynamically inserted here -->
+                        </div>
+                    </section>
+
+                   <!-- Settings & Permissions Section -->
+        <section id="settings-section" class="crm-section crm-hidden">
+            <div class="crm-card">
+                <div class="crm-card-header">
+                    <h2 class="crm-card-title">User Roles</h2>
+                    <button class="crm-btn crm-btn-primary" id="addRoleBtn">Add Role</button>
+                </div>
+                <div class="crm-card-content">
+                    <div id="userRolesList">
+                        <!-- User roles will be dynamically inserted here -->
+                    </div>
+                </div>
+            </div>
+            
+            <div class="crm-card">
+                <div class="crm-card-header">
+                    <h2 class="crm-card-title">Permissions</h2>
+                </div>
+                <div class="crm-card-content">
+                    <div class="crm-settings-grid">
+                        <div class="crm-permission-group">
+                            <div class="crm-permission-group-header">Customer Management</div>
+                            <div class="crm-permission-item">
+                                <span>View Customers</span>
+                                <select class="crm-form-select" style="width: 120px;">
+                                    <option value="all">All Roles</option>
+                                    <option value="admin">Admin Only</option>
+                                    <option value="manager">Manager+</option>
+                                    <option value="custom">Custom</option>
+                                </select>
+                            </div>
+                            <div class="crm-permission-item">
+                                <span>Add Customers</span>
+                                <select class="crm-form-select" style="width: 120px;">
+                                    <option value="all">All Roles</option>
+                                    <option value="admin">Admin Only</option>
+                                    <option value="manager" selected>Manager+</option>
+                                    <option value="custom">Custom</option>
+                                </select>
+                            </div>
+                            <div class="crm-permission-item">
+                                <span>Edit Customers</span>
+                                <select class="crm-form-select" style="width: 120px;">
+                                    <option value="all">All Roles</option>
+                                    <option value="admin">Admin Only</option>
+                                    <option value="manager" selected>Manager+</option>
+                                    <option value="custom">Custom</option>
+                                </select>
+                            </div>
+                            <div class="crm-permission-item">
+                                <span>Delete Customers</span>
+                                <select class="crm-form-select" style="width: 120px;">
+                                    <option value="all">All Roles</option>
+                                    <option value="admin" selected>Admin Only</option>
+                                    <option value="manager">Manager+</option>
+                                    <option value="custom">Custom</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="crm-permission-group">
+                            <div class="crm-permission-group-header">Sales & Proposals</div>
+                            <div class="crm-permission-item">
+                                <span>View Proposals</span>
+                                <select class="crm-form-select" style="width: 120px;">
+                                    <option value="all" selected>All Roles</option>
+                                    <option value="admin">Admin Only</option>
+                                    <option value="manager">Manager+</option>
+                                    <option value="custom">Custom</option>
+                                </select>
+                            </div>
+                            <div class="crm-permission-item">
+                                <span>Create Proposals</span>
+                                <select class="crm-form-select" style="width: 120px;">
+                                    <option value="all">All Roles</option>
+                                    <option value="admin">Admin Only</option>
+                                    <option value="manager" selected>Manager+</option>
+                                    <option value="custom">Custom</option>
+                                </select>
+                            </div>
+                            <div class="crm-permission-item">
+                                <span>Approve Proposals</span>
+                                <select class="crm-form-select" style="width: 120px;">
+                                    <option value="all">All Roles</option>
+                                    <option value="admin" selected>Admin Only</option>
+                                    <option value="manager">Manager+</option>
+                                    <option value="custom">Custom</option>
+                                </select>
+                            </div>
+                            <div class="crm-permission-item">
+                                <span>Delete Proposals</span>
+                                <select class="crm-form-select" style="width: 120px;">
+                                    <option value="all">All Roles</option>
+                                    <option value="admin" selected>Admin Only</option>
+                                    <option value="manager">Manager+</option>
+                                    <option value="custom">Custom</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="crm-permission-group">
+                            <div class="crm-permission-group-header">Reports & Analytics</div>
+                            <div class="crm-permission-item">
+                                <span>View Reports</span>
+                                <select class="crm-form-select" style="width: 120px;">
+                                    <option value="all">All Roles</option>
+                                    <option value="admin">Admin Only</option>
+                                    <option value="manager" selected>Manager+</option>
+                                    <option value="custom">Custom</option>
+                                </select>
+                            </div>
+                            <div class="crm-permission-item">
+                                <span>Create Reports</span>
+                                <select class="crm-form-select" style="width: 120px;">
+                                    <option value="all">All Roles</option>
+                                    <option value="admin">Admin Only</option>
+                                    <option value="manager" selected>Manager+</option>
+                                    <option value="custom">Custom</option>
+                                </select>
+                            </div>
+                            <div class="crm-permission-item">
+                                <span>Export Reports</span>
+                                <select class="crm-form-select" style="width: 120px;">
+                                    <option value="all">All Roles</option>
+                                    <option value="admin">Admin Only</option>
+                                    <option value="manager" selected>Manager+</option>
+                                    <option value="custom">Custom</option>
+                                </select>
+                            </div>
+                            <div class="crm-permission-item">
+                                <span>View Analytics</span>
+                                <select class="crm-form-select" style="width: 120px;">
+                                    <option value="all">All Roles</option>
+                                    <option value="admin">Admin Only</option>
+                                    <option value="manager" selected>Manager+</option>
+                                    <option value="custom">Custom</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="crm-permission-group">
+                            <div class="crm-permission-group-header">Calendar & Events</div>
+                            <div class="crm-permission-item">
+                                <span>View Calendar</span>
+                                <select class="crm-form-select" style="width: 120px;">
+                                    <option value="all" selected>All Roles</option>
+                                    <option value="admin">Admin Only</option>
+                                    <option value="manager">Manager+</option>
+                                    <option value="custom">Custom</option>
+                                </select>
+                            </div>
+                            <div class="crm-permission-item">
+                                <span>Add Events</span>
+                                <select class="crm-form-select" style="width: 120px;">
+                                    <option value="all" selected>All Roles</option>
+                                    <option value="admin">Admin Only</option>
+                                    <option value="manager">Manager+</option>
+                                    <option value="custom">Custom</option>
+                                </select>
+                            </div>
+                            <div class="crm-permission-item">
+                                <span>Edit Events</span>
+                                <select class="crm-form-select" style="width: 120px;">
+                                    <option value="all">All Roles</option>
+                                    <option value="admin">Admin Only</option>
+                                    <option value="manager">Manager+</option>
+                                    <option value="custom" selected>Custom</option>
+                                </select>
+                            </div>
+                            <div class="crm-permission-item">
+                                <span>Delete Events</span>
+                                <select class="crm-form-select" style="width: 120px;">
+                                    <option value="all">All Roles</option>
+                                    <option value="admin">Admin Only</option>
+                                    <option value="manager" selected>Manager+</option>
+                                    <option value="custom">Custom</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="crm-permission-group">
+                            <div class="crm-permission-group-header">Invoices & Billing</div>
+                            <div class="crm-permission-item">
+                                <span>View Invoices</span>
+                                <select class="crm-form-select" style="width: 120px;">
+                                    <option value="all">All Roles</option>
+                                    <option value="admin">Admin Only</option>
+                                    <option value="manager" selected>Manager+</option>
+                                    <option value="custom">Custom</option>
+                                </select>
+                            </div>
+                            <div class="crm-permission-item">
+                                <span>Create Invoices</span>
+                                <select class="crm-form-select" style="width: 120px;">
+                                    <option value="all">All Roles</option>
+                                    <option value="admin">Admin Only</option>
+                                    <option value="manager" selected>Manager+</option>
+                                    <option value="custom">Custom</option>
+                                </select>
+                            </div>
+                            <div class="crm-permission-item">
+                                <span>Send Invoices</span>
+                                <select class="crm-form-select" style="width: 120px;">
+                                    <option value="all">All Roles</option>
+                                    <option value="admin">Admin Only</option>
+                                    <option value="manager" selected>Manager+</option>
+                                    <option value="custom">Custom</option>
+                                </select>
+                            </div>
+                            <div class="crm-permission-item">
+                                <span>Delete Invoices</span>
+                                <select class="crm-form-select" style="width: 120px;">
+                                    <option value="all">All Roles</option>
+                                    <option value="admin" selected>Admin Only</option>
+                                    <option value="manager">Manager+</option>
+                                    <option value="custom">Custom</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="crm-permission-group">
+                            <div class="crm-permission-group-header">System Settings</div>
+                            <div class="crm-permission-item">
+                                <span>View Settings</span>
+                                <select class="crm-form-select" style="width: 120px;">
+                                    <option value="all">All Roles</option>
+                                    <option value="admin" selected>Admin Only</option>
+                                    <option value="manager">Manager+</option>
+                                    <option value="custom">Custom</option>
+                                </select>
+                            </div>
+                            <div class="crm-permission-item">
+                                <span>Modify Settings</span>
+                                <select class="crm-form-select" style="width: 120px;">
+                                    <option value="all">All Roles</option>
+                                    <option value="admin" selected>Admin Only</option>
+                                    <option value="manager">Manager+</option>
+                                    <option value="custom">Custom</option>
+                                </select>
+                            </div>
+                            <div class="crm-permission-item">
+                                <span>Manage Users</span>
+                                <select class="crm-form-select" style="width: 120px;">
+                                    <option value="all">All Roles</option>
+                                    <option value="admin" selected>Admin Only</option>
+                                    <option value="manager">Manager+</option>
+                                    <option value="custom">Custom</option>
+                                </select>
+                            </div>
+                            <div class="crm-permission-item">
+                                <span>View Logs</span>
+                                <select class="crm-form-select" style="width: 120px;">
+                                    <option value="all">All Roles</option>
+                                    <option value="admin" selected>Admin Only</option>
+                                    <option value="manager">Manager+</option>
+                                    <option value="custom">Custom</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="crm-d-flex crm-justify-between crm-mt-2">
+                        <button class="crm-btn crm-btn-outline">Reset to Defaults</button>
+                        <button class="crm-btn crm-btn-primary" id="savePermissionsBtn">Save Changes</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Add Event Modal -->
+    <div class="crm-modal-backdrop" id="addEventModal">
+        <div class="crm-modal">
+            <div class="crm-modal-header">
+                <h2 class="crm-modal-title">Add New Event</h2>
+                <button class="crm-modal-close" data-dismiss="modal" aria-label="Close">&times;</button>
+            </div>
+            <div class="crm-modal-body">
+                <form id="addEventForm">
+                    <div class="crm-form-group">
+                        <label for="eventTitle" class="crm-form-label">Title</label>
+                        <input type="text" id="eventTitle" name="title" class="crm-form-control" required>
+                    </div>
+                    <div class="crm-form-group">
+                        <label for="eventType" class="crm-form-label">Event Type</label>
+                        <select id="eventType" name="type" class="crm-form-select">
+                            <option value="meeting">Meeting</option>
+                            <option value="followup">Follow-up</option>
+                            <option value="deadline">Deadline</option>
+                        </select>
+                    </div>
+                    <div class="crm-form-group">
+                        <label for="eventDate" class="crm-form-label">Date</label>
+                        <input type="date" id="eventDate" name="date" class="crm-form-control" required>
+                    </div>
+                    <div class="crm-form-group">
+                        <label for="eventStartTime" class="crm-form-label">Start Time</label>
+                        <input type="time" id="eventStartTime" name="startTime" class="crm-form-control" required>
+                    </div>
+                    <div class="crm-form-group">
+                        <label for="eventEndTime" class="crm-form-label">End Time</label>
+                        <input type="time" id="eventEndTime" name="endTime" class="crm-form-control" required>
+                    </div>
+                    <div class="crm-form-group">
+                        <label for="eventDescription" class="crm-form-label">Description</label>
+                        <textarea id="eventDescription" name="description" class="crm-form-control crm-form-textarea"></textarea>
+                    </div>
+                    <div class="crm-form-group">
+                        <label for="eventParticipants" class="crm-form-label">Participants</label>
+                        <select id="eventParticipants" name="participants" class="crm-form-select" multiple>
+                            <option value="john.doe">John Doe</option>
+                            <option value="jane.smith">Jane Smith</option>
+                            <option value="mike.johnson">Mike Johnson</option>
+                            <option value="sarah.williams">Sarah Williams</option>
+                            <option value="david.brown">David Brown</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="crm-modal-footer">
+                <button class="crm-btn crm-btn-outline" data-dismiss="modal">Cancel</button>
+                <button class="crm-btn crm-btn-primary" id="submitEventBtn">Add Event</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Announcement Modal -->
+    <div class="crm-modal-backdrop" id="addAnnouncementModal">
+        <div class="crm-modal">
+            <div class="crm-modal-header">
+                <h2 class="crm-modal-title">Add New Announcement</h2>
+                <button class="crm-modal-close" data-dismiss="modal" aria-label="Close">&times;</button>
+            </div>
+            <div class="crm-modal-body">
+                <form id="addAnnouncementForm">
+                    <div class="crm-form-group">
+                        <label for="announcementTitle" class="crm-form-label">Title</label>
+                        <input type="text" id="announcementTitle" name="title" class="crm-form-control" required>
+                    </div>
+                    <div class="crm-form-group">
+                        <label for="announcementContent" class="crm-form-label">Content</label>
+                        <textarea id="announcementContent" name="content" class="crm-form-control crm-form-textarea" required></textarea>
+                    </div>
+                    <div class="crm-form-group">
+                        <label for="announcementPriority" class="crm-form-label">Priority</label>
+                        <select id="announcementPriority" name="priority" class="crm-form-select">
+                            <option value="normal">Normal</option>
+                            <option value="important">Important</option>
+                            <option value="urgent">Urgent</option>
+                        </select>
+                    </div>
+                    <div class="crm-form-group">
+                        <label for="announcementExpiry" class="crm-form-label">Expiry Date (Optional)</label>
+                        <input type="date" id="announcementExpiry" name="expiry" class="crm-form-control">
+                    </div>
+                </form>
+            </div>
+            <div class="crm-modal-footer">
+                <button class="crm-btn crm-btn-outline" data-dismiss="modal">Cancel</button>
+                <button class="crm-btn crm-btn-primary" id="submitAnnouncementBtn">Post Announcement</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Role Modal -->
+    <div class="crm-modal-backdrop" id="addRoleModal">
+        <div class="crm-modal">
+            <div class="crm-modal-header">
+                <h2 class="crm-modal-title">Add New Role</h2>
+                <button class="crm-modal-close" data-dismiss="modal" aria-label="Close">&times;</button>
+            </div>
+            <div class="crm-modal-body">
+                <form id="addRoleForm">
+                    <div class="crm-form-group">
+                        <label for="roleName" class="crm-form-label">Role Name</label>
+                        <input type="text" id="roleName" name="name" class="crm-form-control" required>
+                    </div>
+                    <div class="crm-form-group">
+                        <label for="roleDescription" class="crm-form-label">Description</label>
+                        <textarea id="roleDescription" name="description" class="crm-form-control crm-form-textarea"></textarea>
+                    </div>
+                    <div class="crm-form-group">
+                        <label class="crm-form-label">Base Permissions On</label>
+                        <select id="roleTemplate" name="template" class="crm-form-select">
+                            <option value="none">None (Start from scratch)</option>
+                            <option value="admin">Administrator</option>
+                            <option value="manager">Manager</option>
+                            <option value="user">Standard User</option>
+                            <option value="readonly">Read-Only User</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="crm-modal-footer">
+                <button class="crm-btn crm-btn-outline" data-dismiss="modal">Cancel</button>
+                <button class="crm-btn crm-btn-primary" id="submitRoleBtn">Create Role</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Custom JS -->
+    <script src="index.js"></script>
+    <script src="utilities.js"></script>
+</body>
+</html>

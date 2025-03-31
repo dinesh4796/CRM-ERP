@@ -1,0 +1,1647 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ERP System - Dispatch Management</title>
+    <link rel="stylesheet" href="../Sales-Module/dispatch-styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../index.css">
+
+</head>
+<body>
+
+    <div class="wrapper">
+        <!-- Sidebar -->
+        <nav id="sidebar" class="sidebar">
+            <div class="sidebar-header">
+                <h3>Management System</h3>
+                <button type="button" id="sidebarCollapse" class="btn d-md-none">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+
+            <ul class="list-unstyled components">
+                <li class="active">
+                    <a href="#" onclick="loadContent('dashboard')">
+                        <i class="fas fa-tachometer-alt"></i> Dashboard
+                    </a>
+                </li>
+                <li>
+                    <!-- <a href="#crmSubmenu" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        <i class="fas fa-users"></i> CRM Module -->
+                        <a href="#" class="dropdown-toggle" onclick="toggleDropdown(event)">
+                            <i class="fas fa-users"></i> CRM Module
+                    </a>
+                    <ul id="crmSubmenu" class="submenu">
+                        <li><a href="../remainder.html">Customer Management & Reminders</a></li>
+                        <!-- <li><a href="proposal.html">2. Proposal Management</a></li> -->
+                        <li><a href="../sales.html">Sales Management Reports</a></li>
+                        <li><a href="../contracts.html">Contracts</a></li>
+                        <li><a href="../project-management.html">Projects & Task Management</a></li>
+                        <!-- <li><a href="project-management.html">Task Management</a></li> -->
+                        <li><a href="../utilities.html">Utilities</a></li>
+                        <li><a href="../support.html">Support System & Expenses</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#inventorySubmenu" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        <i class="fas fa-boxes"></i> Inventory Module
+                    </a>
+
+                </li>
+                <li>
+                    <a href="#purchaseSubmenu" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        <i class="fas fa-shopping-cart"></i> Purchase Module
+                    </a>
+
+                </li>
+                <li>
+                    <a href="#salesSubmenu" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        <i class="fas fa-chart-line"></i> Sales Module
+                    </a>
+                    <ul class="collapse list-unstyled" id="salesSubmenu">
+                         <li><a href="/Sales-Module/TrialQuotation.html"><i class="fas fa-file-alt"></i> Quotation </a></li>
+                             <li><a href="/Sales-Module/orders_page.html"><i class="fas fa-shopping-cart"></i> Orders</a></li>
+                             <li><a href="/Sales-Module/dispatch-page.html"><i class="fas fa-truck"></i> Dispatch</a></li>
+                             <li><a href="/Sales-Module/invoice-page.html"><i class="fas fa-file-invoice"></i> Invoice </a></li>
+                             <li><a href="/Sales-Module/crm.html"><i class="fas fa-chart-bar"></i> CRM and Reports</a></li>
+                             <!-- <li><a href="Sales-Module/Trial_quotation-list .html"><i class="fas fa-chart-bar"></i> Performance</a></li> -->
+                  </ul>
+                </li>
+                    
+                <li>
+                    <a href="#" onclick="loadContent('settings')">
+                        <i class="fas fa-cog"></i> Settings
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- Page Content -->
+        <div id="content">
+            <!-- Top Navigation -->
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <div class="container-fluid">
+                    <button type="button" id="sidebarCollapseBtn" class="btn">
+                        <i class="fas fa-align-left"></i>
+                    </button>
+                    <div class="ms-auto d-flex">
+                        <div class="dropdown me-3">
+                            <button class="btn position-relative" type="button" id="notificationDropdown"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fas fa-bell"></i>
+                                <span
+                                    class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                    3
+                                </span>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="notificationDropdown">
+                                <li><a class="dropdown-item" href="#">New purchase order #1234</a></li>
+                                <li><a class="dropdown-item" href="#">Supplier quotation updated</a></li>
+                                <li><a class="dropdown-item" href="#">Payment due for invoice #5678</a></li>
+                            </ul>
+                        </div>
+                        <div class="dropdown">
+                            <button class="btn d-flex align-items-center" type="button" id="userDropdown"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                <img src="https://via.placeholder.com/30" class="rounded-circle me-2">
+                                <span>Admin</span>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                                <li><a class="dropdown-item" href="#">Profile</a></li>
+                                <li><a class="dropdown-item" href="#">Settings</a></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li><a class="dropdown-item" href="#">Logout</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+
+            <!-- Main Content Area -->
+            <div id="main-content" class="container-fluid">
+                <!-- Dashboard content will be loaded here by default -->
+                <div id="dashboard-content">
+                    <!-- Loader -->
+         <div class="loader-container" id="loader">
+            <div class="loader"></div>
+      </div>
+
+       <!-- Toast Notifications -->
+       <div class="toast-container" id="toastContainer"></div>
+
+      <div class="container">
+        <div class="page-header">
+            <div class="header-title">
+                <h1><i class="fas fa-truck-loading"></i> Dispatch Management</h1>
+                <p class="subtitle">Manage dispatches, stock transfers, and delivery schedules</p>
+            </div>
+            <div class="header-actions">
+                <button class="btn btn-primary" id="newDispatchBtn"><i class="fas fa-plus"></i> New Dispatch</button>
+                <div class="search-container">
+                    <input type="text" id="searchInput" placeholder="Search dispatches...">
+                    <button class="search-btn"><i class="fas fa-search"></i></button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="content-wrapper">
+            <div class="sidebar1">
+                <div class="filter-section">
+                    <div class="filter-header">
+                        <h3><i class="fas fa-filter"></i> Filter Dispatches</h3>
+                        <button class="btn-icon" id="toggleFilters"><i class="fas fa-chevron-up"></i></button>
+                    </div>
+                    <div class="filter-body">
+                        <div class="filter-group">
+                            <label for="statusFilter">Status</label>
+                            <select id="statusFilter" class="form-control">
+                                <option value="all">All Statuses</option>
+                                <option value="pending">Pending</option>
+                                <option value="loading">Loading</option>
+                                <option value="in-progress">In Progress</option>
+                                <option value="completed">Completed</option>
+                                <option value="cancelled">Cancelled</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label for="dateRangeFilter">Date Range</label>
+                            <div class="date-range">
+                                <input type="date" id="startDate" class="form-control">
+                                <span class="date-separator">to</span>
+                                <input type="date" id="endDate" class="form-control">
+                            </div>
+                        </div>
+                        <div class="filter-group">
+                            <label for="warehouseFilter">Warehouse</label>
+                            <select id="warehouseFilter" class="form-control">
+                                <option value="all">All Warehouses</option>
+                                <option value="warehouse1">Main Warehouse</option>
+                                <option value="warehouse2">North Distribution Center</option>
+                                <option value="warehouse3">South Distribution Center</option>
+                                <option value="warehouse4">East Fulfillment Center</option>
+                                <option value="warehouse5">West Fulfillment Center</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label for="customerFilter">Customer</label>
+                            <select id="customerFilter" class="form-control">
+                                <option value="all">All Customers</option>
+                                <option value="customer1">Acme Corporation</option>
+                                <option value="customer2">TechSolutions Inc.</option>
+                                <option value="customer3">Global Traders</option>
+                                <option value="customer4">Innovative Systems</option>
+                                <option value="customer5">Pinnacle Industries</option>
+                            </select>
+                        </div>
+                        <div class="filter-actions">
+                            <button class="btn btn-secondary" id="applyFiltersBtn">Apply Filters</button>
+                            <button class="btn btn-outline" id="resetFiltersBtn">Reset</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="quick-stats">
+                    <h3><i class="fas fa-chart-pie"></i> Quick Stats</h3>
+                    <div class="stat-item">
+                        <div class="stat-info">
+                            <span class="stat-label">Pending Dispatches</span>
+                            <span class="stat-value">12</span>
+                        </div>
+                        <div class="stat-icon pending-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-info">
+                            <span class="stat-label">Completed Today</span>
+                            <span class="stat-value">8</span>
+                        </div>
+                        <div class="stat-icon completed-icon">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-info">
+                            <span class="stat-label">Stock Transfers</span>
+                            <span class="stat-value">3</span>
+                        </div>
+                        <div class="stat-icon transfer-icon">
+                            <i class="fas fa-exchange-alt"></i>
+                        </div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-info">
+                            <span class="stat-label">Low Stock Items</span>
+                            <span class="stat-value">5</span>
+                        </div>
+                        <div class="stat-icon warning-icon">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="upcoming-deliveries">
+                    <h3><i class="fas fa-calendar-alt"></i> Upcoming Deliveries</h3>
+                    <div class="delivery-list">
+                        <div class="delivery-item">
+                            <div class="delivery-date">Today</div>
+                            <div class="delivery-details">
+                                <span class="delivery-customer">Acme Corporation</span>
+                                <span class="delivery-id">DSP-2023-001</span>
+                            </div>
+                        </div>
+                        <div class="delivery-item">
+                            <div class="delivery-date">Today</div>
+                            <div class="delivery-details">
+                                <span class="delivery-customer">TechSolutions Inc.</span>
+                                <span class="delivery-id">DSP-2023-002</span>
+                            </div>
+                        </div>
+                        <div class="delivery-item">
+                            <div class="delivery-date">Tomorrow</div>
+                            <div class="delivery-details">
+                                <span class="delivery-customer">Global Traders</span>
+                                <span class="delivery-id">DSP-2023-003</span>
+                            </div>
+                        </div>
+                        <div class="delivery-item">
+                            <div class="delivery-date">Jun 25</div>
+                            <div class="delivery-details">
+                                <span class="delivery-customer">Innovative Systems</span>
+                                <span class="delivery-id">DSP-2023-004</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> 
+
+            <div class="main-content">
+                <div class="tabs">
+                    <button class="tab-btn active" data-tab="dispatches">
+                        <i class="fas fa-truck"></i> Dispatches
+                    </button>
+                    <button class="tab-btn" data-tab="stock-transfer">
+                        <i class="fas fa-exchange-alt"></i> Stock Transfer
+                    </button>
+                    <button class="tab-btn" data-tab="availability">
+                        <i class="fas fa-boxes"></i> Stock Availability
+                    </button>
+                    <button class="tab-btn" data-tab="delivery-schedule">
+                        <i class="fas fa-calendar-alt"></i> Delivery Schedule
+                    </button>
+                </div>
+
+                <div class="tab-content active" id="dispatches-tab">
+                    <div class="action-bar">
+                        <div class="action-group">
+                            <button class="btn btn-outline btn-sm" id="bulkActionBtn">
+                                <i class="fas fa-cog"></i> Bulk Actions <i class="fas fa-chevron-down"></i>
+                            </button>
+                            <div class="dropdown-menu" id="bulkActionMenu">
+                                <a href="#" class="dropdown-item" id="bulkPrintBtn"><i class="fas fa-print"></i> Print Selected</a>
+                                <a href="#" class="dropdown-item" id="bulkExportBtn"><i class="fas fa-file-export"></i> Export Selected</a>
+                                <a href="#" class="dropdown-item danger" id="bulkDeleteBtn"><i class="fas fa-trash"></i> Delete Selected</a>
+                            </div>
+                        </div>
+                        <div class="view-options">
+                            <button class="btn-icon active" id="tableViewBtn" title="Table View">
+                                <i class="fas fa-list"></i>
+                            </button>
+                            <button class="btn-icon" id="cardViewBtn" title="Card View">
+                                <i class="fas fa-th-large"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="table-view active" id="tableView">
+                        <div class="table-responsive">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th class="checkbox-cell">
+                                            <label class="checkbox">
+                                                <input type="checkbox" id="selectAllDispatches">
+                                                <span class="checkmark"></span>
+                                            </label>
+                                        </th>
+                                        <th class="sortable" data-sort="id">Dispatch ID <i class="fas fa-sort"></i></th>
+                                        <th class="sortable" data-sort="so">Sales Order <i class="fas fa-sort"></i></th>
+                                        <th class="sortable" data-sort="customer">Customer <i class="fas fa-sort"></i></th>
+                                        <th class="sortable" data-sort="date">Dispatch Date <i class="fas fa-sort"></i></th>
+                                        <th class="sortable" data-sort="status">Status <i class="fas fa-sort"></i></th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="dispatchTableBody">
+                                    <tr>
+                                        <td class="checkbox-cell">
+                                            <label class="checkbox">
+                                                <input type="checkbox" class="dispatch-checkbox">
+                                                <span class="checkmark"></span>
+                                            </label>
+                                        </td>
+                                        <td>DSP-2023-001</td>
+                                        <td>SO-2023-1001</td>
+                                        <td>
+                                            <div class="customer-info">
+                                                <div class="customer-avatar">AC</div>
+                                                <div class="customer-name">Acme Corporation</div>
+                                            </div>
+                                        </td>
+                                        <td>2023-06-15</td>
+                                        <td><span class="status-badge completed">Completed</span></td>
+                                        <td>
+                                            <div class="action-buttons">
+                                                <button class="action-btn view-btn" title="View Details" data-id="DSP-2023-001">
+                                                    <i class="fas fa-eye"></i>
+                                                </button>
+                                                <button class="action-btn edit-btn" title="Edit" data-id="DSP-2023-001">
+                                                    <i class="fas fa-edit"></i>
+                                                </button>
+                                                <button class="action-btn print-btn" title="Print Dispatch Advice" data-id="DSP-2023-001">
+                                                    <i class="fas fa-print"></i>
+                                                </button>
+                                                <div class="action-dropdown">
+                                                    <button class="action-btn dropdown-btn" title="More Actions">
+                                                        <i class="fas fa-ellipsis-v"></i>
+                                                    </button>
+                                                    <div class="dropdown-menu">
+                                                        <a href="#" class="dropdown-item"><i class="fas fa-file-pdf"></i> Export as PDF</a>
+                                                        <a href="#" class="dropdown-item"><i class="fas fa-file-excel"></i> Export as Excel</a>
+                                                        <a href="#" class="dropdown-item"><i class="fas fa-copy"></i> Duplicate</a>
+                                                        <a href="#" class="dropdown-item danger"><i class="fas fa-trash"></i> Delete</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="checkbox-cell">
+                                            <label class="checkbox">
+                                                <input type="checkbox" class="dispatch-checkbox">
+                                                <span class="checkmark"></span>
+                                            </label>
+                                        </td>
+                                        <td>DSP-2023-002</td>
+                                        <td>SO-2023-1002</td>
+                                        <td>
+                                            <div class="customer-info">
+                                                <div class="customer-avatar">TS</div>
+                                                <div class="customer-name">TechSolutions Inc.</div>
+                                            </div>
+                                        </td>
+                                        <td>2023-06-16</td>
+                                        <td><span class="status-badge loading">Loading</span></td>
+                                        <td>
+                                            <div class="action-buttons">
+                                                <button class="action-btn view-btn" title="View Details" data-id="DSP-2023-002">
+                                                    <i class="fas fa-eye"></i>
+                                                </button>
+                                                <button class="action-btn edit-btn" title="Edit" data-id="DSP-2023-002">
+                                                    <i class="fas fa-edit"></i>
+                                                </button>
+                                                <button class="action-btn print-btn" title="Print Dispatch Advice" data-id="DSP-2023-002">
+                                                    <i class="fas fa-print"></i>
+                                                </button>
+                                                <div class="action-dropdown">
+                                                    <button class="action-btn dropdown-btn" title="More Actions">
+                                                        <i class="fas fa-ellipsis-v"></i>
+                                                    </button>
+                                                    <div class="dropdown-menu">
+                                                        <a href="#" class="dropdown-item"><i class="fas fa-file-pdf"></i> Export as PDF</a>
+                                                        <a href="#" class="dropdown-item"><i class="fas fa-file-excel"></i> Export as Excel</a>
+                                                        <a href="#" class="dropdown-item"><i class="fas fa-copy"></i> Duplicate</a>
+                                                        <a href="#" class="dropdown-item danger"><i class="fas fa-trash"></i> Delete</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="checkbox-cell">
+                                            <label class="checkbox">
+                                                <input type="checkbox" class="dispatch-checkbox">
+                                                <span class="checkmark"></span>
+                                            </label>
+                                        </td>
+                                        <td>DSP-2023-003</td>
+                                        <td>SO-2023-1003</td>
+                                        <td>
+                                            <div class="customer-info">
+                                                <div class="customer-avatar">GT</div>
+                                                <div class="customer-name">Global Traders</div>
+                                            </div>
+                                        </td>
+                                        <td>2023-06-17</td>
+                                        <td><span class="status-badge pending">Pending</span></td>
+                                        <td>
+                                            <div class="action-buttons">
+                                                <button class="action-btn view-btn" title="View Details" data-id="DSP-2023-003">
+                                                    <i class="fas fa-eye"></i>
+                                                </button>
+                                                <button class="action-btn edit-btn" title="Edit" data-id="DSP-2023-003">
+                                                    <i class="fas fa-edit"></i>
+                                                </button>
+                                                <button class="action-btn print-btn" title="Print Dispatch Advice" data-id="DSP-2023-003">
+                                                    <i class="fas fa-print"></i>
+                                                </button>
+                                                <div class="action-dropdown">
+                                                    <button class="action-btn dropdown-btn" title="More Actions">
+                                                        <i class="fas fa-ellipsis-v"></i>
+                                                    </button>
+                                                    <div class="dropdown-menu">
+                                                        <a href="#" class="dropdown-item"><i class="fas fa-file-pdf"></i> Export as PDF</a>
+                                                        <a href="#" class="dropdown-item"><i class="fas fa-file-excel"></i> Export as Excel</a>
+                                                        <a href="#" class="dropdown-item"><i class="fas fa-copy"></i> Duplicate</a>
+                                                        <a href="#" class="dropdown-item danger"><i class="fas fa-trash"></i> Delete</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="checkbox-cell">
+                                            <label class="checkbox">
+                                                <input type="checkbox" class="dispatch-checkbox">
+                                                <span class="checkmark"></span>
+                                            </label>
+                                        </td>
+                                        <td>DSP-2023-004</td>
+                                        <td>SO-2023-1001</td>
+                                        <td>
+                                            <div class="customer-info">
+                                                <div class="customer-avatar">AC</div>
+                                                <div class="customer-name">Acme Corporation</div>
+                                            </div>
+                                        </td>
+                                        <td>2023-06-18</td>
+                                        <td><span class="status-badge pending">Pending</span></td>
+                                        <td>
+                                            <div class="action-buttons">
+                                                <button class="action-btn view-btn" title="View Details" data-id="DSP-2023-004">
+                                                    <i class="fas fa-eye"></i>
+                                                </button>
+                                                <button class="action-btn edit-btn" title="Edit" data-id="DSP-2023-004">
+                                                    <i class="fas fa-edit"></i>
+                                                </button>
+                                                <button class="action-btn print-btn" title="Print Dispatch Advice" data-id="DSP-2023-004">
+                                                    <i class="fas fa-print"></i>
+                                                </button>
+                                                <div class="action-dropdown">
+                                                    <button class="action-btn dropdown-btn" title="More Actions">
+                                                        <i class="fas fa-ellipsis-v"></i>
+                                                    </button>
+                                                    <div class="dropdown-menu">
+                                                        <a href="#" class="dropdown-item"><i class="fas fa-file-pdf"></i> Export as PDF</a>
+                                                        <a href="#" class="dropdown-item"><i class="fas fa-file-excel"></i> Export as Excel</a>
+                                                        <a href="#" class="dropdown-item"><i class="fas fa-copy"></i> Duplicate</a>
+                                                        <a href="#" class="dropdown-item danger"><i class="fas fa-trash"></i> Delete</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="checkbox-cell">
+                                            <label class="checkbox">
+                                                <input type="checkbox" class="dispatch-checkbox">
+                                                <span class="checkmark"></span>
+                                            </label>
+                                        </td>
+                                        <td>DSP-2023-005</td>
+                                        <td>SO-2023-1004</td>
+                                        <td>
+                                            <div class="customer-info">
+                                                <div class="customer-avatar">IS</div>
+                                                <div class="customer-name">Innovative Systems</div>
+                                            </div>
+                                        </td>
+                                        <td>2023-06-19</td>
+                                        <td><span class="status-badge cancelled">Cancelled</span></td>
+                                        <td>
+                                            <div class="action-buttons">
+                                                <button class="action-btn view-btn" title="View Details" data-id="DSP-2023-005">
+                                                    <i class="fas fa-eye"></i>
+                                                </button>
+                                                <button class="action-btn edit-btn" title="Edit" data-id="DSP-2023-005">
+                                                    <i class="fas fa-edit"></i>
+                                                </button>
+                                                <button class="action-btn print-btn" title="Print Dispatch Advice" data-id="DSP-2023-005">
+                                                    <i class="fas fa-print"></i>
+                                                </button>
+                                                <div class="action-dropdown">
+                                                    <button class="action-btn dropdown-btn" title="More Actions">
+                                                        <i class="fas fa-ellipsis-v"></i>
+                                                    </button>
+                                                    <div class="dropdown-menu">
+                                                        <a href="#" class="dropdown-item"><i class="fas fa-file-pdf"></i> Export as PDF</a>
+                                                        <a href="#" class="dropdown-item"><i class="fas fa-file-excel"></i> Export as Excel</a>
+                                                        <a href="#" class="dropdown-item"><i class="fas fa-copy"></i> Duplicate</a>
+                                                        <a href="#" class="dropdown-item danger"><i class="fas fa-trash"></i> Delete</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="card-view" id="cardView">
+                        <div class="card-grid">
+                            <div class="dispatch-card">
+                                <div class="card-header">
+                                    <div class="dispatch-id">DSP-2023-001</div>
+                                    <span class="status-badge completed">Completed</span>
+                                </div>
+                                <div class="card-body">
+                                    <div class="card-row">
+                                        <span class="card-label">Sales Order:</span>
+                                        <span class="card-value">SO-2023-1001</span>
+                                    </div>
+                                    <div class="card-row">
+                                        <span class="card-label">Customer:</span>
+                                        <span class="card-value">Acme Corporation</span>
+                                    </div>
+                                    <div class="card-row">
+                                        <span class="card-label">Dispatch Date:</span>
+                                        <span class="card-value">2023-06-15</span>
+                                    </div>
+                                    <div class="card-row">
+                                        <span class="card-label">Items:</span>
+                                        <span class="card-value">5 items</span>
+                                    </div>
+                                </div>
+                                <div class="card-footer">
+                                    <button class="btn btn-sm btn-outline view-btn" data-id="DSP-2023-001">
+                                        <i class="fas fa-eye"></i> View
+                                    </button>
+                                    <button class="btn btn-sm btn-outline edit-btn" data-id="DSP-2023-001">
+                                        <i class="fas fa-edit"></i> Edit
+                                    </button>
+                                    <button class="btn btn-sm btn-outline print-btn" data-id="DSP-2023-001">
+                                        <i class="fas fa-print"></i> Print
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="dispatch-card">
+                                <div class="card-header">
+                                    <div class="dispatch-id">DSP-2023-002</div>
+                                    <span class="status-badge loading">Loading</span>
+                                </div>
+                                <div class="card-body">
+                                    <div class="card-row">
+                                        <span class="card-label">Sales Order:</span>
+                                        <span class="card-value">SO-2023-1002</span>
+                                    </div>
+                                    <div class="card-row">
+                                        <span class="card-label">Customer:</span>
+                                        <span class="card-value">TechSolutions Inc.</span>
+                                    </div>
+                                    <div class="card-row">
+                                        <span class="card-label">Dispatch Date:</span>
+                                        <span class="card-value">2023-06-16</span>
+                                    </div>
+                                    <div class="card-row">
+                                        <span class="card-label">Items:</span>
+                                        <span class="card-value">3 items</span>
+                                    </div>
+                                </div>
+                                <div class="card-footer">
+                                    <button class="btn btn-sm btn-outline view-btn" data-id="DSP-2023-002">
+                                        <i class="fas fa-eye"></i> View
+                                    </button>
+                                    <button class="btn btn-sm btn-outline edit-btn" data-id="DSP-2023-002">
+                                        <i class="fas fa-edit"></i> Edit
+                                    </button>
+                                    <button class="btn btn-sm btn-outline print-btn" data-id="DSP-2023-002">
+                                        <i class="fas fa-print"></i> Print
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="dispatch-card">
+                                <div class="card-header">
+                                    <div class="dispatch-id">DSP-2023-003</div>
+                                    <span class="status-badge pending">Pending</span>
+                                </div>
+                                <div class="card-body">
+                                    <div class="card-row">
+                                        <span class="card-label">Sales Order:</span>
+                                        <span class="card-value">SO-2023-1003</span>
+                                    </div>
+                                    <div class="card-row">
+                                        <span class="card-label">Customer:</span>
+                                        <span class="card-value">Global Traders</span>
+                                    </div>
+                                    <div class="card-row">
+                                        <span class="card-label">Dispatch Date:</span>
+                                        <span class="card-value">2023-06-17</span>
+                                    </div>
+                                    <div class="card-row">
+                                        <span class="card-label">Items:</span>
+                                        <span class="card-value">7 items</span>
+                                    </div>
+                                </div>
+                                <div class="card-footer">
+                                    <button class="btn btn-sm btn-outline view-btn" data-id="DSP-2023-003">
+                                        <i class="fas fa-eye"></i> View
+                                    </button>
+                                    <button class="btn btn-sm btn-outline edit-btn" data-id="DSP-2023-003">
+                                        <i class="fas fa-edit"></i> Edit
+                                    </button>
+                                    <button class="btn btn-sm btn-outline print-btn" data-id="DSP-2023-003">
+                                        <i class="fas fa-print"></i> Print
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="dispatch-card">
+                                <div class="card-header">
+                                    <div class="dispatch-id">DSP-2023-004</div>
+                                    <span class="status-badge pending">Pending</span>
+                                </div>
+                                <div class="card-body">
+                                    <div class="card-row">
+                                        <span class="card-label">Sales Order:</span>
+                                        <span class="card-value">SO-2023-1001</span>
+                                    </div>
+                                    <div class="card-row">
+                                        <span class="card-label">Customer:</span>
+                                        <span class="card-value">Acme Corporation</span>
+                                    </div>
+                                    <div class="card-row">
+                                        <span class="card-label">Dispatch Date:</span>
+                                        <span class="card-value">2023-06-18</span>
+                                    </div>
+                                    <div class="card-row">
+                                        <span class="card-label">Items:</span>
+                                        <span class="card-value">4 items</span>
+                                    </div>
+                                </div>
+                                <div class="card-footer">
+                                    <button class="btn btn-sm btn-outline view-btn" data-id="DSP-2023-004">
+                                        <i class="fas fa-eye"></i> View
+                                    </button>
+                                    <button class="btn btn-sm btn-outline edit-btn" data-id="DSP-2023-004">
+                                        <i class="fas fa-edit"></i> Edit
+                                    </button>
+                                    <button class="btn btn-sm btn-outline print-btn" data-id="DSP-2023-004">
+                                        <i class="fas fa-print"></i> Print
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="dispatch-card">
+                                <div class="card-header">
+                                    <div class="dispatch-id">DSP-2023-005</div>
+                                    <span class="status-badge cancelled">Cancelled</span>
+                                </div>
+                                <div class="card-body">
+                                    <div class="card-row">
+                                        <span class="card-label">Sales Order:</span>
+                                        <span class="card-value">SO-2023-1004</span>
+                                    </div>
+                                    <div class="card-row">
+                                        <span class="card-label">Customer:</span>
+                                        <span class="card-value">Innovative Systems</span>
+                                    </div>
+                                    <div class="card-row">
+                                        <span class="card-label">Dispatch Date:</span>
+                                        <span class="card-value">2023-06-19</span>
+                                    </div>
+                                    <div class="card-row">
+                                        <span class="card-label">Items:</span>
+                                        <span class="card-value">2 items</span>
+                                    </div>
+                                </div>
+                                <div class="card-footer">
+                                    <button class="btn btn-sm btn-outline view-btn" data-id="DSP-2023-005">
+                                        <i class="fas fa-eye"></i> View
+                                    </button>
+                                    <button class="btn btn-sm btn-outline edit-btn" data-id="DSP-2023-005">
+                                        <i class="fas fa-edit"></i> Edit
+                                    </button>
+                                    <button class="btn btn-sm btn-outline print-btn" data-id="DSP-2023-005">
+                                        <i class="fas fa-print"></i> Print
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pagination">
+                        <button class="pagination-btn" id="firstPage" title="First Page">
+                            <i class="fas fa-angle-double-left"></i>
+                        </button>
+                        <button class="pagination-btn" id="prevPage" title="Previous Page">
+                            <i class="fas fa-angle-left"></i>
+                        </button>
+                        <div class="pagination-pages">
+                            <button class="page-number active">1</button>
+                            <button class="page-number">2</button>
+                            <button class="page-number">3</button>
+                            <button class="page-number">4</button>
+                            <button class="page-number">5</button>
+                        </div>
+                        <button class="pagination-btn" id="nextPage" title="Next Page">
+                            <i class="fas fa-angle-right"></i>
+                        </button>
+                        <button class="pagination-btn" id="lastPage" title="Last Page">
+                            <i class="fas fa-angle-double-right"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="tab-content" id="stock-transfer-tab">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2><i class="fas fa-exchange-alt"></i> Warehouse Stock Transfer</h2>
+                            <button class="btn btn-primary" id="newTransferBtn">
+                                <i class="fas fa-plus"></i> New Transfer
+                            </button>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="data-table">
+                                    <thead>
+                                        <tr>
+                                            <th class="sortable" data-sort="id">Transfer ID <i class="fas fa-sort"></i></th>
+                                            <th class="sortable" data-sort="from">From Warehouse <i class="fas fa-sort"></i></th>
+                                            <th class="sortable" data-sort="to">To Warehouse <i class="fas fa-sort"></i></th>
+                                            <th class="sortable" data-sort="date">Transfer Date <i class="fas fa-sort"></i></th>
+                                            <th class="sortable" data-sort="items">Items <i class="fas fa-sort"></i></th>
+                                            <th class="sortable" data-sort="status">Status <i class="fas fa-sort"></i></th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>TRF-2023-001</td>
+                                            <td>Main Warehouse</td>
+                                            <td>North Distribution Center</td>
+                                            <td>2023-06-15</td>
+                                            <td>5 items</td>
+                                            <td><span class="status-badge completed">Completed</span></td>
+                                            <td>
+                                                <div class="action-buttons">
+                                                    <button class="action-btn view-btn" title="View Details">
+                                                        <i class="fas fa-eye"></i>
+                                                    </button>
+                                                    <button class="action-btn print-btn" title="Print Transfer Document">
+                                                        <i class="fas fa-print"></i>
+                                                    </button>
+                                                    <div class="action-dropdown">
+                                                        <button class="action-btn dropdown-btn" title="More Actions">
+                                                            <i class="fas fa-ellipsis-v"></i>
+                                                        </button>
+                                                        <div class="dropdown-menu">
+                                                            <a href="#" class="dropdown-item"><i class="fas fa-file-pdf"></i> Export as PDF</a>
+                                                            <a href="#" class="dropdown-item"><i class="fas fa-file-excel"></i> Export as Excel</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>TRF-2023-002</td>
+                                            <td>North Distribution Center</td>
+                                            <td>East Fulfillment Center</td>
+                                            <td>2023-06-16</td>
+                                            <td>3 items</td>
+                                            <td><span class="status-badge in-progress">In Progress</span></td>
+                                            <td>
+                                                <div class="action-buttons">
+                                                    <button class="action-btn view-btn" title="View Details">
+                                                        <i class="fas fa-eye"></i>
+                                                    </button>
+                                                    <button class="action-btn edit-btn" title="Edit">
+                                                        <i class="fas fa-edit"></i>
+                                                    </button>
+                                                    <button class="action-btn print-btn" title="Print Transfer Document">
+                                                        <i class="fas fa-print"></i>
+                                                    </button>
+                                                    <div class="action-dropdown">
+                                                        <button class="action-btn dropdown-btn" title="More Actions">
+                                                            <i class="fas fa-ellipsis-v"></i>
+                                                        </button>
+                                                        <div class="dropdown-menu">
+                                                            <a href="#" class="dropdown-item"><i class="fas fa-file-pdf"></i> Export as PDF</a>
+                                                            <a href="#" class="dropdown-item"><i class="fas fa-file-excel"></i> Export as Excel</a>
+                                                            <a href="#" class="dropdown-item danger"><i class="fas fa-times-circle"></i> Cancel Transfer</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>TRF-2023-003</td>
+                                            <td>Main Warehouse</td>
+                                            <td>South Distribution Center</td>
+                                            <td>2023-06-17</td>
+                                            <td>7 items</td>
+                                            <td><span class="status-badge pending">Pending</span></td>
+                                            <td>
+                                                <div class="action-buttons">
+                                                    <button class="action-btn view-btn" title="View Details">
+                                                        <i class="fas fa-eye"></i>
+                                                    </button>
+                                                    <button class="action-btn edit-btn" title="Edit">
+                                                        <i class="fas fa-edit"></i>
+                                                    </button>
+                                                    <button class="action-btn print-btn" title="Print Transfer Document">
+                                                        <i class="fas fa-print"></i>
+                                                    </button>
+                                                    <div class="action-dropdown">
+                                                        <button class="action-btn dropdown-btn" title="More Actions">
+                                                            <i class="fas fa-ellipsis-v"></i>
+                                                        </button>
+                                                        <div class="dropdown-menu">
+                                                            <a href="#" class="dropdown-item"><i class="fas fa-file-pdf"></i> Export as PDF</a>
+                                                            <a href="#" class="dropdown-item"><i class="fas fa-file-excel"></i> Export as Excel</a>
+                                                            <a href="#" class="dropdown-item danger"><i class="fas fa-times-circle"></i> Cancel Transfer</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-content" id="availability-tab">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2><i class="fas fa-boxes"></i> Stock Availability</h2>
+                            <div class="header-actions">
+                                <select id="warehouseSelect" class="form-control">
+                                    <option value="all">All Warehouses</option>
+                                    <option value="warehouse1">Main Warehouse</option>
+                                    <option value="warehouse2">North Distribution Center</option>
+                                    <option value="warehouse3">South Distribution Center</option>
+                                    <option value="warehouse4">East Fulfillment Center</option>
+                                    <option value="warehouse5">West Fulfillment Center</option>
+                                </select>
+                                <div class="search-container">
+                                    <input type="text" id="productSearchInput" class="form-control" placeholder="Search products...">
+                                    <button class="search-btn"><i class="fas fa-search"></i></button>
+                                </div>
+                                <button class="btn btn-outline" id="exportStockBtn">
+                                    <i class="fas fa-file-export"></i> Export
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="data-table">
+                                    <thead>
+                                        <tr>
+                                            <th class="sortable" data-sort="id">Product ID <i class="fas fa-sort"></i></th>
+                                            <th class="sortable" data-sort="name">Product Name <i class="fas fa-sort"></i></th>
+                                            <th class="sortable" data-sort="category">Category <i class="fas fa-sort"></i></th>
+                                            <th class="sortable" data-sort="available">Available Qty <i class="fas fa-sort"></i></th>
+                                            <th class="sortable" data-sort="reserved">Reserved Qty <i class="fas fa-sort"></i></th>
+                                            <th class="sortable" data-sort="warehouse">Warehouse <i class="fas fa-sort"></i></th>
+                                            <th class="sortable" data-sort="status">Status <i class="fas fa-sort"></i></th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>PRD-001</td>
+                                            <td>Premium Widget</td>
+                                            <td>Electronics</td>
+                                            <td>250</td>
+                                            <td>50</td>
+                                            <td>Main Warehouse</td>
+                                            <td><span class="status-badge in-stock">In Stock</span></td>
+                                            <td>
+                                                <div class="action-buttons">
+                                                    <button class="action-btn view-btn" title="View Product Details">
+                                                        <i class="fas fa-eye"></i>
+                                                    </button>
+                                                    <button class="action-btn history-btn" title="View Stock History">
+                                                        <i class="fas fa-history"></i>
+                                                    </button>
+                                                    <div class="action-dropdown">
+                                                        <button class="action-btn dropdown-btn" title="More Actions">
+                                                            <i class="fas fa-ellipsis-v"></i>
+                                                        </button>
+                                                        <div class="dropdown-menu">
+                                                            <a href="#" class="dropdown-item"><i class="fas fa-exchange-alt"></i> Transfer Stock</a>
+                                                            <a href="#" class="dropdown-item"><i class="fas fa-adjust"></i> Adjust Inventory</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>PRD-002</td>
+                                            <td>Deluxe Gadget</td>
+                                            <td>Electronics</td>
+                                            <td>120</td>
+                                            <td>30</td>
+                                            <td>Main Warehouse</td>
+                                            <td><span class="status-badge in-stock">In Stock</span></td>
+                                            <td>
+                                                <div class="action-buttons">
+                                                    <button class="action-btn view-btn" title="View Product Details">
+                                                        <i class="fas fa-eye"></i>
+                                                    </button>
+                                                    <button class="action-btn history-btn" title="View Stock History">
+                                                        <i class="fas fa-history"></i>
+                                                    </button>
+                                                    <div class="action-dropdown">
+                                                        <button class="action-btn dropdown-btn" title="More Actions">
+                                                            <i class="fas fa-ellipsis-v"></i>
+                                                        </button>
+                                                        <div class="dropdown-menu">
+                                                            <a href="#" class="dropdown-item"><i class="fas fa-exchange-alt"></i> Transfer Stock</a>
+                                                            <a href="#" class="dropdown-item"><i class="fas fa-adjust"></i> Adjust Inventory</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>PRD-003</td>
+                                            <td>Standard Component</td>
+                                            <td>Hardware</td>
+                                            <td>0</td>
+                                            <td>0</td>
+                                            <td>North Distribution Center</td>
+                                            <td><span class="status-badge out-of-stock">Out of Stock</span></td>
+                                            <td>
+                                                <div class="action-buttons">
+                                                    <button class="action-btn view-btn" title="View Product Details">
+                                                        <i class="fas fa-eye"></i>
+                                                    </button>
+                                                    <button class="action-btn history-btn" title="View Stock History">
+                                                        <i class="fas fa-history"></i>
+                                                    </button>
+                                                    <div class="action-dropdown">
+                                                        <button class="action-btn dropdown-btn" title="More Actions">
+                                                            <i class="fas fa-ellipsis-v"></i>
+                                                        </button>
+                                                        <div class="dropdown-menu">
+                                                            <a href="#" class="dropdown-item"><i class="fas fa-exchange-alt"></i> Transfer Stock</a>
+                                                            <a href="#" class="dropdown-item"><i class="fas fa-adjust"></i> Adjust Inventory</a>
+                                                            <a href="#" class="dropdown-item"><i class="fas fa-shopping-cart"></i> Create Purchase Order</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>PRD-004</td>
+                                            <td>Basic Module</td>
+                                            <td>Hardware</td>
+                                            <td>15</td>
+                                            <td>10</td>
+                                            <td>South Distribution Center</td>
+                                            <td><span class="status-badge low-stock">Low Stock</span></td>
+                                            <td>
+                                                <div class="action-buttons">
+                                                    <button class="action-btn view-btn" title="View Product Details">
+                                                        <i class="fas fa-eye"></i>
+                                                    </button>
+                                                    <button class="action-btn history-btn" title="View Stock History">
+                                                        <i class="fas fa-history"></i>
+                                                    </button>
+                                                    <div class="action-dropdown">
+                                                        <button class="action-btn dropdown-btn" title="More Actions">
+                                                            <i class="fas fa-ellipsis-v"></i>
+                                                        </button>
+                                                        <div class="dropdown-menu">
+                                                            <a href="#" class="dropdown-item"><i class="fas fa-exchange-alt"></i> Transfer Stock</a>
+                                                            <a href="#" class="dropdown-item"><i class="fas fa-adjust"></i> Adjust Inventory</a>
+                                                            <a href="#" class="dropdown-item"><i class="fas fa-shopping-cart"></i> Create Purchase Order</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>PRD-005</td>
+                                            <td>Advanced System</td>
+                                            <td>Software</td>
+                                            <td>75</td>
+                                            <td>25</td>
+                                            <td>East Fulfillment Center</td>
+                                            <td><span class="status-badge in-stock">In Stock</span></td>
+                                            <td>
+                                                <div class="action-buttons">
+                                                    <button class="action-btn view-btn" title="View Product Details">
+                                                        <i class="fas fa-eye"></i>
+                                                    </button>
+                                                    <button class="action-btn history-btn" title="View Stock History">
+                                                        <i class="fas fa-history"></i>
+                                                    </button>
+                                                    <div class="action-dropdown">
+                                                        <button class="action-btn dropdown-btn" title="More Actions">
+                                                            <i class="fas fa-ellipsis-v"></i>
+                                                        </button>
+                                                        <div class="dropdown-menu">
+                                                            <a href="#" class="dropdown-item"><i class="fas fa-exchange-alt"></i> Transfer Stock</a>
+                                                            <a href="#" class="dropdown-item"><i class="fas fa-adjust"></i> Adjust Inventory</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-content" id="delivery-schedule-tab">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2><i class="fas fa-calendar-alt"></i> Delivery Schedule</h2>
+                            <div class="header-actions">
+                                <div class="date-selector">
+                                    <button class="btn btn-outline btn-sm" id="prevWeekBtn">
+                                        <i class="fas fa-chevron-left"></i>
+                                    </button>
+                                    <span id="currentWeekDisplay">June 19 - June 25, 2023</span>
+                                    <button class="btn btn-outline btn-sm" id="nextWeekBtn">
+                                        <i class="fas fa-chevron-right"></i>
+                                    </button>
+                                </div>
+                                <button class="btn btn-outline" id="printScheduleBtn">
+                                    <i class="fas fa-print"></i> Print Schedule
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="schedule-container">
+                                <div class="schedule-header">
+                                    <div class="schedule-time-column">Time</div>
+                                    <div class="schedule-day">Monday<br>Jun 19</div>
+                                    <div class="schedule-day">Tuesday<br>Jun 20</div>
+                                    <div class="schedule-day">Wednesday<br>Jun 21</div>
+                                    <div class="schedule-day">Thursday<br>Jun 22</div>
+                                    <div class="schedule-day">Friday<br>Jun 23</div>
+                                    <div class="schedule-day weekend">Saturday<br>Jun 24</div>
+                                    <div class="schedule-day weekend">Sunday<br>Jun 25</div>
+                                </div>
+                                <div class="schedule-body">
+                                    <div class="schedule-row">
+                                        <div class="schedule-time">8:00 AM</div>
+                                        <div class="schedule-cell"></div>
+                                        <div class="schedule-cell">
+                                            <div class="schedule-event" data-id="DSP-2023-006">
+                                                <div class="event-title">Acme Corporation</div>
+                                                <div class="event-details">DSP-2023-006</div>
+                                            </div>
+                                        </div>
+                                        <div class="schedule-cell"></div>
+                                        <div class="schedule-cell"></div>
+                                        <div class="schedule-cell">
+                                            <div class="schedule-event" data-id="DSP-2023-009">
+                                                <div class="event-title">Global Traders</div>
+                                                <div class="event-details">DSP-2023-009</div>
+                                            </div>
+                                        </div>
+                                        <div class="schedule-cell"></div>
+                                        <div class="schedule-cell"></div>
+                                    </div>
+                                    <div class="schedule-row">
+                                        <div class="schedule-time">10:00 AM</div>
+                                        <div class="schedule-cell">
+                                            <div class="schedule-event" data-id="DSP-2023-005">
+                                                <div class="event-title">Innovative Systems</div>
+                                                <div class="event-details">DSP-2023-005</div>
+                                            </div>
+                                        </div>
+                                        <div class="schedule-cell"></div>
+                                        <div class="schedule-cell">
+                                            <div class="schedule-event" data-id="DSP-2023-007">
+                                                <div class="event-title">TechSolutions Inc.</div>
+                                                <div class="event-details">DSP-2023-007</div>
+                                            </div>
+                                        </div>
+                                        <div class="schedule-cell"></div>
+                                        <div class="schedule-cell"></div>
+                                        <div class="schedule-cell"></div>
+                                        <div class="schedule-cell"></div>
+                                    </div>
+                                    <div class="schedule-row">
+                                        <div class="schedule-time">1:00 PM</div>
+                                        <div class="schedule-cell"></div>
+                                        <div class="schedule-cell"></div>
+                                        <div class="schedule-cell"></div>
+                                        <div class="schedule-cell">
+                                            <div class="schedule-event" data-id="DSP-2023-008">
+                                                <div class="event-title">Pinnacle Industries</div>
+                                                <div class="event-details">DSP-2023-008</div>
+                                            </div>
+                                        </div>
+                                        <div class="schedule-cell"></div>
+                                        <div class="schedule-cell"></div>
+                                        <div class="schedule-cell"></div>
+                                    </div>
+                                    <div class="schedule-row">
+                                        <div class="schedule-time">3:00 PM</div>
+                                        <div class="schedule-cell"></div>
+                                        <div class="schedule-cell"></div>
+                                        <div class="schedule-cell"></div>
+                                        <div class="schedule-cell"></div>
+                                        <div class="schedule-cell">
+                                            <div class="schedule-event" data-id="DSP-2023-010">
+                                                <div class="event-title">Acme Corporation</div>
+                                                <div class="event-details">DSP-2023-010</div>
+                                            </div>
+                                        </div>
+                                        <div class="schedule-cell"></div>
+                                        <div class="schedule-cell"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for New Dispatch -->
+    <div class="modal" id="dispatchModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-truck"></i> Create New Dispatch</h2>
+                <button class="close-btn" id="closeDispatchModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="dispatchForm">
+                    <div class="form-tabs">
+                        <button type="button" class="form-tab active" data-tab="basic-info">Basic Info</button>
+                        <button type="button" class="form-tab" data-tab="items">Items</button>
+                        <button type="button" class="form-tab" data-tab="delivery">Delivery Details</button>
+                        <button type="button" class="form-tab" data-tab="notes">Notes</button>
+                    </div>
+                    
+                    <div class="form-tab-content active" id="basic-info-tab">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="salesOrder">Sales Order <span class="required">*</span></label>
+                                <select id="salesOrder" class="form-control" required>
+                                    <option value="">Select Sales Order</option>
+                                    <option value="SO-2023-1001">SO-2023-1001 - Acme Corporation</option>
+                                    <option value="SO-2023-1002">SO-2023-1002 - TechSolutions Inc.</option>
+                                    <option value="SO-2023-1003">SO-2023-1003 - Global Traders</option>
+                                    <option value="SO-2023-1004">SO-2023-1004 - Innovative Systems</option>
+                                    <option value="SO-2023-1005">SO-2023-1005 - Pinnacle Industries</option>
+                                </select>
+                                <div class="form-error" id="salesOrderError"></div>
+                            </div>
+                            <div class="form-group">
+                                <label for="dispatchDate">Dispatch Date <span class="required">*</span></label>
+                                <input type="date" id="dispatchDate" class="form-control" required>
+                                <div class="form-error" id="dispatchDateError"></div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="warehouse">Warehouse <span class="required">*</span></label>
+                                <select id="warehouse" class="form-control" required>
+                                    <option value="">Select Warehouse</option>
+                                    <option value="warehouse1">Main Warehouse</option>
+                                    <option value="warehouse2">North Distribution Center</option>
+                                    <option value="warehouse3">South Distribution Center</option>
+                                    <option value="warehouse4">East Fulfillment Center</option>
+                                    <option value="warehouse5">West Fulfillment Center</option>
+                                </select>
+                                <div class="form-error" id="warehouseError"></div>
+                            </div>
+                            <div class="form-group">
+                                <label for="dispatchStatus">Status</label>
+                                <select id="dispatchStatus" class="form-control">
+                                    <option value="pending">Pending</option>
+                                    <option value="loading">Loading</option>
+                                    <option value="in-progress">In Progress</option>
+                                    <option value="completed">Completed</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="dispatchReference">Reference Number</label>
+                            <input type="text" id="dispatchReference" class="form-control" placeholder="Optional reference number">
+                        </div>
+                    </div>
+                    
+                    <div class="form-tab-content" id="items-tab">
+                        <div class="form-group">
+                            <label>Items to Dispatch</label>
+                            <div class="table-responsive">
+                                <table class="data-table" id="dispatchItemsTable">
+                                    <thead>
+                                        <tr>
+                                            <th>Product</th>
+                                            <th>Available Qty</th>
+                                            <th>Order Qty</th>
+                                            <th>Dispatch Qty</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Premium Widget (PRD-001)</td>
+                                            <td>250</td>
+                                            <td>100</td>
+                                            <td><input type="number" class="form-control dispatch-qty" min="1" max="100" value="100"></td>
+                                            <td>
+                                                <button type="button" class="action-btn remove-btn" title="Remove"><i class="fas fa-trash"></i></button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Deluxe Gadget (PRD-002)</td>
+                                            <td>120</td>
+                                            <td>50</td>
+                                            <td><input type="number" class="form-control dispatch-qty" min="1" max="50" value="50"></td>
+                                            <td>
+                                                <button type="button" class="action-btn remove-btn" title="Remove"><i class="fas fa-trash"></i></button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <button type="button" class="btn btn-outline" id="addMoreItemsBtn">
+                                <i class="fas fa-plus"></i> Add More Items
+                            </button>
+                            <button type="button" class="btn btn-outline" id="checkAvailabilityBtn">
+                                <i class="fas fa-search"></i> Check Availability
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="form-tab-content" id="delivery-tab">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="deliveryDate">Delivery Date <span class="required">*</span></label>
+                                <input type="date" id="deliveryDate" class="form-control" required>
+                                <div class="form-error" id="deliveryDateError"></div>
+                            </div>
+                            <div class="form-group">
+                                <label for="deliveryTime">Delivery Time</label>
+                                <select id="deliveryTime" class="form-control">
+                                    <option value="">Select Time</option>
+                                    <option value="8:00">8:00 AM</option>
+                                    <option value="10:00">10:00 AM</option>
+                                    <option value="13:00">1:00 PM</option>
+                                    <option value="15:00">3:00 PM</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="shippingAddress">Shipping Address <span class="required">*</span></label>
+                            <textarea id="shippingAddress" class="form-control" rows="3" required></textarea>
+                            <div class="form-error" id="shippingAddressError"></div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="contactPerson">Contact Person</label>
+                                <input type="text" id="contactPerson" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="contactPhone">Contact Phone</label>
+                                <input type="tel" id="contactPhone" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="deliveryInstructions">Delivery Instructions</label>
+                            <textarea id="deliveryInstructions" class="form-control" rows="3"></textarea>
+                        </div>
+                    </div>
+                    
+                    <div class="form-tab-content" id="notes-tab">
+                        <div class="form-group">
+                            <label for="notes">Notes</label>
+                            <textarea id="notes" class="form-control" rows="5"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="attachments">Attachments</label>
+                            <div class="file-upload">
+                                <input type="file" id="attachments" multiple>
+                                <label for="attachments" class="file-upload-label">
+                                    <i class="fas fa-cloud-upload-alt"></i> Choose Files
+                                </label>
+                                <div class="file-list" id="fileList"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-outline" id="cancelDispatch">Cancel</button>
+                        <button type="button" class="btn btn-secondary" id="saveAsDraft">Save as Draft</button>
+                        <button type="submit" class="btn btn-primary">Create Dispatch</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Stock Transfer -->
+    <div class="modal" id="transferModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-exchange-alt"></i> Create Stock Transfer</h2>
+                <button class="close-btn" id="closeTransferModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="transferForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="fromWarehouse">From Warehouse <span class="required">*</span></label>
+                            <select id="fromWarehouse" class="form-control" required>
+                                <option value="">Select Warehouse</option>
+                                <option value="warehouse1">Main Warehouse</option>
+                                <option value="warehouse2">North Distribution Center</option>
+                                <option value="warehouse3">South Distribution Center</option>
+                                <option value="warehouse4">East Fulfillment Center</option>
+                                <option value="warehouse5">West Fulfillment Center</option>
+                            </select>
+                            <div class="form-error" id="fromWarehouseError"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="toWarehouse">To Warehouse <span class="required">*</span></label>
+                            <select id="toWarehouse" class="form-control" required>
+                                <option value="">Select Warehouse</option>
+                                <option value="warehouse1">Main Warehouse</option>
+                                <option value="warehouse2">North Distribution Center</option>
+                                <option value="warehouse3">South Distribution Center</option>
+                                <option value="warehouse4">East Fulfillment Center</option>
+                                <option value="warehouse5">West Fulfillment Center</option>
+                            </select>
+                            <div class="form-error" id="toWarehouseError"></div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="transferDate">Transfer Date <span class="required">*</span></label>
+                            <input type="date" id="transferDate" class="form-control" required>
+                            <div class="form-error" id="transferDateError"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="transferStatus">Status</label>
+                            <select id="transferStatus" class="form-control">
+                                <option value="pending">Pending</option>
+                                <option value="in-progress">In Progress</option>
+                                <option value="completed">Completed</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Items to Transfer</label>
+                        <div class="table-responsive">
+                            <table class="data-table" id="transferItemsTable">
+                                <thead>
+                                    <tr>
+                                        <th>Product</th>
+                                        <th>Available Qty</th>
+                                        <th>Transfer Qty</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr id="addItemRow">
+                                        <td colspan="4">
+                                            <button type="button" class="btn btn-outline btn-sm" id="addItemBtn">
+                                                <i class="fas fa-plus"></i> Add Item
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="transferNotes">Notes</label>
+                        <textarea id="transferNotes" class="form-control" rows="3"></textarea>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-outline" id="cancelTransfer">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Create Transfer</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for View Dispatch Details -->
+    <div class="modal" id="viewDispatchModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-truck"></i> Dispatch Details</h2>
+                <button class="close-btn" id="closeViewDispatchModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="detail-header">
+                    <div class="detail-id">DSP-2023-001</div>
+                    <span class="status-badge completed">Completed</span>
+                </div>
+                
+                <div class="detail-section">
+                    <h3>Basic Information</h3>
+                    <div class="detail-grid">
+                        <div class="detail-item">
+                            <div class="detail-label">Sales Order</div>
+                            <div class="detail-value">SO-2023-1001</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Customer</div>
+                            <div class="detail-value">Acme Corporation</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Dispatch Date</div>
+                            <div class="detail-value">2023-06-15</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Warehouse</div>
+                            <div class="detail-value">Main Warehouse</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Reference</div>
+                            <div class="detail-value">REF-AC-2023-06</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Created By</div>
+                            <div class="detail-value">John Smith</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="detail-section">
+                    <h3>Items</h3>
+                    <div class="table-responsive">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Product</th>
+                                    <th>Description</th>
+                                    <th>Order Qty</th>
+                                    <th>Dispatched Qty</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>PRD-001</td>
+                                    <td>Premium Widget</td>
+                                    <td>100</td>
+                                    <td>100</td>
+                                </tr>
+                                <tr>
+                                    <td>PRD-002</td>
+                                    <td>Deluxe Gadget</td>
+                                    <td>50</td>
+                                    <td>50</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <div class="detail-section">
+                    <h3>Delivery Information</h3>
+                    <div class="detail-grid">
+                        <div class="detail-item">
+                            <div class="detail-label">Delivery Date</div>
+                            <div class="detail-value">2023-06-16</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Delivery Time</div>
+                            <div class="detail-value">10:00 AM</div>
+                        </div>
+                        <div class="detail-item wide">
+                            <div class="detail-label">Shipping Address</div>
+                            <div class="detail-value">
+                                Acme Corporation<br>
+                                123 Business Park<br>
+                                Suite 500<br>
+                                New York, NY 10001
+                            </div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Contact Person</div>
+                            <div class="detail-value">Jane Doe</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Contact Phone</div>
+                            <div class="detail-value">(555) 123-4567</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="detail-section">
+                    <h3>Notes & Attachments</h3>
+                    <div class="detail-notes">
+                        <p>Customer requested delivery before noon. Special packaging instructions followed as per customer requirements.</p>
+                    </div>
+                    <div class="detail-attachments">
+                        <div class="attachment-item">
+                            <i class="fas fa-file-pdf"></i>
+                            <span>Packing_Instructions.pdf</span>
+                            <a href="#" class="attachment-download"><i class="fas fa-download"></i></a>
+                        </div>
+                        <div class="attachment-item">
+                            <i class="fas fa-file-image"></i>
+                            <span>Product_Placement.jpg</span>
+                            <a href="#" class="attachment-download"><i class="fas fa-download"></i></a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="detail-section">
+                    <h3>Activity Log</h3>
+                    <div class="activity-log">
+                        <div class="activity-item">
+                            <div class="activity-icon completed-icon">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            <div class="activity-content">
+                                <div class="activity-title">Dispatch Completed</div>
+                                <div class="activity-details">
+                                    <span class="activity-user">John Smith</span>
+                                    <span class="activity-date">Jun 15, 2023 - 2:30 PM</span>
+                                </div>
+                                <div class="activity-notes">All items successfully dispatched.</div>
+                            </div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-icon loading-icon">
+                                <i class="fas fa-dolly"></i>
+                            </div>
+                            <div class="activity-content">
+                                <div class="activity-title">Loading Started</div>
+                                <div class="activity-details">
+                                    <span class="activity-user">Mike Johnson</span>
+                                    <span class="activity-date">Jun 15, 2023 - 10:15 AM</span>
+                                </div>
+                                <div class="activity-notes">Items being loaded onto truck #TR-105.</div>
+                            </div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-icon pending-icon">
+                                <i class="fas fa-clipboard-list"></i>
+                            </div>
+                            <div class="activity-content">
+                                <div class="activity-title">Dispatch Created</div>
+                                <div class="activity-details">
+                                    <span class="activity-user">John Smith</span>
+                                    <span class="activity-date">Jun 14, 2023 - 3:45 PM</span>
+                                </div>
+                                <div class="activity-notes">Dispatch created from sales order SO-2023-1001.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="modal-actions">
+                    <button class="btn btn-outline" id="backToListBtn">
+                        <i class="fas fa-arrow-left"></i> Back to List
+                    </button>
+                    <button class="btn btn-outline" id="printDispatchBtn">
+                        <i class="fas fa-print"></i> Print
+                    </button>
+                    <button class="btn btn-primary" id="editDispatchBtn">
+                        <i class="fas fa-edit"></i> Edit
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                </div>
+            </div>
+    <script src="../Sales-Module/dispatch-script.js"></script>
+
+             <!-- Bootstrap JS Bundle with Popper -->
+             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+             <!-- Chart.js -->
+             <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+             <!-- Custom JS -->
+             <script src="../index.js"></script>
+
+
+    
+</body>
+</html>
+

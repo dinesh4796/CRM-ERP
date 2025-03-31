@@ -1,0 +1,1524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ERP System - CRM</title>
+    <link rel="stylesheet" href="mainstyles.css">
+    <link rel="stylesheet" href="crm-styles.css">
+    <!-- <link rel="stylesheet" href="nav-styles.css">
+    <link rel="stylesheet" href="sales-sidebar.css"> -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../index.css">
+
+</head>
+<body>
+    <div class="wrapper">
+        <!-- Sidebar -->
+        <nav id="sidebar" class="sidebar">
+            <div class="sidebar-header">
+                <h3>Management System</h3>
+                <button type="button" id="sidebarCollapse" class="btn d-md-none">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+
+            <ul class="list-unstyled components">
+                <li class="active">
+                    <a href="#" onclick="loadContent('dashboard')">
+                        <i class="fas fa-tachometer-alt"></i> Dashboard
+                    </a>
+                </li>
+                <li>
+                    <!-- <a href="#crmSubmenu" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        <i class="fas fa-users"></i> CRM Module -->
+                        <a href="#" class="dropdown-toggle" onclick="toggleDropdown(event)">
+                            <i class="fas fa-users"></i> CRM Module
+                    </a>
+                    <ul id="crmSubmenu" class="submenu">
+                        <li><a href="../remainder.html">Customer Management & Reminders</a></li>
+                        <!-- <li><a href="proposal.html">2. Proposal Management</a></li> -->
+                        <li><a href="../sales.html">Sales Management Reports</a></li>
+                        <li><a href="../contracts.html">Contracts</a></li>
+                        <li><a href="../project-management.html">Projects & Task Management</a></li>
+                        <!-- <li><a href="project-management.html">Task Management</a></li> -->
+                        <li><a href="../utilities.html">Utilities</a></li>
+                        <li><a href="../support.html">Support System & Expenses</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#inventorySubmenu" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        <i class="fas fa-boxes"></i> Inventory Module
+                    </a>
+
+                </li>
+                <li>
+                    <a href="#purchaseSubmenu" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        <i class="fas fa-shopping-cart"></i> Purchase Module
+                    </a>
+
+                </li>
+                <li>
+                    <a href="#salesSubmenu" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        <i class="fas fa-chart-line"></i> Sales Module
+                    </a>
+                    <ul class="collapse list-unstyled" id="salesSubmenu">
+                         <li><a href="/Sales-Module/TrialQuotation.html"><i class="fas fa-file-alt"></i> Quotation </a></li>
+                             <li><a href="/Sales-Module/orders_page.html"><i class="fas fa-shopping-cart"></i> Orders</a></li>
+                             <li><a href="/Sales-Module/dispatch-page.html"><i class="fas fa-truck"></i> Dispatch</a></li>
+                             <li><a href="/Sales-Module/invoice-page.html"><i class="fas fa-file-invoice"></i> Invoice </a></li>
+                             <li><a href="/Sales-Module/crm.html"><i class="fas fa-chart-bar"></i> CRM and Reports</a></li>
+                             <!-- <li><a href="Sales-Module/Trial_quotation-list .html"><i class="fas fa-chart-bar"></i> Performance</a></li> -->
+                  </ul>
+                </li>
+                    
+                <li>
+                    <a href="#" onclick="loadContent('settings')">
+                        <i class="fas fa-cog"></i> Settings
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- Page Content -->
+        <div id="content">
+            <!-- Top Navigation -->
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <div class="container-fluid">
+                    <button type="button" id="sidebarCollapseBtn" class="btn">
+                        <i class="fas fa-align-left"></i>
+                    </button>
+                    <div class="ms-auto d-flex">
+                        <div class="dropdown me-3">
+                            <button class="btn position-relative" type="button" id="notificationDropdown"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fas fa-bell"></i>
+                                <span
+                                    class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                    3
+                                </span>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="notificationDropdown">
+                                <li><a class="dropdown-item" href="#">New purchase order #1234</a></li>
+                                <li><a class="dropdown-item" href="#">Supplier quotation updated</a></li>
+                                <li><a class="dropdown-item" href="#">Payment due for invoice #5678</a></li>
+                            </ul>
+                        </div>
+                        <div class="dropdown">
+                            <button class="btn d-flex align-items-center" type="button" id="userDropdown"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                <img src="https://via.placeholder.com/30" class="rounded-circle me-2">
+                                <span>Admin</span>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                                <li><a class="dropdown-item" href="#">Profile</a></li>
+                                <li><a class="dropdown-item" href="#">Settings</a></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li><a class="dropdown-item" href="#">Logout</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+
+            <!-- Main Content Area -->
+            <div id="main-content" class="container-fluid">
+                <!-- Dashboard content will be loaded here by default -->
+                <div id="dashboard-content">
+                   <!-- Loader -->
+    <div class="loader-container" id="loader">
+        <div class="loader"></div>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div class="toast-container" id="toastContainer"></div>
+    
+   
+
+    <div class="container">
+        <div class="page-header">
+            <div class="header-title">
+                <h1><i class="fas fa-users"></i> Customer Relationship Management</h1>
+                <p class="subtitle">Manage leads, customers, sales pipeline, and generate reports</p>
+            </div>
+            <div class="header-actions">
+                <button class="btn btn-primary" id="newLeadBtn"><i class="fas fa-plus"></i> New Lead</button>
+                <button class="btn btn-primary" id="newCustomerBtn"><i class="fas fa-plus"></i> New Customer</button>
+                <div class="search-container">
+                    <input type="text" id="searchInput" placeholder="Search customers, leads, contacts...">
+                    <button class="search-btn" id="searchBtn"><i class="fas fa-search"></i></button>
+                </div>
+            </div>
+        </div>
+
+       
+            <div class="main-content">
+                <div class="tabs">
+                    <button class="tab-btn active" data-tab="leads">
+                        <i class="fas fa-user-plus"></i> Leads
+                    </button>
+                    <button class="tab-btn" data-tab="customers">
+                        <i class="fas fa-users"></i> Customers
+                    </button>
+                    <button class="tab-btn" data-tab="opportunities">
+                        <i class="fas fa-handshake"></i> Opportunities
+                    </button>
+                    <button class="tab-btn" data-tab="sales-pipeline">
+                        <i class="fas fa-funnel-dollar"></i> Sales Pipeline
+                    </button>
+                    <button class="tab-btn" data-tab="quotations">
+                        <i class="fas fa-file-invoice-dollar"></i> Quotations
+                    </button>
+                </div>
+
+                <!-- Leads Tab Content -->
+                <div class="tab-content active" id="leads-tab">
+                    <div class="action-bar">
+                        <div class="action-group">
+                            <button class="btn btn-outline btn-sm" id="leadBulkActionBtn">
+                                <i class="fas fa-cog"></i> Bulk Actions <i class="fas fa-chevron-down"></i>
+                            </button>
+                            <div class="dropdown-menu" id="leadBulkActionMenu">
+                                <a href="#" class="dropdown-item" id="bulkAssignBtn"><i class="fas fa-user-check"></i> Assign Selected</a>
+                                <a href="#" class="dropdown-item" id="bulkExportBtn"><i class="fas fa-file-export"></i> Export Selected</a>
+                                <a href="#" class="dropdown-item danger" id="bulkDeleteBtn"><i class="fas fa-trash"></i> Delete Selected</a>
+                            </div>
+                        </div>
+                        <div class="view-options">
+                            <button class="btn-icon active" id="tableViewBtn" title="Table View">
+                                <i class="fas fa-list"></i>
+                            </button>
+                            <button class="btn-icon" id="cardViewBtn" title="Card View">
+                                <i class="fas fa-th-large"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="table-view active" id="tableView">
+                        <div class="table-responsive">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th class="checkbox-cell">
+                                            <label class="checkbox">
+                                                <input type="checkbox" id="selectAllLeads">
+                                                <span class="checkmark"></span>
+                                            </label>
+                                        </th>
+                                        <th class="sortable" data-sort="id">Lead ID <i class="fas fa-sort"></i></th>
+                                        <th class="sortable" data-sort="name">Name <i class="fas fa-sort"></i></th>
+                                        <th class="sortable" data-sort="company">Company <i class="fas fa-sort"></i></th>
+                                        <th class="sortable" data-sort="email">Email <i class="fas fa-sort"></i></th>
+                                        <th class="sortable" data-sort="phone">Phone <i class="fas fa-sort"></i></th>
+                                        <th class="sortable" data-sort="source">Source <i class="fas fa-sort"></i></th>
+                                        <th class="sortable" data-sort="status">Status <i class="fas fa-sort"></i></th>
+                                        <th class="sortable" data-sort="date">Created Date <i class="fas fa-sort"></i></th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="leadsTableBody">
+                                    <tr>
+                                        <td class="checkbox-cell">
+                                            <label class="checkbox">
+                                                <input type="checkbox" class="lead-checkbox" data-id="LEAD-2023-001">
+                                                <span class="checkmark"></span>
+                                            </label>
+                                        </td>
+                                        <td>LEAD-2023-001</td>
+                                        <td>John Smith</td>
+                                        <td>Acme Corporation</td>
+                                        <td>john.smith@acme.com</td>
+                                        <td>+1 (555) 123-4567</td>
+                                        <td>Website</td>
+                                        <td><span class="status-badge new">New</span></td>
+                                        <td>2023-03-15</td>
+                                        <td class="actions-cell">
+                                            <button class="btn-icon view-btn" data-id="LEAD-2023-001" title="View Details">
+                                                <i class="fas fa-eye"></i>
+                                            </button>
+                                            <button class="btn-icon edit-btn" data-id="LEAD-2023-001" title="Edit">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                            <button class="btn-icon convert-btn" data-id="LEAD-2023-001" title="Convert to Customer">
+                                                <i class="fas fa-user-check"></i>
+                                            </button>
+                                            <button class="btn-icon delete-btn" data-id="LEAD-2023-001" title="Delete">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="checkbox-cell">
+                                            <label class="checkbox">
+                                                <input type="checkbox" class="lead-checkbox" data-id="LEAD-2023-002">
+                                                <span class="checkmark"></span>
+                                            </label>
+                                        </td>
+                                        <td>LEAD-2023-002</td>
+                                        <td>Sarah Johnson</td>
+                                        <td>TechSolutions Inc.</td>
+                                        <td>sarah.j@techsolutions.com</td>
+                                        <td>+1 (555) 987-6543</td>
+                                        <td>Referral</td>
+                                        <td><span class="status-badge contacted">Contacted</span></td>
+                                        <td>2023-03-18</td>
+                                        <td class="actions-cell">
+                                            <button class="btn-icon view-btn" data-id="LEAD-2023-002" title="View Details">
+                                                <i class="fas fa-eye"></i>
+                                            </button>
+                                            <button class="btn-icon edit-btn" data-id="LEAD-2023-002" title="Edit">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                            <button class="btn-icon convert-btn" data-id="LEAD-2023-002" title="Convert to Customer">
+                                                <i class="fas fa-user-check"></i>
+                                            </button>
+                                            <button class="btn-icon delete-btn" data-id="LEAD-2023-002" title="Delete">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="checkbox-cell">
+                                            <label class="checkbox">
+                                                <input type="checkbox" class="lead-checkbox" data-id="LEAD-2023-003">
+                                                <span class="checkmark"></span>
+                                            </label>
+                                        </td>
+                                        <td>LEAD-2023-003</td>
+                                        <td>Michael Brown</td>
+                                        <td>Global Traders</td>
+                                        <td>m.brown@globaltraders.com</td>
+                                        <td>+1 (555) 456-7890</td>
+                                        <td>Trade Show</td>
+                                        <td><span class="status-badge qualified">Qualified</span></td>
+                                        <td>2023-03-20</td>
+                                        <td class="actions-cell">
+                                            <button class="btn-icon view-btn" data-id="LEAD-2023-003" title="View Details">
+                                                <i class="fas fa-eye"></i>
+                                            </button>
+                                            <button class="btn-icon edit-btn" data-id="LEAD-2023-003" title="Edit">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                            <button class="btn-icon convert-btn" data-id="LEAD-2023-003" title="Convert to Customer">
+                                                <i class="fas fa-user-check"></i>
+                                            </button>
+                                            <button class="btn-icon delete-btn" data-id="LEAD-2023-003" title="Delete">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="pagination">
+                            <button id="prevPage" class="btn btn-outline btn-sm" disabled>
+                                <i class="fas fa-chevron-left"></i> Previous
+                            </button>
+                            <div class="pagination-info">
+                                Page <span id="currentPage">1</span> of <span id="totalPages">1</span>
+                            </div>
+                            <button id="nextPage" class="btn btn-outline btn-sm">
+                                Next <i class="fas fa-chevron-right"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="card-view" id="cardView">
+                        <div class="card-grid" id="leadCardGrid">
+                            <div class="lead-card" data-id="LEAD-2023-001">
+                                <div class="lead-card-header">
+                                    <div class="lead-initials">JS</div>
+                                    <div class="lead-info">
+                                        <h3>John Smith</h3>
+                                        <p>Acme Corporation</p>
+                                    </div>
+                                    <span class="status-badge new">New</span>
+                                </div>
+                                <div class="lead-card-body">
+                                    <div class="lead-detail">
+                                        <i class="fas fa-envelope"></i>
+                                        <span>john.smith@acme.com</span>
+                                    </div>
+                                    <div class="lead-detail">
+                                        <i class="fas fa-phone"></i>
+                                        <span>+1 (555) 123-4567</span>
+                                    </div>
+                                    <div class="lead-detail">
+                                        <i class="fas fa-globe"></i>
+                                        <span>Website</span>
+                                    </div>
+                                    <div class="lead-detail">
+                                        <i class="fas fa-calendar"></i>
+                                        <span>Mar 15, 2023</span>
+                                    </div>
+                                </div>
+                                <div class="lead-card-footer">
+                                    <button class="btn-icon view-btn" data-id="LEAD-2023-001" title="View Details">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                    <button class="btn-icon edit-btn" data-id="LEAD-2023-001" title="Edit">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="btn-icon convert-btn" data-id="LEAD-2023-001" title="Convert to Customer">
+                                        <i class="fas fa-user-check"></i>
+                                    </button>
+                                    <button class="btn-icon delete-btn" data-id="LEAD-2023-001" title="Delete">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="lead-card" data-id="LEAD-2023-002">
+                                <div class="lead-card-header">
+                                    <div class="lead-initials">SJ</div>
+                                    <div class="lead-info">
+                                        <h3>Sarah Johnson</h3>
+                                        <p>TechSolutions Inc.</p>
+                                    </div>
+                                    <span class="status-badge contacted">Contacted</span>
+                                </div>
+                                <div class="lead-card-body">
+                                    <div class="lead-detail">
+                                        <i class="fas fa-envelope"></i>
+                                        <span>sarah.j@techsolutions.com</span>
+                                    </div>
+                                    <div class="lead-detail">
+                                        <i class="fas fa-phone"></i>
+                                        <span>+1 (555) 987-6543</span>
+                                    </div>
+                                    <div class="lead-detail">
+                                        <i class="fas fa-globe"></i>
+                                        <span>Referral</span>
+                                    </div>
+                                    <div class="lead-detail">
+                                        <i class="fas fa-calendar"></i>
+                                        <span>Mar 18, 2023</span>
+                                    </div>
+                                </div>
+                                <div class="lead-card-footer">
+                                    <button class="btn-icon view-btn" data-id="LEAD-2023-002" title="View Details">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                    <button class="btn-icon edit-btn" data-id="LEAD-2023-002" title="Edit">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="btn-icon convert-btn" data-id="LEAD-2023-002" title="Convert to Customer">
+                                        <i class="fas fa-user-check"></i>
+                                    </button>
+                                    <button class="btn-icon delete-btn" data-id="LEAD-2023-002" title="Delete">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="lead-card" data-id="LEAD-2023-003">
+                                <div class="lead-card-header">
+                                    <div class="lead-initials">MB</div>
+                                    <div class="lead-info">
+                                        <h3>Michael Brown</h3>
+                                        <p>Global Traders</p>
+                                    </div>
+                                    <span class="status-badge qualified">Qualified</span>
+                                </div>
+                                <div class="lead-card-body">
+                                    <div class="lead-detail">
+                                        <i class="fas fa-envelope"></i>
+                                        <span>m.brown@globaltraders.com</span>
+                                    </div>
+                                    <div class="lead-detail">
+                                        <i class="fas fa-phone"></i>
+                                        <span>+1 (555) 456-7890</span>
+                                    </div>
+                                    <div class="lead-detail">
+                                        <i class="fas fa-globe"></i>
+                                        <span>Trade Show</span>
+                                    </div>
+                                    <div class="lead-detail">
+                                        <i class="fas fa-calendar"></i>
+                                        <span>Mar 20, 2023</span>
+                                    </div>
+                                </div>
+                                <div class="lead-card-footer">
+                                    <button class="btn-icon view-btn" data-id="LEAD-2023-003" title="View Details">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                    <button class="btn-icon edit-btn" data-id="LEAD-2023-003" title="Edit">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="btn-icon convert-btn" data-id="LEAD-2023-003" title="Convert to Customer">
+                                        <i class="fas fa-user-check"></i>
+                                    </button>
+                                    <button class="btn-icon delete-btn" data-id="LEAD-2023-003" title="Delete">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="pagination">
+                            <button id="prevPageCard" class="btn btn-outline btn-sm" disabled>
+                                <i class="fas fa-chevron-left"></i> Previous
+                            </button>
+                            <div class="pagination-info">
+                                Page <span id="currentPageCard">1</span> of <span id="totalPagesCard">1</span>
+                            </div>
+                            <button id="nextPageCard" class="btn btn-outline btn-sm">
+                                Next <i class="fas fa-chevron-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Other tab contents will be added here in subsequent code -->
+                <div class="tab-content" id="customers-tab">
+                    <!-- Customers Tab Content -->
+                    <div class="action-bar">
+                        <div class="action-group">
+                            <button class="btn btn-outline btn-sm" id="customerBulkActionBtn">
+                                <i class="fas fa-cog"></i> Bulk Actions <i class="fas fa-chevron-down"></i>
+                            </button>
+                            <div class="dropdown-menu" id="customerBulkActionMenu">
+                                <a href="#" class="dropdown-item" id="bulkExportCustomersBtn"><i class="fas fa-file-export"></i> Export Selected</a>
+                                <a href="#" class="dropdown-item danger" id="bulkDeleteCustomersBtn"><i class="fas fa-trash"></i> Delete Selected</a>
+                            </div>
+                        </div>
+                        <div class="view-options">
+                            <button class="btn-icon active" id="customerTableViewBtn" title="Table View">
+                                <i class="fas fa-list"></i>
+                            </button>
+                            <button class="btn-icon" id="customerCardViewBtn" title="Card View">
+                                <i class="fas fa-th-large"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="table-view active" id="customerTableView">
+                        <div class="table-responsive">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th class="checkbox-cell">
+                                            <label class="checkbox">
+                                                <input type="checkbox" id="selectAllCustomers">
+                                                <span class="checkmark"></span>
+                                            </label>
+                                        </th>
+                                        <th class="sortable" data-sort="id">Customer ID <i class="fas fa-sort"></i></th>
+                                        <th class="sortable" data-sort="name">Name <i class="fas fa-sort"></i></th>
+                                        <th class="sortable" data-sort="company">Company <i class="fas fa-sort"></i></th>
+                                        <th class="sortable" data-sort="email">Email <i class="fas fa-sort"></i></th>
+                                        <th class="sortable" data-sort="phone">Phone <i class="fas fa-sort"></i></th>
+                                        <th class="sortable" data-sort="status">Status <i class="fas fa-sort"></i></th>
+                                        <th class="sortable" data-sort="orders">Orders <i class="fas fa-sort"></i></th>
+                                        <th class="sortable" data-sort="value">Total Value <i class="fas fa-sort"></i></th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="customersTableBody">
+                                    <tr>
+                                        <td class="checkbox-cell">
+                                            <label class="checkbox">
+                                                <input type="checkbox" class="customer-checkbox" data-id="CUST-2023-001">
+                                                <span class="checkmark"></span>
+                                            </label>
+                                        </td>
+                                        <td>CUST-2023-001</td>
+                                        <td>John Smith</td>
+                                        <td>Acme Corporation</td>
+                                        <td>john.smith@acme.com</td>
+                                        <td>+1 (555) 123-4567</td>
+                                        <td><span class="status-badge active">Active</span></td>
+                                        <td>5</td>
+                                        <td>$12,450.00</td>
+                                        <td class="actions-cell">
+                                            <button class="btn-icon view-btn" data-id="CUST-2023-001" title="View Details">
+                                                <i class="fas fa-eye"></i>
+                                            </button>
+                                            <button class="btn-icon edit-btn" data-id="CUST-2023-001" title="Edit">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                            <button class="btn-icon delete-btn" data-id="CUST-2023-001" title="Delete">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="checkbox-cell">
+                                            <label class="checkbox">
+                                                <input type="checkbox" class="customer-checkbox" data-id="CUST-2023-002">
+                                                <span class="checkmark"></span>
+                                            </label>
+                                        </td>
+                                        <td>CUST-2023-002</td>
+                                        <td>Sarah Johnson</td>
+                                        <td>TechSolutions Inc.</td>
+                                        <td>sarah.j@techsolutions.com</td>
+                                        <td>+1 (555) 987-6543</td>
+                                        <td><span class="status-badge active">Active</span></td>
+                                        <td>3</td>
+                                        <td>$8,750.00</td>
+                                        <td class="actions-cell">
+                                            <button class="btn-icon view-btn" data-id="CUST-2023-002" title="View Details">
+                                                <i class="fas fa-eye"></i>
+                                            </button>
+                                            <button class="btn-icon edit-btn" data-id="CUST-2023-002" title="Edit">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                            <button class="btn-icon delete-btn" data-id="CUST-2023-002" title="Delete">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="checkbox-cell">
+                                            <label class="checkbox">
+                                                <input type="checkbox" class="customer-checkbox" data-id="CUST-2023-003">
+                                                <span class="checkmark"></span>
+                                            </label>
+                                        </td>
+                                        <td>CUST-2023-003</td>
+                                        <td>Michael Brown</td>
+                                        <td>Global Traders</td>
+                                        <td>m.brown@globaltraders.com</td>
+                                        <td>+1 (555) 456-7890</td>
+                                        <td><span class="status-badge active">Active</span></td>
+                                        <td>7</td>
+                                        <td>$24,890.00</td>
+                                        <td class="actions-cell">
+                                            <button class="btn-icon view-btn" data-id="CUST-2023-003" title="View Details">
+                                                <i class="fas fa-eye"></i>
+                                            </button>
+                                            <button class="btn-icon edit-btn" data-id="CUST-2023-003" title="Edit">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                            <button class="btn-icon delete-btn" data-id="CUST-2023-003" title="Delete">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="pagination">
+                            <button id="prevPageCustomer" class="btn btn-outline btn-sm" disabled>
+                                <i class="fas fa-chevron-left"></i> Previous
+                            </button>
+                            <div class="pagination-info">
+                                Page <span id="currentPageCustomer">1</span> of <span id="totalPagesCustomer">1</span>
+                            </div>
+                            <button id="nextPageCustomer" class="btn btn-outline btn-sm">
+                                Next <i class="fas fa-chevron-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-content" id="opportunities-tab">
+                    <!-- Opportunities Tab Content -->
+                    <div class="action-bar">
+                        <div class="action-group">
+                            <button class="btn btn-primary btn-sm" id="newOpportunityBtn">
+                                <i class="fas fa-plus"></i> New Opportunity
+                            </button>
+                        </div>
+                        <div class="view-options">
+                            <button class="btn-icon active" id="opportunityTableViewBtn" title="Table View">
+                                <i class="fas fa-list"></i>
+                            </button>
+                            <button class="btn-icon" id="opportunityCardViewBtn" title="Card View">
+                                <i class="fas fa-th-large"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="table-view active" id="opportunityTableView">
+                        <div class="table-responsive">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th class="sortable" data-sort="id">Opportunity ID <i class="fas fa-sort"></i></th>
+                                        <th class="sortable" data-sort="name">Name <i class="fas fa-sort"></i></th>
+                                        <th class="sortable" data-sort="customer">Customer <i class="fas fa-sort"></i></th>
+                                        <th class="sortable" data-sort="value">Value <i class="fas fa-sort"></i></th>
+                                        <th class="sortable" data-sort="stage">Stage <i class="fas fa-sort"></i></th>
+                                        <th class="sortable" data-sort="probability">Probability <i class="fas fa-sort"></i></th>
+                                        <th class="sortable" data-sort="expected-close">Expected Close <i class="fas fa-sort"></i></th>
+                                        <th class="sortable" data-sort="owner">Owner <i class="fas fa-sort"></i></th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="opportunitiesTableBody">
+                                    <tr>
+                                        <td>OPP-2023-001</td>
+                                        <td>Enterprise Software Package</td>
+                                        <td>Acme Corporation</td>
+                                        <td>$45,000.00</td>
+                                        <td><span class="status-badge proposal">Proposal</span></td>
+                                        <td>65%</td>
+                                        <td>Apr 15, 2023</td>
+                                        <td>John Doe</td>
+                                        <td class="actions-cell">
+                                            <button class="btn-icon view-btn" data-id="OPP-2023-001" title="View Details">
+                                                <i class="fas fa-eye"></i>
+                                            </button>
+                                            <button class="btn-icon edit-btn" data-id="OPP-2023-001" title="Edit">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                            <button class="btn-icon delete-btn" data-id="OPP-2023-001" title="Delete">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>OPP-2023-002</td>
+                                        <td>Warehouse Management System</td>
+                                        <td>TechSolutions Inc.</td>
+                                        <td>$78,500.00</td>
+                                        <td><span class="status-badge negotiation">Negotiation</span></td>
+                                        <td>85%</td>
+                                        <td>Apr 10, 2023</td>
+                                        <td>Jane Smith</td>
+                                        <td class="actions-cell">
+                                            <button class="btn-icon view-btn" data-id="OPP-2023-002" title="View Details">
+                                                <i class="fas fa-eye"></i>
+                                            </button>
+                                            <button class="btn-icon edit-btn" data-id="OPP-2023-002" title="Edit">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                            <button class="btn-icon delete-btn" data-id="OPP-2023-002" title="Delete">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>OPP-2023-003</td>
+                                        <td>Supply Chain Optimization</td>
+                                        <td>Global Traders</td>
+                                        <td>$120,000.00</td>
+                                        <td><span class="status-badge qualified">Qualified</span></td>
+                                        <td>40%</td>
+                                        <td>May 20, 2023</td>
+                                        <td>Mark Johnson</td>
+                                        <td class="actions-cell">
+                                            <button class="btn-icon view-btn" data-id="OPP-2023-003" title="View Details">
+                                                <i class="fas fa-eye"></i>
+                                            </button>
+                                            <button class="btn-icon edit-btn" data-id="OPP-2023-003" title="Edit">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                            <button class="btn-icon delete-btn" data-id="OPP-2023-003" title="Delete">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-content" id="sales-pipeline-tab">
+                    <!-- Sales Pipeline Tab Content -->
+                    <div class="kanban-board">
+                        <div class="kanban-column">
+                            <div class="kanban-column-header">
+                                <h3>New Leads</h3>
+                                <span class="badge">3</span>
+                            </div>
+                            <div class="kanban-column-body">
+                                <div class="kanban-card" draggable="true" data-id="LEAD-2023-010">
+                                    <div class="kanban-card-header">
+                                        <h4>LEAD-2023-010</h4>
+                                        <span class="status-badge new">New</span>
+                                    </div>
+                                    <div class="kanban-card-body">
+                                        <p class="kanban-card-title">James Wilson</p>
+                                        <p class="kanban-card-subtitle">Stellar Inc.</p>
+                                    </div>
+                                    <div class="kanban-card-footer">
+                                        <span>March 24, 2023</span>
+                                        <button class="btn-icon view-btn" data-id="LEAD-2023-010">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="kanban-card" draggable="true" data-id="LEAD-2023-011">
+                                    <div class="kanban-card-header">
+                                        <h4>LEAD-2023-011</h4>
+                                        <span class="status-badge new">New</span>
+                                    </div>
+                                    <div class="kanban-card-body">
+                                        <p class="kanban-card-title">Emily Adams</p>
+                                        <p class="kanban-card-subtitle">Quantum Solutions</p>
+                                    </div>
+                                    <div class="kanban-card-footer">
+                                        <span>March 23, 2023</span>
+                                        <button class="btn-icon view-btn" data-id="LEAD-2023-011">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="kanban-card" draggable="true" data-id="LEAD-2023-012">
+                                    <div class="kanban-card-header">
+                                        <h4>LEAD-2023-012</h4>
+                                        <span class="status-badge new">New</span>
+                                    </div>
+                                    <div class="kanban-card-body">
+                                        <p class="kanban-card-title">Robert Lee</p>
+                                        <p class="kanban-card-subtitle">Visionary Enterprises</p>
+                                    </div>
+                                    <div class="kanban-card-footer">
+                                        <span>March 22, 2023</span>
+                                        <button class="btn-icon view-btn" data-id="LEAD-2023-012">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="kanban-column">
+                            <div class="kanban-column-header">
+                                <h3>Contacted</h3>
+                                <span class="badge">2</span>
+                            </div>
+                            <div class="kanban-column-body">
+                                <div class="kanban-card" draggable="true" data-id="LEAD-2023-008">
+                                    <div class="kanban-card-header">
+                                        <h4>LEAD-2023-008</h4>
+                                        <span class="status-badge contacted">Contacted</span>
+                                    </div>
+                                    <div class="kanban-card-body">
+                                        <p class="kanban-card-title">David Thompson</p>
+                                        <p class="kanban-card-subtitle">Pioneer Industries</p>
+                                    </div>
+                                    <div class="kanban-card-footer">
+                                        <span>March 20, 2023</span>
+                                        <button class="btn-icon view-btn" data-id="LEAD-2023-008">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="kanban-card" draggable="true" data-id="LEAD-2023-009">
+                                    <div class="kanban-card-header">
+                                        <h4>LEAD-2023-009</h4>
+                                        <span class="status-badge contacted">Contacted</span>
+                                    </div>
+                                    <div class="kanban-card-body">
+                                        <p class="kanban-card-title">Jessica Parker</p>
+                                        <p class="kanban-card-subtitle">Fusion Technologies</p>
+                                    </div>
+                                    <div class="kanban-card-footer">
+                                        <span>March 19, 2023</span>
+                                        <button class="btn-icon view-btn" data-id="LEAD-2023-009">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="kanban-column">
+                            <div class="kanban-column-header">
+                                <h3>Qualified</h3>
+                                <span class="badge">2</span>
+                            </div>
+                            <div class="kanban-column-body">
+                                <div class="kanban-card" draggable="true" data-id="OPP-2023-003">
+                                    <div class="kanban-card-header">
+                                        <h4>OPP-2023-003</h4>
+                                        <span class="status-badge qualified">Qualified</span>
+                                    </div>
+                                    <div class="kanban-card-body">
+                                        <p class="kanban-card-title">Supply Chain Optimization</p>
+                                        <p class="kanban-card-subtitle">Global Traders</p>
+                                        <p class="kanban-card-value">$120,000.00</p>
+                                    </div>
+                                    <div class="kanban-card-footer">
+                                        <span>May 20, 2023</span>
+                                        <button class="btn-icon view-btn" data-id="OPP-2023-003">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="kanban-card" draggable="true" data-id="OPP-2023-004">
+                                    <div class="kanban-card-header">
+                                        <h4>OPP-2023-004</h4>
+                                        <span class="status-badge qualified">Qualified</span>
+                                    </div>
+                                    <div class="kanban-card-body">
+                                        <p class="kanban-card-title">Custom Analytics Dashboard</p>
+                                        <p class="kanban-card-subtitle">Innovative Systems</p>
+                                        <p class="kanban-card-value">$35,000.00</p>
+                                    </div>
+                                    <div class="kanban-card-footer">
+                                        <span>Apr 28, 2023</span>
+                                        <button class="btn-icon view-btn" data-id="OPP-2023-004">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="kanban-column">
+                            <div class="kanban-column-header">
+                                <h3>Proposal</h3>
+                                <span class="badge">1</span>
+                            </div>
+                            <div class="kanban-column-body">
+                                <div class="kanban-card" draggable="true" data-id="OPP-2023-001">
+                                    <div class="kanban-card-header">
+                                        <h4>OPP-2023-001</h4>
+                                        <span class="status-badge proposal">Proposal</span>
+                                    </div>
+                                    <div class="kanban-card-body">
+                                        <p class="kanban-card-title">Enterprise Software Package</p>
+                                        <p class="kanban-card-subtitle">Acme Corporation</p>
+                                        <p class="kanban-card-value">$45,000.00</p>
+                                    </div>
+                                    <div class="kanban-card-footer">
+                                        <span>Apr 15, 2023</span>
+                                        <button class="btn-icon view-btn" data-id="OPP-2023-001">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="kanban-column">
+                            <div class="kanban-column-header">
+                                <h3>Negotiation</h3>
+                                <span class="badge">1</span>
+                            </div>
+                            <div class="kanban-column-body">
+                                <div class="kanban-card" draggable="true" data-id="OPP-2023-002">
+                                    <div class="kanban-card-header">
+                                        <h4>OPP-2023-002</h4>
+                                        <span class="status-badge negotiation">Negotiation</span>
+                                    </div>
+                                    <div class="kanban-card-body">
+                                        <p class="kanban-card-title">Warehouse Management System</p>
+                                        <p class="kanban-card-subtitle">TechSolutions Inc.</p>
+                                        <p class="kanban-card-value">$78,500.00</p>
+                                    </div>
+                                    <div class="kanban-card-footer">
+                                        <span>Apr 10, 2023</span>
+                                        <button class="btn-icon view-btn" data-id="OPP-2023-002">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="kanban-column">
+                            <div class="kanban-column-header">
+                                <h3>Closed Won</h3>
+                                <span class="badge">1</span>
+                            </div>
+                            <div class="kanban-column-body">
+                                <div class="kanban-card" draggable="true" data-id="OPP-2023-005">
+                                    <div class="kanban-card-header">
+                                        <h4>OPP-2023-005</h4>
+                                        <span class="status-badge closed-won">Closed Won</span>
+                                    </div>
+                                    <div class="kanban-card-body">
+                                        <p class="kanban-card-title">IT Infrastructure Upgrade</p>
+                                        <p class="kanban-card-subtitle">Pinnacle Industries</p>
+                                        <p class="kanban-card-value">$95,200.00</p>
+                                    </div>
+                                    <div class="kanban-card-footer">
+                                        <span>Mar 15, 2023</span>
+                                        <button class="btn-icon view-btn" data-id="OPP-2023-005">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-content" id="quotations-tab">
+                    <!-- Quotations Tab Content -->
+                    <div class="action-bar">
+                        <div class="action-group">
+                            <button class="btn btn-primary btn-sm" id="newQuotationBtn">
+                                <i class="fas fa-plus"></i> New Quotation
+                            </button>
+                            <button class="btn btn-outline btn-sm" id="quotationBulkActionBtn">
+                                <i class="fas fa-cog"></i> Bulk Actions <i class="fas fa-chevron-down"></i>
+                            </button>
+                            <div class="dropdown-menu" id="quotationBulkActionMenu">
+                                <a href="#" class="dropdown-item" id="bulkPrintQuotationBtn"><i class="fas fa-print"></i> Print Selected</a>
+                                <a href="#" class="dropdown-item" id="bulkExportQuotationBtn"><i class="fas fa-file-export"></i> Export Selected</a>
+                                <a href="#" class="dropdown-item danger" id="bulkDeleteQuotationBtn"><i class="fas fa-trash"></i> Delete Selected</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th class="checkbox-cell">
+                                        <label class="checkbox">
+                                            <input type="checkbox" id="selectAllQuotations">
+                                            <span class="checkmark"></span>
+                                        </label>
+                                    </th>
+                                    <th class="sortable" data-sort="id">Quotation ID <i class="fas fa-sort"></i></th>
+                                    <th class="sortable" data-sort="customer">Customer <i class="fas fa-sort"></i></th>
+                                    <th class="sortable" data-sort="opportunity">Opportunity <i class="fas fa-sort"></i></th>
+                                    <th class="sortable" data-sort="date">Created Date <i class="fas fa-sort"></i></th>
+                                    <th class="sortable" data-sort="expiry">Expiry Date <i class="fas fa-sort"></i></th>
+                                    <th class="sortable" data-sort="value">Value <i class="fas fa-sort"></i></th>
+                                    <th class="sortable" data-sort="status">Status <i class="fas fa-sort"></i></th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="quotationsTableBody">
+                                <tr>
+                                    <td class="checkbox-cell">
+                                        <label class="checkbox">
+                                            <input type="checkbox" class="quotation-checkbox" data-id="QUO-2023-001">
+                                            <span class="checkmark"></span>
+                                        </label>
+                                    </td>
+                                    <td>QUO-2023-001</td>
+                                    <td>Acme Corporation</td>
+                                    <td>Enterprise Software Package</td>
+                                    <td>Mar 10, 2023</td>
+                                    <td>Apr 10, 2023</td>
+                                    <td>$45,000.00</td>
+                                    <td><span class="status-badge pending">Pending</span></td>
+                                    <td class="actions-cell">
+                                        <button class="btn-icon view-btn" data-id="QUO-2023-001" title="View Details">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                        <button class="btn-icon edit-btn" data-id="QUO-2023-001" title="Edit">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="btn-icon print-btn" data-id="QUO-2023-001" title="Print">
+                                            <i class="fas fa-print"></i>
+                                        </button>
+                                        <button class="btn-icon delete-btn" data-id="QUO-2023-001" title="Delete">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="checkbox-cell">
+                                        <label class="checkbox">
+                                            <input type="checkbox" class="quotation-checkbox" data-id="QUO-2023-002">
+                                            <span class="checkmark"></span>
+                                        </label>
+                                    </td>
+                                    <td>QUO-2023-002</td>
+                                    <td>TechSolutions Inc.</td>
+                                    <td>Warehouse Management System</td>
+                                    <td>Mar 12, 2023</td>
+                                    <td>Apr 12, 2023</td>
+                                    <td>$78,500.00</td>
+                                    <td><span class="status-badge in-progress">In Review</span></td>
+                                    <td class="actions-cell">
+                                        <button class="btn-icon view-btn" data-id="QUO-2023-002" title="View Details">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                        <button class="btn-icon edit-btn" data-id="QUO-2023-002" title="Edit">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="btn-icon print-btn" data-id="QUO-2023-002" title="Print">
+                                            <i class="fas fa-print"></i>
+                                        </button>
+                                        <button class="btn-icon delete-btn" data-id="QUO-2023-002" title="Delete">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="checkbox-cell">
+                                        <label class="checkbox">
+                                            <input type="checkbox" class="quotation-checkbox" data-id="QUO-2023-003">
+                                            <span class="checkmark"></span>
+                                        </label>
+                                    </td>
+                                    <td>QUO-2023-003</td>
+                                    <td>Global Traders</td>
+                                    <td>Supply Chain Optimization</td>
+                                    <td>Mar 15, 2023</td>
+                                    <td>Apr 15, 2023</td>
+                                    <td>$120,000.00</td>
+                                    <td><span class="status-badge completed">Accepted</span></td>
+                                    <td class="actions-cell">
+                                        <button class="btn-icon view-btn" data-id="QUO-2023-003" title="View Details">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                        <button class="btn-icon edit-btn" data-id="QUO-2023-003" title="Edit">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="btn-icon print-btn" data-id="QUO-2023-003" title="Print">
+                                            <i class="fas fa-print"></i>
+                                        </button>
+                                        <button class="btn-icon delete-btn" data-id="QUO-2023-003" title="Delete">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- New Lead Modal -->
+    <div class="modal" id="leadModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2><i class="fas fa-user-plus"></i> New Lead</h2>
+                    <button class="close-btn" id="closeLeadModal">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="leadForm">
+                        <div class="form-tabs">
+                            <button type="button" class="form-tab active" data-tab="basic-info">Basic Information</button>
+                            <button type="button" class="form-tab" data-tab="contact-info">Contact Information</button>
+                            <button type="button" class="form-tab" data-tab="additional-info">Additional Information</button>
+                        </div>
+                        <div class="form-tab-content active" id="basic-info-tab">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="leadFirstName">First Name <span class="required">*</span></label>
+                                    <input type="text" id="leadFirstName" class="form-control" required>
+                                    <div class="form-error" id="leadFirstNameError"></div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="leadLastName">Last Name <span class="required">*</span></label>
+                                    <input type="text" id="leadLastName" class="form-control" required>
+                                    <div class="form-error" id="leadLastNameError"></div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="leadCompany">Company Name <span class="required">*</span></label>
+                                <input type="text" id="leadCompany" class="form-control" required>
+                                <div class="form-error" id="leadCompanyError"></div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="leadTitle">Job Title</label>
+                                    <input type="text" id="leadTitle" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label for="leadSource">Lead Source <span class="required">*</span></label>
+                                    <select id="leadSource" class="form-control" required>
+                                        <option value="">Select Source</option>
+                                        <option value="website">Website</option>
+                                        <option value="referral">Referral</option>
+                                        <option value="social-media">Social Media</option>
+                                        <option value="email-campaign">Email Campaign</option>
+                                        <option value="trade-show">Trade Show</option>
+                                        <option value="cold-call">Cold Call</option>
+                                        <option value="other">Other</option>
+                                    </select>
+                                    <div class="form-error" id="leadSourceError"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-tab-content" id="contact-info-tab">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="leadEmail">Email <span class="required">*</span></label>
+                                    <input type="email" id="leadEmail" class="form-control" required>
+                                    <div class="form-error" id="leadEmailError"></div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="leadPhone">Phone <span class="required">*</span></label>
+                                    <input type="tel" id="leadPhone" class="form-control" required>
+                                    <div class="form-error" id="leadPhoneError"></div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="leadAddress">Address</label>
+                                <input type="text" id="leadAddress" class="form-control">
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="leadCity">City</label>
+                                    <input type="text" id="leadCity" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label for="leadState">State/Province</label>
+                                    <input type="text" id="leadState" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="leadZip">Postal Code</label>
+                                    <input type="text" id="leadZip" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label for="leadCountry">Country</label>
+                                    <input type="text" id="leadCountry" class="form-control" value="United States">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-tab-content" id="additional-info-tab">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="leadStatus">Status</label>
+                                    <select id="leadStatus" class="form-control">
+                                        <option value="new">New</option>
+                                        <option value="contacted">Contacted</option>
+                                        <option value="qualified">Qualified</option>
+                                        <option value="unqualified">Unqualified</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="leadAssignedTo">Assigned To</label>
+                                    <select id="leadAssignedTo" class="form-control">
+                                        <option value="">Select User</option>
+                                        <option value="user1">John Doe</option>
+                                        <option value="user2">Jane Smith</option>
+                                        <option value="user3">Mark Johnson</option>
+                                        <option value="user4">Sarah Williams</option>
+                                        <option value="user5">Robert Brown</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="leadInterest">Interest Level</label>
+                                <select id="leadInterest" class="form-control">
+                                    <option value="high">High</option>
+                                    <option value="medium" selected>Medium</option>
+                                    <option value="low">Low</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="leadNotes">Notes</label>
+                                <textarea id="leadNotes" class="form-control" rows="4"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <button type="button" class="btn btn-outline" id="cancelLead">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Save Lead</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Lead View Modal -->
+    <div class="modal" id="viewLeadModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2><i class="fas fa-user"></i> Lead Details</h2>
+                    <button class="close-btn" id="closeViewLeadModal">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="detail-header">
+                        <div class="detail-title">
+                            <h3 id="viewLeadName">John Smith</h3>
+                            <p id="viewLeadCompany">Acme Corporation</p>
+                        </div>
+                        <div class="detail-badge">
+                            <span class="status-badge new" id="viewLeadStatus">New</span>
+                        </div>
+                    </div>
+                    <div class="detail-tabs">
+                        <button class="detail-tab active" data-tab="lead-info">Information</button>
+                        <button class="detail-tab" data-tab="lead-activities">Activities</button>
+                        <button class="detail-tab" data-tab="lead-notes">Notes</button>
+                    </div>
+                    <div class="detail-tab-content active" id="lead-info-tab">
+                        <div class="detail-section">
+                            <h4>Contact Information</h4>
+                            <div class="detail-row">
+                                <div class="detail-label">Email:</div>
+                                <div class="detail-value" id="viewLeadEmail">john.smith@acme.com</div>
+                            </div>
+                            <div class="detail-row">
+                                <div class="detail-label">Phone:</div>
+                                <div class="detail-value" id="viewLeadPhone">+1 (555) 123-4567</div>
+                            </div>
+                            <div class="detail-row">
+                                <div class="detail-label">Address:</div>
+                                <div class="detail-value" id="viewLeadAddress">123 Main St, Suite 500, Anytown, CA 90210</div>
+                            </div>
+                        </div>
+                        <div class="detail-section">
+                            <h4>Lead Information</h4>
+                            <div class="detail-row">
+                                <div class="detail-label">Lead ID:</div>
+                                <div class="detail-value" id="viewLeadId">LEAD-2023-001</div>
+                            </div>
+                            <div class="detail-row">
+                                <div class="detail-label">Source:</div>
+                                <div class="detail-value" id="viewLeadSource">Website</div>
+                            </div>
+                            <div class="detail-row">
+                                <div class="detail-label">Interest Level:</div>
+                                <div class="detail-value" id="viewLeadInterest">Medium</div>
+                            </div>
+                            <div class="detail-row">
+                                <div class="detail-label">Assigned To:</div>
+                                <div class="detail-value" id="viewLeadAssigned">John Doe</div>
+                            </div>
+                            <div class="detail-row">
+                                <div class="detail-label">Created Date:</div>
+                                <div class="detail-value" id="viewLeadCreated">March 15, 2023</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="detail-tab-content" id="lead-activities-tab">
+                        <div class="activity-list">
+                            <div class="activity-item">
+                                <div class="activity-icon">
+                                    <i class="fas fa-envelope"></i>
+                                </div>
+                                <div class="activity-content">
+                                    <div class="activity-header">
+                                        <span class="activity-title">Email Sent</span>
+                                        <span class="activity-date">March 18, 2023</span>
+                                    </div>
+                                    <div class="activity-description">
+                                        Initial outreach email was sent to the lead.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="activity-item">
+                                <div class="activity-icon">
+                                    <i class="fas fa-phone"></i>
+                                </div>
+                                <div class="activity-content">
+                                    <div class="activity-header">
+                                        <span class="activity-title">Phone Call</span>
+                                        <span class="activity-date">March 20, 2023</span>
+                                    </div>
+                                    <div class="activity-description">
+                                        Discussed product offerings and company requirements.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="activity-item">
+                                <div class="activity-icon">
+                                    <i class="fas fa-tasks"></i>
+                                </div>
+                                <div class="activity-content">
+                                    <div class="activity-header">
+                                        <span class="activity-title">Status Updated</span>
+                                        <span class="activity-date">March 22, 2023</span>
+                                    </div>
+                                    <div class="activity-description">
+                                        Lead status changed from "New" to "Contacted".
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="detail-tab-content" id="lead-notes-tab">
+                        <div class="notes-list">
+                            <div class="note-item">
+                                <div class="note-header">
+                                    <span class="note-author">John Doe</span>
+                                    <span class="note-date">March 18, 2023</span>
+                                </div>
+                                <div class="note-content">
+                                    Lead is interested in our enterprise solutions. Need to schedule a demo next week.
+                                </div>
+                            </div>
+                            <div class="note-item">
+                                <div class="note-header">
+                                    <span class="note-author">Jane Smith</span>
+                                    <span class="note-date">March 20, 2023</span>
+                                </div>
+                                <div class="note-content">
+                                    Had a call with John. They are in the early stages of evaluation and comparing with 2 other vendors.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="note-form">
+                            <textarea class="form-control" id="newNoteText" placeholder="Add a note..."></textarea>
+                            <button class="btn btn-primary btn-sm" id="addNoteBtn">Add Note</button>
+                        </div>
+                    </div>
+                    <div class="form-actions center">
+                        <button class="btn btn-outline" id="backToLeadsBtn">Back to List</button>
+                        <button class="btn btn-primary" id="editLeadBtn">Edit Lead</button>
+                        <button class="btn btn-secondary" id="convertLeadBtn">Convert to Customer</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- New Customer Modal -->
+    <div class="modal" id="customerModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2><i class="fas fa-user-plus"></i> New Customer</h2>
+                    <button class="close-btn" id="closeCustomerModal">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="customerForm">
+                        <div class="form-tabs">
+                            <button type="button" class="form-tab active" data-tab="customer-basic-info">Basic Information</button>
+                            <button type="button" class="form-tab" data-tab="customer-contact-info">Contact Information</button>
+                            <button type="button" class="form-tab" data-tab="customer-additional-info">Additional Information</button>
+                        </div>
+                        <div class="form-tab-content active" id="customer-basic-info-tab">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="customerFirstName">First Name <span class="required">*</span></label>
+                                    <input type="text" id="customerFirstName" class="form-control" required>
+                                    <div class="form-error" id="customerFirstNameError"></div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="customerLastName">Last Name <span class="required">*</span></label>
+                                    <input type="text" id="customerLastName" class="form-control" required>
+                                    <div class="form-error" id="customerLastNameError"></div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="customerCompany">Company Name <span class="required">*</span></label>
+                                <input type="text" id="customerCompany" class="form-control" required>
+                                <div class="form-error" id="customerCompanyError"></div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="customerType">Customer Type</label>
+                                    <select id="customerType" class="form-control">
+                                        <option value="regular">Regular</option>
+                                        <option value="vip">VIP</option>
+                                        <option value="wholesale">Wholesale</option>
+                                        <option value="retail">Retail</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="customerIndustry">Industry</label>
+                                    <select id="customerIndustry" class="form-control">
+                                        <option value="">Select Industry</option>
+                                        <option value="technology">Technology</option>
+                                        <option value="retail">Retail</option>
+                                        <option value="manufacturing">Manufacturing</option>
+                                        <option value="healthcare">Healthcare</option>
+                                        <option value="finance">Finance</option>
+                                        <option value="education">Education</option>
+                                        <option value="other">Other</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-tab-content" id="customer-contact-info-tab">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="customerEmail">Email <span class="required">*</span></label>
+                                    <input type="email" id="customerEmail" class="form-control" required>
+                                    <div class="form-error" id="customerEmailError"></div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="customerPhone">Phone <span class="required">*</span></label>
+                                    <input type="tel" id="customerPhone" class="form-control" required>
+                                    <div class="form-error" id="customerPhoneError"></div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="customerAddress">Address</label>
+                                <input type="text" id="customerAddress" class="form-control">
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="customerCity">City</label>
+                                    <input type="text" id="customerCity" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label for="customerState">State/Province</label>
+                                    <input type="text" id="customerState" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="customerZip">Postal Code</label>
+                                    <input type="text" id="customerZip" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label for="customerCountry">Country</label>
+                                    <input type="text" id="customerCountry" class="form-control" value="United States">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-tab-content" id="customer-additional-info-tab">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="customerStatus">Status</label>
+                                    <select id="customerStatus" class="form-control">
+                                        <option value="active">Active</option>
+                                        <option value="inactive">Inactive</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="customerAssignedTo">Account Manager</label>
+                                    <select id="customerAssignedTo" class="form-control">
+                                        <option value="">Select User</option>
+                                        <option value="user1">John Doe</option>
+                                        <option value="user2">Jane Smith</option>
+                                        <option value="user3">Mark Johnson</option>
+                                        <option value="user4">Sarah Williams</option>
+                                        <option value="user5">Robert Brown</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="customerPaymentTerms">Payment Terms</label>
+                                <select id="customerPaymentTerms" class="form-control">
+                                    <option value="net15">Net 15</option>
+                                    <option value="net30" selected>Net 30</option>
+                                    <option value="net45">Net 45</option>
+                                    <option value="net60">Net 60</option>
+                                    <option value="immediate">Immediate Payment</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="customerNotes">Notes</label>
+                                <textarea id="customerNotes" class="form-control" rows="4"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <button type="button" class="btn btn-outline" id="cancelCustomer">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Save Customer</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+                </div>
+            </div>
+
+     
+    <script src="crm-script.js"></script>
+    <script src="sales-sidebar.js"></script>
+
+     <!-- Bootstrap JS Bundle with Popper -->
+     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+     <!-- Chart.js -->
+     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+     <!-- Custom JS -->
+     <script src="../index.js"></script>
+</body>
+</html>

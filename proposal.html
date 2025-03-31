@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Proposal</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="proposal.css">
+</head>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Proposal</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <link rel="stylesheet" href="proposal.css">
+</head>
+<body>
+    <div class="wrapper">
+        <!-- Sidebar -->
+        <nav id="sidebar" class="sidebar">
+            <div class="sidebar-header">
+                <h3>Management System</h3>
+                <button type="button" id="sidebarCollapse" class="btn d-md-none">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+
+            <ul class="list-unstyled components">
+                <li class="active">
+                    <a href="#" onclick="loadContent('dashboard')">
+                        <i class="fas fa-tachometer-alt"></i> Dashboard
+                    </a>
+                </li>
+                <li>
+                    <!-- <a href="#crmSubmenu" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        <i class="fas fa-users"></i> CRM Module -->
+                        <a href="#" class="dropdown-toggle" onclick="toggleDropdown(event)">
+                            <i class="fas fa-users"></i> CRM Module
+                    </a>
+                    <ul id="crmSubmenu" class="submenu">
+                        <li><a href="remainder.html">Customer Management & Reminders</a></li>
+                        <!-- <li><a href="proposal.html">2. Proposal Management</a></li> -->
+                        <li><a href="sales.html">Sales Management Reports</a></li>
+                        <li><a href="contracts.html">Contracts</a></li>
+                        <li><a href="project-management.html">Projects & Task Management</a></li>
+                        <!-- <li><a href="project-management.html">Task Management</a></li> -->
+                        <li><a href="utilities.html">Utilities</a></li>
+                        <li><a href="support.html">Support System & Expenses</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#inventorySubmenu" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        <i class="fas fa-boxes"></i> Inventory Module
+                    </a>
+
+                </li>
+                <li>
+                    <a href="#purchaseSubmenu" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        <i class="fas fa-shopping-cart"></i> Purchase Module
+                    </a>
+
+                </li>
+                <li>
+                    <a href="#salesSubmenu" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        <i class="fas fa-chart-line"></i> Sales Module
+                    </a>
+                    <ul class="collapse list-unstyled" id="salesSubmenu">
+                         <li><a href="Sales-Module/TrialQuotation.html"><i class="fas fa-file-alt"></i> Quotation </a></li>
+                             <li><a href="Sales-Module/orders_page.html"><i class="fas fa-shopping-cart"></i> Orders</a></li>
+                             <li><a href="Sales-Module/dispatch-page.html"><i class="fas fa-truck"></i> Dispatch</a></li>
+                             <li><a href="Sales-Module/invoice-page.html"><i class="fas fa-file-invoice"></i> Invoice </a></li>
+                             <li><a href="Sales-Module/crm.html"><i class="fas fa-chart-bar"></i> CRM and Reports</a></li>
+                             <!-- <li><a href="Sales-Module/Trial_quotation-list .html"><i class="fas fa-chart-bar"></i> Performance</a></li> -->
+                  </ul>
+                </li>
+                    
+                <li>
+                    <a href="#" onclick="loadContent('settings')">
+                        <i class="fas fa-cog"></i> Settings
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- Page Content -->
+        <div id="content">
+            <!-- Top Navigation -->
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <div class="container-fluid">
+                    <button type="button" id="sidebarCollapseBtn" class="btn">
+                        <i class="fas fa-align-left"></i>
+                    </button>
+                    <div class="ms-auto d-flex">
+                        <div class="dropdown me-3">
+                            <button class="btn position-relative" type="button" id="notificationDropdown"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fas fa-bell"></i>
+                                <span
+                                    class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                    3
+                                </span>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="notificationDropdown">
+                                <li><a class="dropdown-item" href="#">New purchase order #1234</a></li>
+                                <li><a class="dropdown-item" href="#">Supplier quotation updated</a></li>
+                                <li><a class="dropdown-item" href="#">Payment due for invoice #5678</a></li>
+                            </ul>
+                        </div>
+                        <div class="dropdown">
+                            <button class="btn d-flex align-items-center" type="button" id="userDropdown"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                <img src="https://via.placeholder.com/30" class="rounded-circle me-2">
+                                <span>Admin</span>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                                <li><a class="dropdown-item" href="#">Profile</a></li>
+                                <li><a class="dropdown-item" href="#">Settings</a></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li><a class="dropdown-item" href="#">Logout</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+
+            
+    <div class="container mt-5">
+        <h2 class="text-center mb-4">Create Proposal</h2>
+        <form id="proposal-form" class="proposal-form">
+            <!-- Customer Information Section -->
+            <div class="customer-info">
+                <h4>Customer Information</h4>
+                <div class="form-group">
+                    <label for="proposalName">Customer Name</label>
+                    <input type="text" id="proposalName" class="form-control" disabled />
+                </div>
+                <div class="form-group">
+                    <label for="proposalEmail">Customer Email</label>
+                    <input type="email" id="proposalEmail" class="form-control" disabled />
+                </div>
+                <div class="form-group">
+                    <label for="proposalPhone">Customer Phone</label>
+                    <input type="text" id="proposalPhone" class="form-control" disabled />
+                </div>
+            </div>
+
+            <!-- Proposal Details Section -->
+            <div class="proposal-details">
+                <h4>Proposal Details</h4>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="proposalDate">Proposal Date</label>
+                        <input type="date" id="proposalDate" class="form-control" />
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="proposalValidity">Proposal Validity (Days)</label>
+                        <input type="number" id="proposalValidity" class="form-control" placeholder="Enter validity in days" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="proposalDetails">Proposal Description</label>
+                    <textarea id="proposalDetails" class="form-control" rows="3" placeholder="Enter proposal details"></textarea>
+                </div>
+            </div>
+
+            <!-- Itemized Breakdown Section -->
+            <div class="itemized-breakdown">
+                <h4>Itemized Breakdown</h4>
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <label for="itemName">Item Name</label>
+                        <input type="text" id="itemName" class="form-control" placeholder="Item Name" />
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="itemQuantity">Quantity</label>
+                        <input type="number" id="itemQuantity" class="form-control" placeholder="Quantity" />
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="itemPrice">Unit Price</label>
+                        <input type="number" id="itemPrice" class="form-control" placeholder="Unit Price" />
+                    </div>
+                </div>
+                 <!-- Discount and Taxes Section -->
+            <div class="discount-taxes">
+                <h4>Discount & Taxes</h4>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="discount">Discount (%)</label>
+                        <input type="number" id="discount" class="form-control" placeholder="Enter Discount Percentage" />
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="taxes">Taxes (%)</label>
+                        <input type="number" id="taxes" class="form-control" placeholder="Enter Taxes Percentage" />
+                    </div>
+                </div>
+            </div>
+
+                <button type="button" class="btn btn-primary add-item-btn" onclick="addItem()">Add Item</button>
+
+                <h5>Added Items</h5>
+                <table class="table table-striped" id="itemsTable">
+                    <thead>
+                        <tr>
+                            <th>Item Name</th>
+                            <th>Quantity</th>
+                            <th>Unit Price</th>
+                            <th>Total</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="itemList">
+                        <!-- Item list rows will appear here -->
+                    </tbody>
+                </table>
+            </div>
+
+           
+            <!-- Proposal Summary Section -->
+            <div class="proposal-summary">
+                <h4>Proposal Summary</h4>
+                <div class="summary-box">
+                    <p><strong>Subtotal:</strong> <span id="subtotal">0.00</span></p>
+                    <p><strong>Discount:</strong> <span id="discountAmount">0.00</span></p>
+                    <p><strong>Taxes:</strong> <span id="taxAmount">0.00</span></p>
+                    <p><strong>Total Amount:</strong> <span id="totalAmount">0.00</span></p>
+                </div>
+            </div>
+
+            <!-- Terms and Conditions Section -->
+            <div class="terms-conditions">
+                <h4>Terms & Conditions</h4>
+                <ul>
+                    <li>50% upfront, 50% upon completion.</li>
+                    <li>This proposal is valid for <span id="validityDays">30</span> days.</li>
+                    <li>Payment is due within 15 days of receiving the invoice.</li>
+                </ul>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="action-buttons">
+                <button type="submit" class="btn btn-success">Create Proposal</button>
+                <button type="button" class="btn btn-secondary" onclick="generatePDF()">Generate PDF</button>
+            </div>
+        </form>
+    </div>
+
+    
+     <!-- Bootstrap JS Bundle with Popper -->
+     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+     <!-- Chart.js -->
+     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+     <!-- Custom JS -->
+     <script src="index.js"></script>
+     <script src="proposal.js"></script>
+</body>
+</html>
+</html>

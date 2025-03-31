@@ -1,0 +1,1072 @@
+body {
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    margin-top: 50px;
+}
+
+#lead-form-container {
+    display: none;
+}
+
+form {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+form button {
+    width: 100%;
+}
+
+table {
+    margin-top: 20px;
+}
+
+button {
+    margin-right: 5px;
+}
+
+.action-btns {
+    display: flex;
+    gap: 5px;
+}
+
+.action-btns button {
+    padding: 5px 10px;
+}
+
+/*NAVBAR MEDIA QUERIES (FROM CONTRACTS CSS) */
+.navbar {
+    padding: 15px 10px;
+    background: #fff;
+    border: none;
+    border-radius: 0;
+    margin-bottom: 20px;
+    box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+}
+
+#sidebarCollapseBtn {
+    background: transparent;
+    color: #333;
+}
+
+/* Notification Styles */
+.notification-menu {
+    width: 300px;
+    max-height: 400px;
+    overflow-y: auto;
+    padding: 0;
+}
+
+.notification-menu .dropdown-header {
+    font-size: 16px;
+    font-weight: bold;
+    padding: 10px 15px;
+    background-color: #f8f9fa;
+}
+
+.notification-item {
+    padding: 10px 15px;
+    border-bottom: 1px solid #e9ecef;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.notification-item:hover {
+    background-color: #f8f9fa;
+}
+
+.notification-item .notification-title {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.notification-item .notification-time {
+    font-size: 12px;
+    color: #6c757d;
+}
+
+.notification-item .notification-message {
+    font-size: 14px;
+    color: #212529;
+}
+
+.no-notifications {
+    padding: 15px;
+    text-align: center;
+    color: #6c757d;
+}
+
+.notification-item.unread {
+    background-color: #e8f4ff;
+}
+
+.notification-item.unread:hover {
+    background-color: #d8eaff;
+}
+
+.mark-all-read {
+    text-align: center;
+    padding: 8px;
+    background-color: #f8f9fa;
+    cursor: pointer;
+    font-weight: bold;
+    color: #007bff;
+}
+
+.mark-all-read:hover {
+    background-color: #e9ecef;
+}
+
+/* Highlight for leads with active reminders */
+tr.has-reminder {
+    background-color: #fff8e1 !important;
+}
+
+tr.reminder-due {
+    background-color: #ffebee !important;
+}
+
+tr.table-primary {
+    background-color: #e3f2fd !important;
+}
+
+@media (max-width: 768px) {
+    .navbar {
+        padding: 10px;
+    }
+    .d-flex.justify-content-between {
+        flex-direction: column;
+        gap: 10px;
+    }
+    .d-flex.justify-content-between button {
+        width: 100%;
+    }
+    table {
+        display: block;
+        overflow-x: auto;
+    }
+    .action-btns {
+        flex-direction: column;
+        gap: 5px;
+    }
+    .action-btns button {
+        width: 100%;
+        margin-right: 0;
+    }
+}
+
+@media (max-width: 576px) {
+    .navbar {
+        height: 50px;
+        padding: 8px;
+    }
+    .navbar .btn {
+        font-size: 0.9rem;
+    }
+    .navbar .bell {
+        right: 40px;
+        font-size: 1rem;
+    }
+    .navbar .admin {
+        right: 10px;
+        font-size: 1rem;
+    }
+    .form-group {
+        margin-bottom: 10px;
+    }
+    table th, 
+    table td {
+        padding: 8px;
+        font-size: 14px;
+    }
+    h2 {
+        font-size: 22px;
+    }
+    .notification-menu {
+        width: 250px;
+    }
+}
+
+@media (max-width: 400px){
+    .navbar {
+        height: 50px;
+        padding: 8px;
+    }
+    .navbar .btn {
+        font-size: 0.8rem;
+    }
+    .navbar .bell {
+        right: 0px;
+        font-size: 0.9rem;
+    }
+    .navbar .admin{
+        right: 5px;
+        font-size: 0.9rem;
+    }
+}
+/* ===== ADD LEAD FORM STYLES ===== */
+#lead-form-container {
+    display: none;
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    margin: 20px auto;
+}
+
+#lead-form-container h2 {
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.form-group label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    display: block;
+    color: #555;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: 0.3s;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+}
+
+.form-group textarea {
+    resize: none;
+    height: 100px;
+}
+
+#lead-form-container button {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+#lead-form-container button:hover {
+    background-color: #0056b3;
+}
+
+/* Toast notification */
+.toast-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 9999;
+}
+
+.toast {
+    background-color: #fff;
+    border-radius: 4px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    overflow: hidden;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    width: 350px;
+    max-width: 100%;
+    animation: slideIn 0.3s ease-out forwards;
+}
+
+.toast.hide {
+    animation: slideOut 0.3s ease-out forwards;
+}
+
+.toast-icon {
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #007bff;
+    color: white;
+}
+
+.toast-content {
+    padding: 12px;
+    flex-grow: 1;
+}
+
+.toast-title {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.toast-message {
+    color: #666;
+}
+
+.toast-close {
+    padding: 12px;
+    cursor: pointer;
+    color: #999;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideOut {
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    #lead-form-container {
+        width: 90%;
+        padding: 15px;
+    }
+    
+    #lead-form-container h2 {
+        font-size: 20px;
+    }
+    
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        font-size: 14px;
+        padding: 8px;
+    }
+
+    #lead-form-container button {
+        font-size: 14px;
+        padding: 8px;
+    }
+    
+    .toast-container {
+        width: 90%;
+        right: 5%;
+    }
+}
+
+@media (max-width: 480px) {
+    #lead-form-container h2 {
+        font-size: 18px;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        font-size: 13px;
+        padding: 7px;
+    }
+
+    #lead-form-container button {
+        font-size: 13px;
+        padding: 7px;
+    }
+}
+/* Media Queries for Reminder Section */
+
+/* Large Mobile Devices (768px and below) */
+@media (max-width: 768px) {
+    /* Notification dropdown adjustments */
+    .notification-menu {
+        width: 280px;
+        max-height: 350px;
+    }
+    
+    .notification-item {
+        padding: 8px 12px;
+    }
+    
+    .notification-item .notification-title {
+        font-size: 14px;
+    }
+    
+    .notification-item .notification-message {
+        font-size: 13px;
+    }
+    
+    /* Toast notification adjustments */
+    .toast-container {
+        width: 90%;
+        right: 5%;
+        top: 10px;
+    }
+    
+    .toast {
+        width: 100%;
+        max-width: 100%;
+    }
+    
+    .toast-icon {
+        padding: 12px;
+    }
+    
+    .toast-content {
+        padding: 10px;
+    }
+    
+    .toast-title {
+        font-size: 15px;
+    }
+    
+    .toast-message {
+        font-size: 13px;
+    }
+    
+    /* Table reminder indicators */
+    tr.has-reminder td, tr.reminder-due td {
+        padding: 10px 8px;
+    }
+}
+
+/* Medium Mobile Devices (576px and below) */
+@media (max-width: 576px) {
+    /* Notification dropdown adjustments */
+    .notification-menu {
+        width: 250px;
+        max-height: 300px;
+        right: -70px;
+    }
+    
+    .notification-menu:before {
+        content: '';
+        position: absolute;
+        top: -8px;
+        right: 80px;
+        border-left: 8px solid transparent;
+        border-right: 8px solid transparent;
+        border-bottom: 8px solid #f8f9fa;
+    }
+    
+    .notification-menu .dropdown-header {
+        font-size: 14px;
+        padding: 8px 12px;
+    }
+    
+    .notification-item .notification-title {
+        font-size: 13px;
+    }
+    
+    .notification-item .notification-time {
+        font-size: 11px;
+    }
+    
+    .notification-item .notification-message {
+        font-size: 12px;
+    }
+    
+    .mark-all-read {
+        padding: 6px;
+        font-size: 13px;
+    }
+    
+    /* Badge positioning */
+    #notification-badge {
+        transform: translate(40%, -40%) !important;
+        font-size: 0.65rem;
+        padding: 0.2rem 0.4rem;
+    }
+    
+    /* Toast notification adjustments */
+    .toast {
+        font-size: 13px;
+    }
+    
+    .toast-icon {
+        padding: 10px;
+    }
+    
+    .toast-content {
+        padding: 8px;
+    }
+    
+    .toast-title {
+        font-size: 14px;
+    }
+    
+    .toast-message {
+        font-size: 12px;
+    }
+    
+    .toast-close {
+        padding: 8px;
+    }
+    
+    /* Table reminder columns */
+    table th:nth-child(7), /* Status column */
+    table td:nth-child(7),
+    table th:nth-child(5), /* Source column */
+    table td:nth-child(5) {
+        display: none; /* Hide less important columns on small screens */
+    }
+    
+    /* Make reminder column more visible */
+    table th:nth-child(8), /* Reminder column */
+    table td:nth-child(8) {
+        font-weight: bold;
+        min-width: 100px;
+    }
+}
+
+/* Small Mobile Devices (400px and below) */
+@media (max-width: 400px) {
+    /* Notification dropdown adjustments */
+    .notification-menu {
+        width: 220px;
+        max-height: 280px;
+        right: -80px;
+    }
+    
+    .notification-menu:before {
+        right: 90px;
+    }
+    
+    .notification-item {
+        padding: 6px 10px;
+    }
+    
+    .notification-item .notification-title {
+        font-size: 12px;
+        margin-bottom: 3px;
+    }
+    
+    .notification-item .notification-time {
+        font-size: 10px;
+    }
+    
+    .notification-item .notification-message {
+        font-size: 11px;
+    }
+    
+    /* Badge positioning for very small screens */
+    #notification-badge {
+        transform: translate(30%, -30%) !important;
+        font-size: 0.6rem;
+        padding: 0.15rem 0.35rem;
+    }
+    
+    /* Toast notification adjustments */
+    .toast-container {
+        width: 95%;
+        right: 2.5%;
+        top: 5px;
+    }
+    
+    .toast-icon {
+        padding: 8px;
+    }
+    
+    .toast-content {
+        padding: 6px;
+    }
+    
+    .toast-title {
+        font-size: 13px;
+    }
+    
+    .toast-message {
+        font-size: 11px;
+    }
+    
+    .toast-close {
+        padding: 6px;
+    }
+    
+    /* Table adjustments for tiny screens */
+    table th:nth-child(6), /* Next Follow-Up column */
+    table td:nth-child(6) {
+        display: none; /* Hide more columns on very small screens */
+    }
+    
+    /* Make reminder column more compact */
+    table th:nth-child(8), /* Reminder column */
+    table td:nth-child(8) {
+        max-width: 80px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+    
+    /* Adjust action buttons */
+    table td:last-child {
+        padding: 5px;
+    }
+    
+    table td:last-child i {
+        font-size: 12px;
+        padding: 4px 6px;
+    }
+}
+
+/* Landscape orientation adjustments */
+@media (max-height: 500px) and (orientation: landscape) {
+    .notification-menu {
+        max-height: 200px; /* Limit height in landscape mode */
+    }
+    
+    #lead-form-container {
+        max-height: 80vh;
+        overflow-y: auto;
+    }
+    
+    /* Compact form in landscape */
+    .form-group {
+        margin-bottom: 8px;
+    }
+    
+    .form-group label {
+        font-size: 13px;
+        margin-bottom: 2px;
+    }
+    
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        padding: 6px;
+        font-size: 13px;
+    }
+    
+    .form-group textarea {
+        height: 60px;
+    }
+}
+
+/* High-DPI (Retina) screens */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    /* Ensure crisp icons and badges */
+    .notification-badge, 
+    .fa-bell, 
+    .toast-icon i {
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+}
+
+/* Dark mode support for OLED screens to save battery */
+@media (prefers-color-scheme: dark) {
+    .toast {
+        background-color: #222;
+        color: #eee;
+    }
+    
+    .toast-message {
+        color: #bbb;
+    }
+    
+    .toast-close {
+        color: #777;
+    }
+    
+    .notification-menu {
+        background-color: #222;
+        border-color: #444;
+    }
+    
+    .notification-menu .dropdown-header {
+        background-color: #333;
+        color: #eee;
+    }
+    
+    .notification-item {
+        border-color: #444;
+    }
+    
+    .notification-item:hover {
+        background-color: #333;
+    }
+    
+    .notification-item .notification-time {
+        color: #999;
+    }
+    
+    .notification-item .notification-message {
+        color: #ccc;
+    }
+    
+    .notification-item.unread {
+        background-color: #1a3a5a;
+    }
+    
+    .notification-item.unread:hover {
+        background-color: #1e4267;
+    }
+    
+    .mark-all-read {
+        background-color: #333;
+        color: #4da3ff;
+    }
+    
+    .mark-all-read:hover {
+        background-color: #444;
+    }
+}
+/* Media Queries for Reminder Section */
+
+/* Large Mobile Devices (768px and below) */
+@media (max-width: 768px) {
+    /* Notification dropdown adjustments */
+    .notification-menu {
+        width: 280px;
+        max-height: 350px;
+    }
+    
+    .notification-item {
+        padding: 8px 12px;
+    }
+    
+    .notification-item .notification-title {
+        font-size: 14px;
+    }
+    
+    .notification-item .notification-message {
+        font-size: 13px;
+    }
+    
+    /* Toast notification adjustments */
+    .toast-container {
+        width: 90%;
+        right: 5%;
+        top: 10px;
+    }
+    
+    .toast {
+        width: 100%;
+        max-width: 100%;
+    }
+    
+    .toast-icon {
+        padding: 12px;
+    }
+    
+    .toast-content {
+        padding: 10px;
+    }
+    
+    .toast-title {
+        font-size: 15px;
+    }
+    
+    .toast-message {
+        font-size: 13px;
+    }
+    
+    /* Table reminder indicators */
+    tr.has-reminder td, tr.reminder-due td {
+        padding: 10px 8px;
+    }
+}
+
+/* Medium Mobile Devices (576px and below) */
+@media (max-width: 576px) {
+    /* Notification dropdown adjustments */
+    .notification-menu {
+        width: 250px;
+        max-height: 300px;
+        right: -70px; /* Adjust position to prevent overflow */
+    }
+    
+    .notification-menu:before {
+        content: '';
+        position: absolute;
+        top: -8px;
+        right: 80px;
+        border-left: 8px solid transparent;
+        border-right: 8px solid transparent;
+        border-bottom: 8px solid #f8f9fa;
+    }
+    
+    .notification-menu .dropdown-header {
+        font-size: 14px;
+        padding: 8px 12px;
+    }
+    
+    .notification-item .notification-title {
+        font-size: 13px;
+    }
+    
+    .notification-item .notification-time {
+        font-size: 11px;
+    }
+    
+    .notification-item .notification-message {
+        font-size: 12px;
+    }
+    
+    .mark-all-read {
+        padding: 6px;
+        font-size: 13px;
+    }
+    
+    /* Badge positioning */
+    #notification-badge {
+        transform: translate(40%, -40%) !important;
+        font-size: 0.65rem;
+        padding: 0.2rem 0.4rem;
+    }
+    
+    /* Toast notification adjustments */
+    .toast {
+        font-size: 13px;
+    }
+    
+    .toast-icon {
+        padding: 10px;
+    }
+    
+    .toast-content {
+        padding: 8px;
+    }
+    
+    .toast-title {
+        font-size: 14px;
+    }
+    
+    .toast-message {
+        font-size: 12px;
+    }
+    
+    .toast-close {
+        padding: 8px;
+    }
+    
+    /* Table reminder columns */
+    table th:nth-child(7), /* Status column */
+    table td:nth-child(7),
+    table th:nth-child(5), /* Source column */
+    table td:nth-child(5) {
+        display: none; /* Hide less important columns on small screens */
+    }
+    
+    /* Make reminder column more visible */
+    table th:nth-child(8), /* Reminder column */
+    table td:nth-child(8) {
+        font-weight: bold;
+        min-width: 100px;
+    }
+}
+
+/* Small Mobile Devices (400px and below) */
+@media (max-width: 400px) {
+    /* Notification dropdown adjustments */
+    .notification-menu {
+        width: auto;
+        max-height: 280px;
+        right: -80px;
+    }
+    
+    .notification-menu:before {
+        right: 90px;
+    }
+    
+    .notification-item {
+        padding: 6px 10px;
+    }
+    
+    .notification-item .notification-title {
+        font-size: 12px;
+        margin-bottom: 3px;
+    }
+    
+    .notification-item .notification-time {
+        font-size: 10px;
+    }
+    
+    .notification-item .notification-message {
+        font-size:11px;
+    }
+    
+    /* Badge positioning for very small screens */
+    #notification-badge {
+        transform: translate(30%, -30%) !important;
+        font-size: 0.6rem;
+        padding: 0.15rem 0.35rem;
+    }
+    
+    /* Toast notification adjustments */
+    .toast-container {
+        width: 95%;
+        right: 2.5%;
+        top: 5px;
+    }
+    
+    .toast-icon {
+        padding: 8px;
+    }
+    
+    .toast-content {
+        padding: 6px;
+    }
+    
+    .toast-title {
+        font-size: 13px;
+    }
+    
+    .toast-message {
+        font-size: 11px;
+    }
+    
+    .toast-close {
+        padding: 6px;
+    }
+    
+    /* Table adjustments for tiny screens */
+    table th:nth-child(6), /* Next Follow-Up column */
+    table td:nth-child(6) {
+        display: none; /* Hide more columns on very small screens */
+    }
+    
+    /* Make reminder column more compact */
+    table th:nth-child(8), /* Reminder column */
+    table td:nth-child(8) {
+        max-width: 80px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+    
+    /* Adjust action buttons */
+    table td:last-child {
+        padding: 5px;
+    }
+    
+    table td:last-child i {
+        font-size: 12px;
+        padding: 4px 6px;
+    }
+}
+
+/* Landscape orientation adjustments */
+@media (max-height: 500px) and (orientation: landscape) {
+    .notification-menu {
+        max-height: 200px; /* Limit height in landscape mode */
+    }
+    
+    #lead-form-container {
+        max-height: 80vh;
+        overflow-y: auto;
+    }
+    
+    /* Compact form in landscape */
+    .form-group {
+        margin-bottom: 8px;
+    }
+    
+    .form-group label {
+        font-size: 13px;
+        margin-bottom: 2px;
+    }
+    
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        padding: 6px;
+        font-size: 13px;
+    }
+    
+    .form-group textarea {
+        height: 60px;
+    }
+}
+
+/* High-DPI (Retina) screens */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    /* Ensure crisp icons and badges */
+    .notification-badge, 
+    .fa-bell, 
+    .toast-icon i {
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+}
+
+/* Dark mode support for OLED screens to save battery */
+@media (prefers-color-scheme: dark) {
+    .toast {
+        background-color: #222;
+        color: #eee;
+    }
+    
+    .toast-message {
+        color: #bbb;
+    }
+    
+    .toast-close {
+        color: #777;
+    }
+    
+    .notification-menu {
+        background-color: #222;
+        border-color: #444;
+    }
+    
+    .notification-menu .dropdown-header {
+        background-color: #333;
+        color: #eee;
+    }
+    
+    .notification-item {
+        border-color: #444;
+    }
+    
+    .notification-item:hover {
+        background-color: #333;
+    }
+    
+    .notification-item .notification-time {
+        color: #999;
+    }
+    
+    .notification-item .notification-message {
+        color: #ccc;
+    }
+    
+    .notification-item.unread {
+        background-color: #1a3a5a;
+    }
+    
+    .notification-item.unread:hover {
+        background-color: #1e4267;
+    }
+    
+    .mark-all-read {
+        background-color: #333;
+        color: #4da3ff;
+    }
+    
+    .mark-all-read:hover {
+        background-color: #444;
+    }
+}

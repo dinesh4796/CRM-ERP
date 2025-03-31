@@ -1,0 +1,2080 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>ERP System - Reports</title>
+        <link rel="stylesheet" href="mainstyles.css" />
+        <link rel="stylesheet" href="reports-styles.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+    
+
+        <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../index.css">
+
+    </head>
+    <body>
+        <div class="wrapper">
+            <!-- Sidebar -->
+            <nav id="sidebar" class="sidebar">
+                <div class="sidebar-header">
+                    <h3>Management System</h3>
+                    <button type="button" id="sidebarCollapse" class="btn d-md-none">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+    
+                <ul class="list-unstyled components">
+                    <li class="active">
+                        <a href="#" onclick="loadContent('dashboard')">
+                            <i class="fas fa-tachometer-alt"></i> Dashboard
+                        </a>
+                    </li>
+                    <li>
+                        <!-- <a href="#crmSubmenu" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                            <i class="fas fa-users"></i> CRM Module -->
+                            <a href="#" class="dropdown-toggle" onclick="toggleDropdown(event)">
+                                <i class="fas fa-users"></i> CRM Module
+                        </a>
+                        <ul id="crmSubmenu" class="submenu">
+                            <li><a href="../remainder.html">Customer Management & Reminders</a></li>
+                            <!-- <li><a href="proposal.html">2. Proposal Management</a></li> -->
+                            <li><a href="../sales.html">Sales Management Reports</a></li>
+                            <li><a href="../contracts.html">Contracts</a></li>
+                            <li><a href="../project-management.html">Projects & Task Management</a></li>
+                            <!-- <li><a href="project-management.html">Task Management</a></li> -->
+                            <li><a href="../utilities.html">Utilities</a></li>
+                            <li><a href="../support.html">Support System & Expenses</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#inventorySubmenu" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                            <i class="fas fa-boxes"></i> Inventory Module
+                        </a>
+    
+                    </li>
+                    <li>
+                        <a href="#purchaseSubmenu" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                            <i class="fas fa-shopping-cart"></i> Purchase Module
+                        </a>
+    
+                    </li>
+                    <li>
+                        <a href="#salesSubmenu" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                            <i class="fas fa-chart-line"></i> Sales Module
+                        </a>
+                        <ul class="collapse list-unstyled" id="salesSubmenu">
+                             <li><a href="/Sales-Module/TrialQuotation.html"><i class="fas fa-file-alt"></i> Quotation </a></li>
+                                 <li><a href="/Sales-Module/orders_page.html"><i class="fas fa-shopping-cart"></i> Orders</a></li>
+                                 <li><a href="/Sales-Module/dispatch-page.html"><i class="fas fa-truck"></i> Dispatch</a></li>
+                                 <li><a href="/Sales-Module/invoice-page.html"><i class="fas fa-file-invoice"></i> Invoice </a></li>
+                                 <li><a href="/Sales-Module/crm.html"><i class="fas fa-chart-bar"></i> CRM and Reports</a></li>
+                                 <!-- <li><a href="Sales-Module/Trial_quotation-list .html"><i class="fas fa-chart-bar"></i> Performance</a></li> -->
+                      </ul>
+                    </li>
+                        
+                    <li>
+                        <a href="#" onclick="loadContent('settings')">
+                            <i class="fas fa-cog"></i> Settings
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+    
+            <!-- Page Content -->
+            <div id="content">
+                <!-- Top Navigation -->
+                <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                    <div class="container-fluid">
+                        <button type="button" id="sidebarCollapseBtn" class="btn">
+                            <i class="fas fa-align-left"></i>
+                        </button>
+                        <div class="ms-auto d-flex">
+                            <div class="dropdown me-3">
+                                <button class="btn position-relative" type="button" id="notificationDropdown"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fas fa-bell"></i>
+                                    <span
+                                        class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                        3
+                                    </span>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="notificationDropdown">
+                                    <li><a class="dropdown-item" href="#">New purchase order #1234</a></li>
+                                    <li><a class="dropdown-item" href="#">Supplier quotation updated</a></li>
+                                    <li><a class="dropdown-item" href="#">Payment due for invoice #5678</a></li>
+                                </ul>
+                            </div>
+                            <div class="dropdown">
+                                <button class="btn d-flex align-items-center" type="button" id="userDropdown"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    <img src="https://via.placeholder.com/30" class="rounded-circle me-2">
+                                    <span>Admin</span>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                                    <li><a class="dropdown-item" href="#">Profile</a></li>
+                                    <li><a class="dropdown-item" href="#">Settings</a></li>
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                    <li><a class="dropdown-item" href="#">Logout</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </nav>
+    
+                <!-- Main Content Area -->
+                <div id="main-content" class="container-fluid">
+                    <!-- Dashboard content will be loaded here by default -->
+                    <div id="dashboard-content">
+                         <!-- Loader -->
+        <div class="loader-container" id="loader">
+            <div class="loader"></div>
+        </div>
+
+        <!-- Toast Notifications -->
+        <div class="toast-container" id="toastContainer"></div>
+
+        <div class="container">
+            <div class="page-header">
+                <div class="header-title">
+                    <h1>
+                        <i class="fas fa-chart-line"></i> Reports & Analytics
+                    </h1>
+                    <p class="subtitle">
+                        Generate insights, analyze performance, and download
+                        custom reports
+                    </p>
+                </div>
+                <div class="header-actions">
+                    <button class="btn btn-primary" id="generateReportBtn">
+                        <i class="fas fa-file-export"></i> Generate Report
+                    </button>
+                    <div class="search-container">
+                        <input
+                            type="text"
+                            id="searchInput"
+                            placeholder="Search reports..."
+                        />
+                        <button class="search-btn" id="searchBtn">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+       <!---    <div class="content-wrapper">
+                <div class="sidebar">
+                    <div class="filter-section">
+                        <div class="filter-header">
+                            <h3>
+                                <i class="fas fa-filter"></i> Report Filters
+                            </h3>
+                            <button class="btn-icon" id="toggleFilters">
+                                <i class="fas fa-chevron-up"></i>
+                            </button>
+                        </div>
+                        <div class="filter-body">
+                            <div class="filter-group">
+                                <label for="reportType">Report Type</label>
+                                <select id="reportType" class="form-control">
+                                    <option value="all">All Reports</option>
+                                    <option value="sales">Sales Reports</option>
+                                    <option value="leads">Lead Reports</option>
+                                    <option value="customers">
+                                        Customer Reports
+                                    </option>
+                                    <option value="inventory">
+                                        Inventory Reports
+                                    </option>
+                                    <option value="financial">
+                                        Financial Reports
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="filter-group">
+                                <label for="dateRangeFilter">Date Range</label>
+                                <div class="date-range">
+                                    <input
+                                        type="date"
+                                        id="startDate"
+                                        class="form-control"
+                                    />
+                                    <span class="date-separator">to</span>
+                                    <input
+                                        type="date"
+                                        id="endDate"
+                                        class="form-control"
+                                    />
+                                </div>
+                            </div>
+                            <div class="filter-group">
+                                <label for="comparisonPeriod"
+                                    >Comparison Period</label
+                                >
+                                <select
+                                    id="comparisonPeriod"
+                                    class="form-control"
+                                >
+                                    <option value="none">No Comparison</option>
+                                    <option value="previous-period">
+                                        Previous Period
+                                    </option>
+                                    <option value="previous-year">
+                                        Previous Year
+                                    </option>
+                                    <option value="custom">
+                                        Custom Period
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="filter-actions">
+                                <button
+                                    class="btn btn-secondary"
+                                    id="applyFiltersBtn"
+                                >
+                                    Apply Filters
+                                </button>
+                                <button
+                                    class="btn btn-outline"
+                                    id="resetFiltersBtn"
+                                >
+                                    Reset
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="quick-stats">
+                        <h3>
+                            <i class="fas fa-chart-pie"></i> Executive Summary
+                        </h3>
+                        <div class="stat-item">
+                            <div class="stat-info">
+                                <span class="stat-label">Total Sales</span>
+                                <span class="stat-value">$487,392</span>
+                            </div>
+                            <div class="stat-icon completed-icon">
+                                <i class="fas fa-dollar-sign"></i>
+                            </div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-info">
+                                <span class="stat-label">Conversion Rate</span>
+                                <span class="stat-value">24.8%</span>
+                            </div>
+                            <div class="stat-icon transfer-icon">
+                                <i class="fas fa-exchange-alt"></i>
+                            </div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-info">
+                                <span class="stat-label">Customer Growth</span>
+                                <span class="stat-value">+12.5%</span>
+                            </div>
+                            <div class="stat-icon pending-icon">
+                                <i class="fas fa-users"></i>
+                            </div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-info">
+                                <span class="stat-label">Avg. Order Value</span>
+                                <span class="stat-value">$1,250</span>
+                            </div>
+                            <div class="stat-icon warning-icon">
+                                <i class="fas fa-shopping-cart"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="saved-reports">
+                        <h3><i class="fas fa-bookmark"></i> Saved Reports</h3>
+                        <div class="saved-reports-list">
+                            <div class="saved-report-item">
+                                <div class="saved-report-icon">
+                                    <i class="fas fa-file-alt"></i>
+                                </div>
+                                <div class="saved-report-details">
+                                    <span class="saved-report-name"
+                                        >Quarterly Sales Report</span
+                                    >
+                                    <span class="saved-report-date"
+                                        >Created on Mar 15, 2023</span
+                                    >
+                                </div>
+                                <button
+                                    class="btn-icon view-report-btn"
+                                    data-id="report-001"
+                                >
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+                            <div class="saved-report-item">
+                                <div class="saved-report-icon">
+                                    <i class="fas fa-file-alt"></i>
+                                </div>
+                                <div class="saved-report-details">
+                                    <span class="saved-report-name"
+                                        >Lead Conversion Analysis</span
+                                    >
+                                    <span class="saved-report-date"
+                                        >Created on Mar 10, 2023</span
+                                    >
+                                </div>
+                                <button
+                                    class="btn-icon view-report-btn"
+                                    data-id="report-002"
+                                >
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+                            <div class="saved-report-item">
+                                <div class="saved-report-icon">
+                                    <i class="fas fa-file-alt"></i>
+                                </div>
+                                <div class="saved-report-details">
+                                    <span class="saved-report-name"
+                                        >Product Performance</span
+                                    >
+                                    <span class="saved-report-date"
+                                        >Created on Mar 5, 2023</span
+                                    >
+                                </div>
+                                <button
+                                    class="btn-icon view-report-btn"
+                                    data-id="report-003"
+                                >
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
+
+                <div class="main-content">
+                    <div class="tabs">
+                        <button class="tab-btn active" data-tab="dashboard">
+                            <i class="fas fa-tachometer-alt"></i> Dashboard
+                        </button>
+                        <button class="tab-btn" data-tab="sales-reports">
+                            <i class="fas fa-chart-bar"></i> Sales Reports
+                        </button>
+                        <button class="tab-btn" data-tab="customer-reports">
+                            <i class="fas fa-users"></i> Customer Reports
+                        </button>
+                        <button class="tab-btn" data-tab="inventory-reports">
+                            <i class="fas fa-boxes"></i> Inventory Reports
+                        </button>
+                        <button class="tab-btn" data-tab="custom-reports">
+                            <i class="fas fa-file-alt"></i> Custom Reports
+                        </button>
+                    </div>
+
+                    <!-- Dashboard Tab Content -->
+                    <div class="tab-content active" id="dashboard-tab">
+                        <div class="report-cards">
+                            <div class="report-card">
+                                <div class="report-card-title">
+                                    <h3>Total Revenue</h3>
+                                    <button
+                                        class="btn-icon"
+                                        title="View Details"
+                                    >
+                                        <i class="fas fa-ellipsis-v"></i>
+                                    </button>
+                                </div>
+                                <div class="report-card-value">$487,392</div>
+                                <div class="report-card-change positive">
+                                    <i class="fas fa-arrow-up"></i> 15.3% vs
+                                    last period
+                                </div>
+                            </div>
+                            <div class="report-card">
+                                <div class="report-card-title">
+                                    <h3>New Customers</h3>
+                                    <button
+                                        class="btn-icon"
+                                        title="View Details"
+                                    >
+                                        <i class="fas fa-ellipsis-v"></i>
+                                    </button>
+                                </div>
+                                <div class="report-card-value">128</div>
+                                <div class="report-card-change positive">
+                                    <i class="fas fa-arrow-up"></i> 12.5% vs
+                                    last period
+                                </div>
+                            </div>
+                            <div class="report-card">
+                                <div class="report-card-title">
+                                    <h3>Conversion Rate</h3>
+                                    <button
+                                        class="btn-icon"
+                                        title="View Details"
+                                    >
+                                        <i class="fas fa-ellipsis-v"></i>
+                                    </button>
+                                </div>
+                                <div class="report-card-value">24.8%</div>
+                                <div class="report-card-change positive">
+                                    <i class="fas fa-arrow-up"></i> 2.3% vs last
+                                    period
+                                </div>
+                            </div>
+                            <div class="report-card">
+                                <div class="report-card-title">
+                                    <h3>Avg. Order Value</h3>
+                                    <button
+                                        class="btn-icon"
+                                        title="View Details"
+                                    >
+                                        <i class="fas fa-ellipsis-v"></i>
+                                    </button>
+                                </div>
+                                <div class="report-card-value">$1,250</div>
+                                <div class="report-card-change negative">
+                                    <i class="fas fa-arrow-down"></i> 3.1% vs
+                                    last period
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="report-row">
+                            <div class="report-chart">
+                                <div class="report-chart-header">
+                                    <h3>Revenue Trend</h3>
+                                    <div class="report-chart-actions">
+                                        <select
+                                            class="form-control form-control-sm"
+                                        >
+                                            <option value="7days">
+                                                Last 7 Days
+                                            </option>
+                                            <option value="30days" selected>
+                                                Last 30 Days
+                                            </option>
+                                            <option value="90days">
+                                                Last 90 Days
+                                            </option>
+                                            <option value="1year">
+                                                Last Year
+                                            </option>
+                                        </select>
+                                        <button class="btn-icon" title="Export">
+                                            <i class="fas fa-download"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="report-chart-container">
+                                    <div
+                                        class="placeholder-chart"
+                                        id="revenueTrendChart"
+                                    >
+                                        <span>Revenue Trend Chart</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="report-row">
+                            <div class="report-chart half">
+                                <div class="report-chart-header">
+                                    <h3>Sales by Category</h3>
+                                    <div class="report-chart-actions">
+                                        <button class="btn-icon" title="Export">
+                                            <i class="fas fa-download"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="report-chart-container">
+                                    <div
+                                        class="placeholder-chart"
+                                        id="salesCategoryChart"
+                                    >
+                                        <span>Sales by Category Chart</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="report-chart half">
+                                <div class="report-chart-header">
+                                    <h3>Customer Acquisition</h3>
+                                    <div class="report-chart-actions">
+                                        <button class="btn-icon" title="Export">
+                                            <i class="fas fa-download"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="report-chart-container">
+                                    <div
+                                        class="placeholder-chart"
+                                        id="customerAcquisitionChart"
+                                    >
+                                        <span>Customer Acquisition Chart</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="report-row">
+                            <div class="report-table">
+                                <div class="report-table-header">
+                                    <h3>Top Performing Products</h3>
+                                    <div class="report-table-actions">
+                                        <button class="btn-icon" title="Export">
+                                            <i class="fas fa-download"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="table-responsive">
+                                    <table class="data-table">
+                                        <thead>
+                                            <tr>
+                                                <th
+                                                    class="sortable"
+                                                    data-sort="product"
+                                                >
+                                                    Product
+                                                    <i class="fas fa-sort"></i>
+                                                </th>
+                                                <th
+                                                    class="sortable"
+                                                    data-sort="category"
+                                                >
+                                                    Category
+                                                    <i class="fas fa-sort"></i>
+                                                </th>
+                                                <th
+                                                    class="sortable"
+                                                    data-sort="sales"
+                                                >
+                                                    Sales
+                                                    <i class="fas fa-sort"></i>
+                                                </th>
+                                                <th
+                                                    class="sortable"
+                                                    data-sort="revenue"
+                                                >
+                                                    Revenue
+                                                    <i class="fas fa-sort"></i>
+                                                </th>
+                                                <th
+                                                    class="sortable"
+                                                    data-sort="profit"
+                                                >
+                                                    Profit
+                                                    <i class="fas fa-sort"></i>
+                                                </th>
+                                                <th
+                                                    class="sortable"
+                                                    data-sort="growth"
+                                                >
+                                                    Growth
+                                                    <i class="fas fa-sort"></i>
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    Enterprise Software Suite
+                                                </td>
+                                                <td>Software</td>
+                                                <td>124</td>
+                                                <td>$186,000</td>
+                                                <td>$111,600</td>
+                                                <td>
+                                                    <span
+                                                        class="growth-positive"
+                                                        >+18.2%</span
+                                                    >
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Cloud Storage Solution</td>
+                                                <td>Services</td>
+                                                <td>212</td>
+                                                <td>$84,800</td>
+                                                <td>$63,600</td>
+                                                <td>
+                                                    <span
+                                                        class="growth-positive"
+                                                        >+12.4%</span
+                                                    >
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Data Analytics Platform</td>
+                                                <td>Software</td>
+                                                <td>87</td>
+                                                <td>$78,300</td>
+                                                <td>$42,700</td>
+                                                <td>
+                                                    <span
+                                                        class="growth-positive"
+                                                        >+8.7%</span
+                                                    >
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Secure Network Gateway</td>
+                                                <td>Hardware</td>
+                                                <td>63</td>
+                                                <td>$69,300</td>
+                                                <td>$34,650</td>
+                                                <td>
+                                                    <span
+                                                        class="growth-negative"
+                                                        >-2.1%</span
+                                                    >
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    Mobile Device Management
+                                                </td>
+                                                <td>Software</td>
+                                                <td>95</td>
+                                                <td>$47,500</td>
+                                                <td>$28,500</td>
+                                                <td>
+                                                    <span
+                                                        class="growth-positive"
+                                                        >+6.3%</span
+                                                    >
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sales Reports Tab Content -->
+                    <div class="tab-content" id="sales-reports-tab">
+                        <div class="report-actions">
+                            <div class="report-selection">
+                                <label for="salesReportType"
+                                    >Report Type:</label
+                                >
+                                <select
+                                    id="salesReportType"
+                                    class="form-control"
+                                >
+                                    <option value="overview">
+                                        Sales Overview
+                                    </option>
+                                    <option value="performance">
+                                        Sales Performance
+                                    </option>
+                                    <option value="trends">Sales Trends</option>
+                                    <option value="forecast">
+                                        Sales Forecast
+                                    </option>
+                                    <option value="comparison">
+                                        Sales Comparison
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="report-timeframe">
+                                <label for="salesTimeframe">Timeframe:</label>
+                                <select
+                                    id="salesTimeframe"
+                                    class="form-control"
+                                >
+                                    <option value="daily">Daily</option>
+                                    <option value="weekly">Weekly</option>
+                                    <option value="monthly" selected>
+                                        Monthly
+                                    </option>
+                                    <option value="quarterly">Quarterly</option>
+                                    <option value="yearly">Yearly</option>
+                                </select>
+                            </div>
+                            <button
+                                class="btn btn-primary"
+                                id="generateSalesReportBtn"
+                            >
+                                <i class="fas fa-sync"></i> Generate
+                            </button>
+                        </div>
+
+                        <div class="report-container" id="salesReportContainer">
+                            <div class="report-header">
+                                <h2>Monthly Sales Overview</h2>
+                                <p>Data from March 1, 2023 to March 25, 2023</p>
+                            </div>
+
+                            <div class="report-row">
+                                <div class="report-chart">
+                                    <div class="report-chart-header">
+                                        <h3>Sales by Month</h3>
+                                        <div class="report-chart-actions">
+                                            <button
+                                                class="btn-icon"
+                                                title="Export"
+                                            >
+                                                <i class="fas fa-download"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="report-chart-container">
+                                        <div
+                                            class="placeholder-chart"
+                                            id="salesByMonthChart"
+                                        >
+                                            <span>Sales by Month Chart</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="report-row">
+                                <div class="report-chart half">
+                                    <div class="report-chart-header">
+                                        <h3>Sales by Product Category</h3>
+                                        <div class="report-chart-actions">
+                                            <button
+                                                class="btn-icon"
+                                                title="Export"
+                                            >
+                                                <i class="fas fa-download"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="report-chart-container">
+                                        <div
+                                            class="placeholder-chart"
+                                            id="salesByCategoryChart"
+                                        >
+                                            <span
+                                                >Sales by Product Category
+                                                Chart</span
+                                            >
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="report-chart half">
+                                    <div class="report-chart-header">
+                                        <h3>Sales by Region</h3>
+                                        <div class="report-chart-actions">
+                                            <button
+                                                class="btn-icon"
+                                                title="Export"
+                                            >
+                                                <i class="fas fa-download"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="report-chart-container">
+                                        <div
+                                            class="placeholder-chart"
+                                            id="salesByRegionChart"
+                                        >
+                                            <span>Sales by Region Chart</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="report-row">
+                                <div class="report-table">
+                                    <div class="report-table-header">
+                                        <h3>Sales by Representative</h3>
+                                        <div class="report-table-actions">
+                                            <button
+                                                class="btn-icon"
+                                                title="Export"
+                                            >
+                                                <i class="fas fa-download"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="table-responsive">
+                                        <table class="data-table">
+                                            <thead>
+                                                <tr>
+                                                    <th
+                                                        class="sortable"
+                                                        data-sort="rep"
+                                                    >
+                                                        Sales Rep
+                                                        <i
+                                                            class="fas fa-sort"
+                                                        ></i>
+                                                    </th>
+                                                    <th
+                                                        class="sortable"
+                                                        data-sort="deals"
+                                                    >
+                                                        Deals
+                                                        <i
+                                                            class="fas fa-sort"
+                                                        ></i>
+                                                    </th>
+                                                    <th
+                                                        class="sortable"
+                                                        data-sort="quota"
+                                                    >
+                                                        Quota
+                                                        <i
+                                                            class="fas fa-sort"
+                                                        ></i>
+                                                    </th>
+                                                    <th
+                                                        class="sortable"
+                                                        data-sort="achievement"
+                                                    >
+                                                        Achievement
+                                                        <i
+                                                            class="fas fa-sort"
+                                                        ></i>
+                                                    </th>
+                                                    <th
+                                                        class="sortable"
+                                                        data-sort="revenue"
+                                                    >
+                                                        Revenue
+                                                        <i
+                                                            class="fas fa-sort"
+                                                        ></i>
+                                                    </th>
+                                                    <th
+                                                        class="sortable"
+                                                        data-sort="avg-deal"
+                                                    >
+                                                        Avg. Deal Size
+                                                        <i
+                                                            class="fas fa-sort"
+                                                        ></i>
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>John Doe</td>
+                                                    <td>32</td>
+                                                    <td>$100,000</td>
+                                                    <td>
+                                                        <div
+                                                            class="progress-bar"
+                                                        >
+                                                            <div
+                                                                class="progress"
+                                                                style="
+                                                                    width: 112%;
+                                                                "
+                                                            ></div>
+                                                            <span>112%</span>
+                                                        </div>
+                                                    </td>
+                                                    <td>$112,000</td>
+                                                    <td>$3,500</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Jane Smith</td>
+                                                    <td>28</td>
+                                                    <td>$100,000</td>
+                                                    <td>
+                                                        <div
+                                                            class="progress-bar"
+                                                        >
+                                                            <div
+                                                                class="progress"
+                                                                style="
+                                                                    width: 95%;
+                                                                "
+                                                            ></div>
+                                                            <span>95%</span>
+                                                        </div>
+                                                    </td>
+                                                    <td>$95,000</td>
+                                                    <td>$3,392</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Mark Johnson</td>
+                                                    <td>24</td>
+                                                    <td>$80,000</td>
+                                                    <td>
+                                                        <div
+                                                            class="progress-bar"
+                                                        >
+                                                            <div
+                                                                class="progress"
+                                                                style="
+                                                                    width: 105%;
+                                                                "
+                                                            ></div>
+                                                            <span>105%</span>
+                                                        </div>
+                                                    </td>
+                                                    <td>$84,000</td>
+                                                    <td>$3,500</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Sarah Williams</td>
+                                                    <td>30</td>
+                                                    <td>$100,000</td>
+                                                    <td>
+                                                        <div
+                                                            class="progress-bar"
+                                                        >
+                                                            <div
+                                                                class="progress"
+                                                                style="
+                                                                    width: 132%;
+                                                                "
+                                                            ></div>
+                                                            <span>132%</span>
+                                                        </div>
+                                                    </td>
+                                                    <td>$132,000</td>
+                                                    <td>$4,400</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Robert Brown</td>
+                                                    <td>22</td>
+                                                    <td>$80,000</td>
+                                                    <td>
+                                                        <div
+                                                            class="progress-bar"
+                                                        >
+                                                            <div
+                                                                class="progress"
+                                                                style="
+                                                                    width: 80%;
+                                                                "
+                                                            ></div>
+                                                            <span>80%</span>
+                                                        </div>
+                                                    </td>
+                                                    <td>$64,000</td>
+                                                    <td>$2,909</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Customer Reports Tab Content -->
+                    <div class="tab-content" id="customer-reports-tab">
+                        <div class="report-actions">
+                            <div class="report-selection">
+                                <label for="customerReportType"
+                                    >Report Type:</label
+                                >
+                                <select
+                                    id="customerReportType"
+                                    class="form-control"
+                                >
+                                    <option value="overview">
+                                        Customer Overview
+                                    </option>
+                                    <option value="acquisition">
+                                        Customer Acquisition
+                                    </option>
+                                    <option value="retention">
+                                        Customer Retention
+                                    </option>
+                                    <option value="lifetime">
+                                        Lifetime Value
+                                    </option>
+                                    <option value="segmentation">
+                                        Customer Segmentation
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="report-timeframe">
+                                <label for="customerTimeframe"
+                                    >Timeframe:</label
+                                >
+                                <select
+                                    id="customerTimeframe"
+                                    class="form-control"
+                                >
+                                    <option value="monthly" selected>
+                                        Monthly
+                                    </option>
+                                    <option value="quarterly">Quarterly</option>
+                                    <option value="yearly">Yearly</option>
+                                </select>
+                            </div>
+                            <button
+                                class="btn btn-primary"
+                                id="generateCustomerReportBtn"
+                            >
+                                <i class="fas fa-sync"></i> Generate
+                            </button>
+                        </div>
+
+                        <div
+                            class="report-container"
+                            id="customerReportContainer"
+                        >
+                            <div class="report-header">
+                                <h2>Customer Overview</h2>
+                                <p>Data from March 1, 2023 to March 25, 2023</p>
+                            </div>
+
+                            <div class="report-cards">
+                                <div class="report-card">
+                                    <div class="report-card-title">
+                                        <h3>Total Customers</h3>
+                                    </div>
+                                    <div class="report-card-value">1,245</div>
+                                    <div class="report-card-change positive">
+                                        <i class="fas fa-arrow-up"></i> 12.5% vs
+                                        last period
+                                    </div>
+                                </div>
+                                <div class="report-card">
+                                    <div class="report-card-title">
+                                        <h3>New Customers</h3>
+                                    </div>
+                                    <div class="report-card-value">128</div>
+                                    <div class="report-card-change positive">
+                                        <i class="fas fa-arrow-up"></i> 8.2% vs
+                                        last period
+                                    </div>
+                                </div>
+                                <div class="report-card">
+                                    <div class="report-card-title">
+                                        <h3>Churn Rate</h3>
+                                    </div>
+                                    <div class="report-card-value">2.8%</div>
+                                    <div class="report-card-change negative">
+                                        <i class="fas fa-arrow-down"></i> 0.5%
+                                        vs last period
+                                    </div>
+                                </div>
+                                <div class="report-card">
+                                    <div class="report-card-title">
+                                        <h3>Avg. LTV</h3>
+                                    </div>
+                                    <div class="report-card-value">$5,840</div>
+                                    <div class="report-card-change positive">
+                                        <i class="fas fa-arrow-up"></i> 4.2% vs
+                                        last period
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="report-row">
+                                <div class="report-chart">
+                                    <div class="report-chart-header">
+                                        <h3>Customer Growth</h3>
+                                        <div class="report-chart-actions">
+                                            <button
+                                                class="btn-icon"
+                                                title="Export"
+                                            >
+                                                <i class="fas fa-download"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="report-chart-container">
+                                        <div
+                                            class="placeholder-chart"
+                                            id="customerGrowthChart"
+                                        >
+                                            <span>Customer Growth Chart</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="report-row">
+                                <div class="report-chart half">
+                                    <div class="report-chart-header">
+                                        <h3>Customer Segmentation</h3>
+                                        <div class="report-chart-actions">
+                                            <button
+                                                class="btn-icon"
+                                                title="Export"
+                                            >
+                                                <i class="fas fa-download"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="report-chart-container">
+                                        <div
+                                            class="placeholder-chart"
+                                            id="customerSegmentationChart"
+                                        >
+                                            <span
+                                                >Customer Segmentation
+                                                Chart</span
+                                            >
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="report-chart half">
+                                    <div class="report-chart-header">
+                                        <h3>Customer Acquisition Cost</h3>
+                                        <div class="report-chart-actions">
+                                            <button
+                                                class="btn-icon"
+                                                title="Export"
+                                            >
+                                                <i class="fas fa-download"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="report-chart-container">
+                                        <div
+                                            class="placeholder-chart"
+                                            id="customerCACChart"
+                                        >
+                                            <span
+                                                >Customer Acquisition Cost
+                                                Chart</span
+                                            >
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="report-row">
+                                <div class="report-table">
+                                    <div class="report-table-header">
+                                        <h3>Top Customers by Revenue</h3>
+                                        <div class="report-table-actions">
+                                            <button
+                                                class="btn-icon"
+                                                title="Export"
+                                            >
+                                                <i class="fas fa-download"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="table-responsive">
+                                        <table class="data-table">
+                                            <thead>
+                                                <tr>
+                                                    <th
+                                                        class="sortable"
+                                                        data-sort="customer"
+                                                    >
+                                                        Customer
+                                                        <i
+                                                            class="fas fa-sort"
+                                                        ></i>
+                                                    </th>
+                                                    <th
+                                                        class="sortable"
+                                                        data-sort="industry"
+                                                    >
+                                                        Industry
+                                                        <i
+                                                            class="fas fa-sort"
+                                                        ></i>
+                                                    </th>
+                                                    <th
+                                                        class="sortable"
+                                                        data-sort="orders"
+                                                    >
+                                                        Orders
+                                                        <i
+                                                            class="fas fa-sort"
+                                                        ></i>
+                                                    </th>
+                                                    <th
+                                                        class="sortable"
+                                                        data-sort="revenue"
+                                                    >
+                                                        Revenue
+                                                        <i
+                                                            class="fas fa-sort"
+                                                        ></i>
+                                                    </th>
+                                                    <th
+                                                        class="sortable"
+                                                        data-sort="ltv"
+                                                    >
+                                                        LTV
+                                                        <i
+                                                            class="fas fa-sort"
+                                                        ></i>
+                                                    </th>
+                                                    <th
+                                                        class="sortable"
+                                                        data-sort="growth"
+                                                    >
+                                                        YoY Growth
+                                                        <i
+                                                            class="fas fa-sort"
+                                                        ></i>
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>Acme Corporation</td>
+                                                    <td>Technology</td>
+                                                    <td>24</td>
+                                                    <td>$156,000</td>
+                                                    <td>$312,000</td>
+                                                    <td>
+                                                        <span
+                                                            class="growth-positive"
+                                                            >+18.2%</span
+                                                        >
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>TechSolutions Inc.</td>
+                                                    <td>IT Services</td>
+                                                    <td>18</td>
+                                                    <td>$124,200</td>
+                                                    <td>$248,400</td>
+                                                    <td>
+                                                        <span
+                                                            class="growth-positive"
+                                                            >+12.4%</span
+                                                        >
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Global Traders</td>
+                                                    <td>Retail</td>
+                                                    <td>32</td>
+                                                    <td>$98,600</td>
+                                                    <td>$183,200</td>
+                                                    <td>
+                                                        <span
+                                                            class="growth-negative"
+                                                            >-2.1%</span
+                                                        >
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Innovative Systems</td>
+                                                    <td>Manufacturing</td>
+                                                    <td>15</td>
+                                                    <td>$87,400</td>
+                                                    <td>$152,000</td>
+                                                    <td>
+                                                        <span
+                                                            class="growth-positive"
+                                                            >+8.7%</span
+                                                        >
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Pinnacle Industries</td>
+                                                    <td>Construction</td>
+                                                    <td>22</td>
+                                                    <td>$76,500</td>
+                                                    <td>$143,000</td>
+                                                    <td>
+                                                        <span
+                                                            class="growth-positive"
+                                                            >+6.3%</span
+                                                        >
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Inventory Reports Tab Content -->
+                    <div class="tab-content" id="inventory-reports-tab">
+                        <div class="report-actions">
+                            <div class="report-selection">
+                                <label for="inventoryReportType"
+                                    >Report Type:</label
+                                >
+                                <select
+                                    id="inventoryReportType"
+                                    class="form-control"
+                                >
+                                    <option value="overview">
+                                        Inventory Overview
+                                    </option>
+                                    <option value="valuation">
+                                        Inventory Valuation
+                                    </option>
+                                    <option value="movement">
+                                        Stock Movement
+                                    </option>
+                                    <option value="aging">
+                                        Inventory Aging
+                                    </option>
+                                    <option value="forecast">
+                                        Inventory Forecast
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="report-warehouse">
+                                <label for="inventoryWarehouse"
+                                    >Warehouse:</label
+                                >
+                                <select
+                                    id="inventoryWarehouse"
+                                    class="form-control"
+                                >
+                                    <option value="all">All Warehouses</option>
+                                    <option value="warehouse1">
+                                        Main Warehouse
+                                    </option>
+                                    <option value="warehouse2">
+                                        North Distribution Center
+                                    </option>
+                                    <option value="warehouse3">
+                                        South Distribution Center
+                                    </option>
+                                    <option value="warehouse4">
+                                        East Fulfillment Center
+                                    </option>
+                                    <option value="warehouse5">
+                                        West Fulfillment Center
+                                    </option>
+                                </select>
+                            </div>
+                            <button
+                                class="btn btn-primary"
+                                id="generateInventoryReportBtn"
+                            >
+                                <i class="fas fa-sync"></i> Generate
+                            </button>
+                        </div>
+
+                        <div
+                            class="report-container"
+                            id="inventoryReportContainer"
+                        >
+                            <div class="report-header">
+                                <h2>Inventory Overview</h2>
+                                <p>Data as of March 25, 2023</p>
+                            </div>
+
+                            <div class="report-cards">
+                                <div class="report-card">
+                                    <div class="report-card-title">
+                                        <h3>Total SKUs</h3>
+                                    </div>
+                                    <div class="report-card-value">2,458</div>
+                                    <div class="report-card-change positive">
+                                        <i class="fas fa-arrow-up"></i> 3.2% vs
+                                        last period
+                                    </div>
+                                </div>
+                                <div class="report-card">
+                                    <div class="report-card-title">
+                                        <h3>Inventory Value</h3>
+                                    </div>
+                                    <div class="report-card-value">$1.24M</div>
+                                    <div class="report-card-change positive">
+                                        <i class="fas fa-arrow-up"></i> 5.8% vs
+                                        last period
+                                    </div>
+                                </div>
+                                <div class="report-card">
+                                    <div class="report-card-title">
+                                        <h3>Low Stock Items</h3>
+                                    </div>
+                                    <div class="report-card-value">42</div>
+                                    <div class="report-card-change negative">
+                                        <i class="fas fa-arrow-up"></i> 12.5% vs
+                                        last period
+                                    </div>
+                                </div>
+                                <div class="report-card">
+                                    <div class="report-card-title">
+                                        <h3>Days of Inventory</h3>
+                                    </div>
+                                    <div class="report-card-value">32</div>
+                                    <div class="report-card-change positive">
+                                        <i class="fas fa-arrow-down"></i> 3.5%
+                                        vs last period
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="report-row">
+                                <div class="report-chart">
+                                    <div class="report-chart-header">
+                                        <h3>Inventory Value by Category</h3>
+                                        <div class="report-chart-actions">
+                                            <button
+                                                class="btn-icon"
+                                                title="Export"
+                                            >
+                                                <i class="fas fa-download"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="report-chart-container">
+                                        <div
+                                            class="placeholder-chart"
+                                            id="inventoryCategoryChart"
+                                        >
+                                            <span
+                                                >Inventory Value by Category
+                                                Chart</span
+                                            >
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="report-row">
+                                <div class="report-chart half">
+                                    <div class="report-chart-header">
+                                        <h3>Inventory by Warehouse</h3>
+                                        <div class="report-chart-actions">
+                                            <button
+                                                class="btn-icon"
+                                                title="Export"
+                                            >
+                                                <i class="fas fa-download"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="report-chart-container">
+                                        <div
+                                            class="placeholder-chart"
+                                            id="inventoryWarehouseChart"
+                                        >
+                                            <span
+                                                >Inventory by Warehouse
+                                                Chart</span
+                                            >
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="report-chart half">
+                                    <div class="report-chart-header">
+                                        <h3>Inventory Turnover</h3>
+                                        <div class="report-chart-actions">
+                                            <button
+                                                class="btn-icon"
+                                                title="Export"
+                                            >
+                                                <i class="fas fa-download"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="report-chart-container">
+                                        <div
+                                            class="placeholder-chart"
+                                            id="inventoryTurnoverChart"
+                                        >
+                                            <span
+                                                >Inventory Turnover Chart</span
+                                            >
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="report-row">
+                                <div class="report-table">
+                                    <div class="report-table-header">
+                                        <h3>Low Stock Items</h3>
+                                        <div class="report-table-actions">
+                                            <button
+                                                class="btn-icon"
+                                                title="Export"
+                                            >
+                                                <i class="fas fa-download"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="table-responsive">
+                                        <table class="data-table">
+                                            <thead>
+                                                <tr>
+                                                    <th
+                                                        class="sortable"
+                                                        data-sort="sku"
+                                                    >
+                                                        SKU
+                                                        <i
+                                                            class="fas fa-sort"
+                                                        ></i>
+                                                    </th>
+                                                    <th
+                                                        class="sortable"
+                                                        data-sort="product"
+                                                    >
+                                                        Product
+                                                        <i
+                                                            class="fas fa-sort"
+                                                        ></i>
+                                                    </th>
+                                                    <th
+                                                        class="sortable"
+                                                        data-sort="category"
+                                                    >
+                                                        Category
+                                                        <i
+                                                            class="fas fa-sort"
+                                                        ></i>
+                                                    </th>
+                                                    <th
+                                                        class="sortable"
+                                                        data-sort="warehouse"
+                                                    >
+                                                        Warehouse
+                                                        <i
+                                                            class="fas fa-sort"
+                                                        ></i>
+                                                    </th>
+                                                    <th
+                                                        class="sortable"
+                                                        data-sort="qty"
+                                                    >
+                                                        Qty on Hand
+                                                        <i
+                                                            class="fas fa-sort"
+                                                        ></i>
+                                                    </th>
+                                                    <th
+                                                        class="sortable"
+                                                        data-sort="reorder"
+                                                    >
+                                                        Reorder Point
+                                                        <i
+                                                            class="fas fa-sort"
+                                                        ></i>
+                                                    </th>
+                                                    <th
+                                                        class="sortable"
+                                                        data-sort="status"
+                                                    >
+                                                        Status
+                                                        <i
+                                                            class="fas fa-sort"
+                                                        ></i>
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>PRD-001234</td>
+                                                    <td>
+                                                        Enterprise Server 4000
+                                                    </td>
+                                                    <td>Hardware</td>
+                                                    <td>Main Warehouse</td>
+                                                    <td>3</td>
+                                                    <td>5</td>
+                                                    <td>
+                                                        <span
+                                                            class="status-badge pending"
+                                                            >Low Stock</span
+                                                        >
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>PRD-001857</td>
+                                                    <td>Cloud Storage 1TB</td>
+                                                    <td>Services</td>
+                                                    <td>
+                                                        North Distribution
+                                                        Center
+                                                    </td>
+                                                    <td>2</td>
+                                                    <td>10</td>
+                                                    <td>
+                                                        <span
+                                                            class="status-badge pending"
+                                                            >Low Stock</span
+                                                        >
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>PRD-002143</td>
+                                                    <td>
+                                                        Network Switch 24-Port
+                                                    </td>
+                                                    <td>Hardware</td>
+                                                    <td>
+                                                        East Fulfillment Center
+                                                    </td>
+                                                    <td>1</td>
+                                                    <td>8</td>
+                                                    <td>
+                                                        <span
+                                                            class="status-badge cancelled"
+                                                            >Critical</span
+                                                        >
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>PRD-003542</td>
+                                                    <td>
+                                                        Security Software Suite
+                                                    </td>
+                                                    <td>Software</td>
+                                                    <td>Main Warehouse</td>
+                                                    <td>4</td>
+                                                    <td>5</td>
+                                                    <td>
+                                                        <span
+                                                            class="status-badge pending"
+                                                            >Low Stock</span
+                                                        >
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>PRD-004123</td>
+                                                    <td>
+                                                        Data Backup Solution
+                                                    </td>
+                                                    <td>Services</td>
+                                                    <td>
+                                                        South Distribution
+                                                        Center
+                                                    </td>
+                                                    <td>0</td>
+                                                    <td>3</td>
+                                                    <td>
+                                                        <span
+                                                            class="status-badge cancelled"
+                                                            >Out of Stock</span
+                                                        >
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Custom Reports Tab Content -->
+                    <div class="tab-content" id="custom-reports-tab">
+                        <div class="custom-report-builder">
+                            <div class="custom-report-header">
+                                <h2>Custom Report Builder</h2>
+                                <p>
+                                    Build a custom report by selecting the data,
+                                    format, and visualizations you need.
+                                </p>
+                            </div>
+
+                            <div class="custom-report-form">
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="reportName"
+                                            >Report Name</label
+                                        >
+                                        <input
+                                            type="text"
+                                            id="reportName"
+                                            class="form-control"
+                                            placeholder="Enter report name"
+                                        />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="reportCategory"
+                                            >Report Category</label
+                                        >
+                                        <select
+                                            id="reportCategory"
+                                            class="form-control"
+                                        >
+                                            <option value="sales">
+                                                Sales Report
+                                            </option>
+                                            <option value="customer">
+                                                Customer Report
+                                            </option>
+                                            <option value="inventory">
+                                                Inventory Report
+                                            </option>
+                                            <option value="financial">
+                                                Financial Report
+                                            </option>
+                                            <option value="combined">
+                                                Combined Report
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="reportDateRange"
+                                            >Date Range</label
+                                        >
+                                        <div class="date-range">
+                                            <input
+                                                type="date"
+                                                id="customStartDate"
+                                                class="form-control"
+                                            />
+                                            <span class="date-separator"
+                                                >to</span
+                                            >
+                                            <input
+                                                type="date"
+                                                id="customEndDate"
+                                                class="form-control"
+                                            />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="reportFrequency"
+                                            >Report Frequency</label
+                                        >
+                                        <select
+                                            id="reportFrequency"
+                                            class="form-control"
+                                        >
+                                            <option value="once">
+                                                One-time Report
+                                            </option>
+                                            <option value="daily">Daily</option>
+                                            <option value="weekly">
+                                                Weekly
+                                            </option>
+                                            <option value="monthly">
+                                                Monthly
+                                            </option>
+                                            <option value="quarterly">
+                                                Quarterly
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Data to Include</label>
+                                    <div class="checkbox-group">
+                                        <label class="checkbox-label">
+                                            <input
+                                                type="checkbox"
+                                                name="data-include"
+                                                value="sales"
+                                            />
+                                            Sales Data
+                                        </label>
+                                        <label class="checkbox-label">
+                                            <input
+                                                type="checkbox"
+                                                name="data-include"
+                                                value="customer"
+                                            />
+                                            Customer Data
+                                        </label>
+                                        <label class="checkbox-label">
+                                            <input
+                                                type="checkbox"
+                                                name="data-include"
+                                                value="product"
+                                            />
+                                            Product Data
+                                        </label>
+                                        <label class="checkbox-label">
+                                            <input
+                                                type="checkbox"
+                                                name="data-include"
+                                                value="inventory"
+                                            />
+                                            Inventory Data
+                                        </label>
+                                        <label class="checkbox-label">
+                                            <input
+                                                type="checkbox"
+                                                name="data-include"
+                                                value="financial"
+                                            />
+                                            Financial Data
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Visualizations</label>
+                                    <div class="checkbox-group">
+                                        <label class="checkbox-label">
+                                            <input
+                                                type="checkbox"
+                                                name="visualizations"
+                                                value="table"
+                                            />
+                                            Data Table
+                                        </label>
+                                        <label class="checkbox-label">
+                                            <input
+                                                type="checkbox"
+                                                name="visualizations"
+                                                value="bar"
+                                            />
+                                            Bar Chart
+                                        </label>
+                                        <label class="checkbox-label">
+                                            <input
+                                                type="checkbox"
+                                                name="visualizations"
+                                                value="line"
+                                            />
+                                            Line Chart
+                                        </label>
+                                        <label class="checkbox-label">
+                                            <input
+                                                type="checkbox"
+                                                name="visualizations"
+                                                value="pie"
+                                            />
+                                            Pie Chart
+                                        </label>
+                                        <label class="checkbox-label">
+                                            <input
+                                                type="checkbox"
+                                                name="visualizations"
+                                                value="kpi"
+                                            />
+                                            KPI Cards
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Export Format</label>
+                                    <div class="radio-group">
+                                        <label class="radio-label">
+                                            <input
+                                                type="radio"
+                                                name="export-format"
+                                                value="pdf"
+                                                checked
+                                            />
+                                            PDF
+                                        </label>
+                                        <label class="radio-label">
+                                            <input
+                                                type="radio"
+                                                name="export-format"
+                                                value="excel"
+                                            />
+                                            Excel
+                                        </label>
+                                        <label class="radio-label">
+                                            <input
+                                                type="radio"
+                                                name="export-format"
+                                                value="csv"
+                                            />
+                                            CSV
+                                        </label>
+                                        <label class="radio-label">
+                                            <input
+                                                type="radio"
+                                                name="export-format"
+                                                value="html"
+                                            />
+                                            HTML
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="form-actions">
+                                    <button
+                                        class="btn btn-outline"
+                                        id="previewReportBtn"
+                                    >
+                                        <i class="fas fa-eye"></i> Preview
+                                        Report
+                                    </button>
+                                    <button
+                                        class="btn btn-primary"
+                                        id="createReportBtn"
+                                    >
+                                        <i class="fas fa-save"></i> Create
+                                        Report
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Generate Report Modal -->
+        <div class="modal" id="generateReportModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2>
+                            <i class="fas fa-file-export"></i> Generate Report
+                        </h2>
+                        <button class="close-btn" id="closeGenerateReportModal">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="generateReportForm">
+                            <div class="form-group">
+                                <label for="genReportType">Report Type</label>
+                                <select
+                                    id="genReportType"
+                                    class="form-control"
+                                    required
+                                >
+                                    <option value="">Select Report Type</option>
+                                    <option value="sales">Sales Report</option>
+                                    <option value="customer">
+                                        Customer Report
+                                    </option>
+                                    <option value="inventory">
+                                        Inventory Report
+                                    </option>
+                                    <option value="financial">
+                                        Financial Report
+                                    </option>
+                                    <option value="product">
+                                        Product Report
+                                    </option>
+                                </select>
+                                <div
+                                    class="form-error"
+                                    id="genReportTypeError"
+                                ></div>
+                            </div>
+                            <div class="form-group">
+                                <label for="genReportFormat"
+                                    >Report Format</label
+                                >
+                                <select
+                                    id="genReportFormat"
+                                    class="form-control"
+                                    required
+                                >
+                                    <option value="pdf">PDF</option>
+                                    <option value="excel">Excel</option>
+                                    <option value="csv">CSV</option>
+                                    <option value="html">HTML</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="genDateRange">Date Range</label>
+                                <div class="date-range">
+                                    <input
+                                        type="date"
+                                        id="genStartDate"
+                                        class="form-control"
+                                        required
+                                    />
+                                    <span class="date-separator">to</span>
+                                    <input
+                                        type="date"
+                                        id="genEndDate"
+                                        class="form-control"
+                                        required
+                                    />
+                                </div>
+                                <div
+                                    class="form-error"
+                                    id="genDateRangeError"
+                                ></div>
+                            </div>
+                            <div class="form-group">
+                                <label>Include in Report</label>
+                                <div class="checkbox-group">
+                                    <label class="checkbox-label">
+                                        <input
+                                            type="checkbox"
+                                            name="include"
+                                            value="summary"
+                                            checked
+                                        />
+                                        Summary
+                                    </label>
+                                    <label class="checkbox-label">
+                                        <input
+                                            type="checkbox"
+                                            name="include"
+                                            value="charts"
+                                            checked
+                                        />
+                                        Charts & Graphs
+                                    </label>
+                                    <label class="checkbox-label">
+                                        <input
+                                            type="checkbox"
+                                            name="include"
+                                            value="tables"
+                                            checked
+                                        />
+                                        Detailed Tables
+                                    </label>
+                                    <label class="checkbox-label">
+                                        <input
+                                            type="checkbox"
+                                            name="include"
+                                            value="trends"
+                                        />
+                                        Trend Analysis
+                                    </label>
+                                    <label class="checkbox-label">
+                                        <input
+                                            type="checkbox"
+                                            name="include"
+                                            value="forecast"
+                                        />
+                                        Forecasts
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="reportName">Report Name</label>
+                                <input
+                                    type="text"
+                                    id="genReportName"
+                                    class="form-control"
+                                    placeholder="Enter a name for this report"
+                                    required
+                                />
+                                <div
+                                    class="form-error"
+                                    id="genReportNameError"
+                                ></div>
+                            </div>
+                            <div class="form-actions">
+                                <button
+                                    type="button"
+                                    class="btn btn-outline"
+                                    id="cancelGenerateReport"
+                                >
+                                    Cancel
+                                </button>
+                                <button type="submit" class="btn btn-primary">
+                                    Generate Report
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+                    </div>
+                </div>
+                 <!-- Bootstrap JS Bundle with Popper -->
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+            <!-- Chart.js -->
+            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+            <!-- Custom JS -->
+            <script src="../index.js"></script>
+
+        
+
+        <script src="reports-script.js"></script>
+    </body>
+</html>

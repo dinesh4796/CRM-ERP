@@ -1,0 +1,1448 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Purchase Management System - Quotation Management</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../index.css">
+
+    <style>
+        :root {
+            --primary-color: #2C3E50;
+            --secondary-color: #1A252F;
+            --accent-color: #3498DB;
+            --success-color: #2ECC71;
+            --warning-color: #F39C12;
+            --danger-color: #E74C3C;
+            --light-color: #ECF0F1;
+            --dark-color: #2C3E50;
+        }
+
+        body {
+            background-color: #f8f9fa;
+        }
+
+        /* .wrapper {
+            display: flex;
+            width: 100%;
+        }
+
+        .sidebar {
+            min-width: 250px;
+            max-width: 250px;
+            background: var(--primary-color);
+            color: #fff;
+            transition: all 0.3s;
+            height: 100vh;
+            position: fixed;
+            z-index: 999;
+        } */
+
+        #content {
+            width: calc(100% - 250px);
+            margin-left: 250px;
+            transition: all 0.3s;
+        }
+
+        .card {
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+            transition: transform 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card-header {
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 10px 10px 0 0 !important;
+            padding: 15px 20px;
+        }
+
+        .form-control, .form-select {
+            border-radius: 5px;
+            padding: 10px 15px;
+            border: 1px solid #ced4da;
+            margin-bottom: 15px;
+        }
+
+        .form-control:focus, .form-select:focus {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 0.25rem rgba(52, 152, 219, 0.25);
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--secondary-color);
+            border-color: var(--secondary-color);
+        }
+
+        .btn-success {
+            background-color: var(--success-color);
+            border-color: var(--success-color);
+        }
+
+        .btn-success:hover {
+            background-color: #27ae60;
+            border-color: #27ae60;
+        }
+
+        .btn-outline-secondary {
+            color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+
+        .btn-outline-secondary:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .section-title {
+            color: var(--primary-color);
+            font-weight: 600;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--accent-color);
+        }
+
+        .form-floating > label {
+            padding: 0.5rem 0.75rem;
+        }
+
+        .form-floating > .form-control {
+            padding: 1rem 0.75rem;
+        }
+
+        .alert-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 9999;
+        }
+
+        .custom-alert {
+            padding: 15px 20px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            min-width: 300px;
+            animation: slideIn 0.5s forwards;
+        }
+
+        @keyframes slideIn {
+            0% {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            100% {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .alert-success {
+            background-color: var(--success-color);
+            color: white;
+        }
+
+        .alert-danger {
+            background-color: var(--danger-color);
+            color: white;
+        }
+
+        .alert-warning {
+            background-color: var(--warning-color);
+            color: white;
+        }
+
+        .close-alert {
+            background: transparent;
+            border: none;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .summary-card {
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .summary-total {
+            font-weight: bold;
+            font-size: 18px;
+            border-top: 1px solid #dee2e6;
+            padding-top: 10px;
+            margin-top: 10px;
+        }
+
+        .product-item {
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            padding: 15px;
+            margin-bottom: 15px;
+            background-color: white;
+        }
+
+        .product-item:hover {
+            background-color: #f8f9fa;
+        }
+
+        .remove-product {
+            color: var(--danger-color);
+            cursor: pointer;
+        }
+
+        .add-product-btn {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrapper">
+        <!-- Sidebar -->
+        <nav id="sidebar" class="sidebar">
+            <div class="sidebar-header">
+                <h3>Management System</h3>
+                <button type="button" id="sidebarCollapse" class="btn d-md-none">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+
+            <ul class="list-unstyled components">
+                <li class="active">
+                    <a href="#" onclick="loadContent('dashboard')">
+                        <i class="fas fa-tachometer-alt"></i> Dashboard
+                    </a>
+                </li>
+                <li>
+                    <!-- <a href="#crmSubmenu" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        <i class="fas fa-users"></i> CRM Module -->
+                        <a href="#" class="dropdown-toggle" onclick="toggleDropdown(event)">
+                            <i class="fas fa-users"></i> CRM Module
+                    </a>
+                    <ul id="crmSubmenu" class="submenu">
+                        <li><a href="../remainder.html">Customer Management & Reminders</a></li>
+                        <!-- <li><a href="proposal.html">2. Proposal Management</a></li> -->
+                        <li><a href="../sales.html">Sales Management Reports</a></li>
+                        <li><a href="../contracts.html">Contracts</a></li>
+                        <li><a href="../project-management.html">Projects & Task Management</a></li>
+                        <!-- <li><a href="project-management.html">Task Management</a></li> -->
+                        <li><a href="../utilities.html">Utilities</a></li>
+                        <li><a href="../support.html">Support System & Expenses</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#inventorySubmenu" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        <i class="fas fa-boxes"></i> Inventory Module
+                    </a>
+
+                </li>
+                <li>
+                    <a href="#purchaseSubmenu" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        <i class="fas fa-shopping-cart"></i> Purchase Module
+                    </a>
+
+                </li>
+                <li>
+                    <a href="#salesSubmenu" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        <i class="fas fa-chart-line"></i> Sales Module
+                    </a>
+                    <ul class="collapse list-unstyled" id="salesSubmenu">
+                         <li><a href="/Sales-Module/TrialQuotation.html"><i class="fas fa-file-alt"></i> Quotation </a></li>
+                             <li><a href="/Sales-Module/orders_page.html"><i class="fas fa-shopping-cart"></i> Orders</a></li>
+                             <li><a href="/Sales-Module/dispatch-page.html"><i class="fas fa-truck"></i> Dispatch</a></li>
+                             <li><a href="/Sales-Module/invoice-page.html"><i class="fas fa-file-invoice"></i> Invoice </a></li>
+                             <li><a href="/Sales-Module/crm.html"><i class="fas fa-chart-bar"></i> CRM and Reports</a></li>
+                             <!-- <li><a href="Sales-Module/Trial_quotation-list .html"><i class="fas fa-chart-bar"></i> Performance</a></li> -->
+                  </ul>
+                </li>
+                    
+                <li>
+                    <a href="#" onclick="loadContent('settings')">
+                        <i class="fas fa-cog"></i> Settings
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- Page Content -->
+        <div id="content">
+            <!-- Top Navigation -->
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <div class="container-fluid">
+                    <button type="button" id="sidebarCollapseBtn" class="btn">
+                        <i class="fas fa-align-left"></i>
+                    </button>
+                    <div class="ms-auto d-flex">
+                        <div class="dropdown me-3">
+                            <button class="btn position-relative" type="button" id="notificationDropdown"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fas fa-bell"></i>
+                                <span
+                                    class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                    3
+                                </span>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="notificationDropdown">
+                                <li><a class="dropdown-item" href="#">New purchase order #1234</a></li>
+                                <li><a class="dropdown-item" href="#">Supplier quotation updated</a></li>
+                                <li><a class="dropdown-item" href="#">Payment due for invoice #5678</a></li>
+                            </ul>
+                        </div>
+                        <div class="dropdown">
+                            <button class="btn d-flex align-items-center" type="button" id="userDropdown"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                <img src="https://via.placeholder.com/30" class="rounded-circle me-2">
+                                <span>Admin</span>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                                <li><a class="dropdown-item" href="#">Profile</a></li>
+                                <li><a class="dropdown-item" href="#">Settings</a></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li><a class="dropdown-item" href="#">Logout</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+
+            <!-- Main Content Area -->
+            <div id="main-content" class="container-fluid">
+                <!-- Dashboard content will be loaded here by default -->
+                <div id="dashboard-content">
+                     <!-- Main Content Area -->
+            <div class="container-fluid py-4">
+                <div class="row mb-4">
+                    <div class="col-md-8">
+                        <h2 class="section-title">
+                            <i class="fas fa-file-invoice me-2"></i> Create New Quotation
+                        </h2>
+                    </div>
+                    <div class="col-md-4 text-end">
+                        <a href="../Sales-Module/Trial_quotation-list .html" class="btn btn-outline-secondary">
+                            <i class="fas fa-list me-2"></i> View Quotation List
+                        </a>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-8">
+                        <form id="TrialQuotationForm">
+                            <div class="card mb-4">
+                                <div class="card-header">
+                                    <h5 class="mb-0"><i class="fas fa-user me-2"></i> Customer Information</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-floating mb-3">
+                                                <input type="text" class="form-control" id="customerName" placeholder="Customer Name" required>
+                                                <label for="customerName">Customer Name</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-floating mb-3">
+                                                <input type="date" class="form-control" id="quotationDate" required>
+                                                <label for="quotationDate">Quotation Date</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-floating mb-3">
+                                                <input type="email" class="form-control" id="customerEmail" placeholder="Customer Email" required>
+                                                <label for="customerEmail">Customer Email</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-floating mb-3">
+                                                <input type="text" class="form-control" id="customerPhone" placeholder="Customer Phone Number" required>
+                                                <label for="customerPhone">Customer Phone</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-floating mb-3">
+                                                <input type="text" class="form-control" id="customerAddress" placeholder="Customer Address">
+                                                <label for="customerAddress">Customer Address (Optional)</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card mb-4">
+                                <div class="card-header">
+                                    <h5 class="mb-0"><i class="fas fa-box me-2"></i> Product Information</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div id="productContainer">
+                                        <div class="product-item" data-index="0">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-floating mb-3">
+                                                        <input type="text" class="form-control product-name" placeholder="Product Name" required>
+                                                        <label>Product Name</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-floating mb-3">
+                                                        <select class="form-select product-category">
+                                                            <option value="">Select Category</option>
+                                                            <option value="Electronics">Electronics</option>
+                                                            <option value="Furniture">Furniture</option>
+                                                            <option value="Clothing">Clothing</option>
+                                                            <option value="Software">Software</option>
+                                                            <option value="Services">Services</option>
+                                                        </select>
+                                                        <label>Category (Optional)</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="form-floating mb-3">
+                                                        <textarea class="form-control product-description" placeholder="Product Description" style="height: 100px"></textarea>
+                                                        <label>Product Description</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    <div class="form-floating mb-3">
+                                                        <input type="number" class="form-control product-quantity" placeholder="Quantity" value="1" min="1" required>
+                                                        <label>Quantity</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="form-floating mb-3">
+                                                        <input type="number" class="form-control product-price" placeholder="Unit Price" step="0.01" min="0" required>
+                                                        <label>Unit Price ($)</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="form-floating mb-3">
+                                                        <input type="number" class="form-control product-discount" placeholder="Discount" value="0" min="0" max="100">
+                                                        <label>Discount (%)</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="form-floating mb-3">
+                                                        <input type="number" class="form-control product-tax" placeholder="Tax" value="0" min="0" max="100">
+                                                        <label>Tax (%)</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button type="button" class="btn btn-outline-primary add-product-btn" id="addProductBtn">
+                                        <i class="fas fa-plus me-2"></i> Add Another Product
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="card mb-4">
+                                <div class="card-header">
+                                    <h5 class="mb-0"><i class="fas fa-file-alt me-2"></i> Additional Information</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-floating mb-3">
+                                                <select class="form-select" id="paymentTerms">
+                                                    <option value="Net 30">Net 30</option>
+                                                    <option value="Net 15">Net 15</option>
+                                                    <option value="Net 45">Net 45</option>
+                                                    <option value="Due on Receipt">Due on Receipt</option>
+                                                </select>
+                                                <label for="paymentTerms">Payment Terms</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-floating mb-3">
+                                                <input type="date" class="form-control" id="validUntil">
+                                                <label for="validUntil">Valid Until</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-floating mb-3">
+                                                <textarea class="form-control" id="notes" placeholder="Notes" style="height: 100px"></textarea>
+                                                <label for="notes">Notes or Terms & Conditions</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="d-flex justify-content-between">
+                                <button type="button" class="btn btn-outline-secondary" id="resetBtn">
+                                    <i class="fas fa-undo me-2"></i> Reset Form
+                                </button>
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-save me-2"></i> Save Quotation
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="col-lg-4">
+                        <div class="card sticky-top" style="top: 20px;">
+                            <div class="card-header">
+                                <h5 class="mb-0"><i class="fas fa-calculator me-2"></i> Quotation Summary</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="summary-card">
+                                    <div id="productSummary">
+                                        <!-- Product summary items will be added here -->
+                                    </div>
+                                    <hr>
+                                    <div class="summary-item">
+                                        <span>Subtotal:</span>
+                                        <span id="subtotal">$0.00</span>
+                                    </div>
+                                    <div class="summary-item">
+                                        <span>Total Discount:</span>
+                                        <span id="totalDiscount">$0.00</span>
+                                    </div>
+                                    <div class="summary-item">
+                                        <span>Total Tax:</span>
+                                        <span id="totalTax">$0.00</span>
+                                    </div>
+                                    <div class="summary-total">
+                                        <span>Grand Total:</span>
+                                        <span id="grandTotal">$0.00</span>
+                                    </div>
+                                </div>
+                                <div class="mt-4">
+                                    <div class="d-grid">
+                                        <button type="button" class="btn btn-success" id="previewBtn">
+                                            <i class="fas fa-eye me-2"></i> Preview Quotation
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Alert Container -->
+            <div class="alert-container" id="alertContainer"></div>
+        </div>
+    </div>
+
+    <!-- Preview Modal -->
+    <div class="modal fade" id="previewModal" tabindex="-1" aria-labelledby="previewModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title" id="previewModalLabel">Quotation Preview</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="previewContent">
+                    <!-- Preview content will be inserted here -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="printPreviewBtn">
+                        <i class="fas fa-print me-2"></i> Print
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+  </div>
+             
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize date fields with current date
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('quotationDate').value = today;
+            
+            // Set valid until date to 30 days from now
+            const validUntil = new Date();
+            validUntil.setDate(validUntil.getDate() + 30);
+            document.getElementById('validUntil').value = validUntil.toISOString().split('T')[0];
+            
+            // Check if we're in edit mode
+            const editIndex = localStorage.getItem('editQuotationIndex');
+            if (editIndex !== null) {
+                const editQuotation = JSON.parse(localStorage.getItem('editQuotation'));
+                if (editQuotation) {
+                    populateFormForEdit(editQuotation);
+                    showAlert('Editing existing quotation', 'warning');
+                }
+            }
+            
+            // Add event listeners
+            document.getElementById('TrialQuotationForm').addEventListener('submit', handleFormSubmit);
+            document.getElementById('addProductBtn').addEventListener('click', addProductItem);
+            document.getElementById('resetBtn').addEventListener('click', resetForm);
+            document.getElementById('previewBtn').addEventListener('click', showPreview);
+            document.getElementById('printPreviewBtn').addEventListener('click', printPreview);
+            
+            // Add event listeners for calculation
+            document.querySelectorAll('.product-quantity, .product-price, .product-discount, .product-tax').forEach(input => {
+                input.addEventListener('input', updateCalculations);
+            });
+            
+            // Initial calculation
+            updateCalculations();
+        });
+        
+        // Handle form submission
+        function handleFormSubmit(event) {
+            event.preventDefault();
+            
+            // Validate form
+            if (!validateForm()) {
+                return;
+            }
+            
+            // Collect customer data
+            const customerData = {
+                quotationDate: document.getElementById('quotationDate').value,
+                customer: document.getElementById('customerName').value.trim(),
+                email: document.getElementById('customerEmail').value.trim(),
+                phone: document.getElementById('customerPhone').value.trim(),
+                address: document.getElementById('customerAddress').value.trim(),
+                paymentTerms: document.getElementById('paymentTerms').value,
+                validUntil: document.getElementById('validUntil').value,
+                notes: document.getElementById('notes').value.trim()
+            };
+            
+            // Collect products data
+            const products = [];
+            document.querySelectorAll('.product-item').forEach(item => {
+                const product = {
+                    name: item.querySelector('.product-name').value.trim(),
+                    description: item.querySelector('.product-description').value.trim(),
+                    category: item.querySelector('.product-category').value,
+                    quantity: parseInt(item.querySelector('.product-quantity').value) || 0,
+                    price: parseFloat(item.querySelector('.product-price').value) || 0,
+                    discount: parseFloat(item.querySelector('.product-discount').value) || 0,
+                    tax: parseFloat(item.querySelector('.product-tax').value) || 0
+                };
+                
+                // Calculate product totals
+                const subtotal = product.quantity * product.price;
+                const discountAmount = (subtotal * product.discount) / 100;
+                const taxAmount = ((subtotal - discountAmount) * product.tax) / 100;
+                const total = subtotal - discountAmount + taxAmount;
+                
+                product.subtotal = subtotal;
+                product.discountAmount = discountAmount;
+                product.taxAmount = taxAmount;
+                product.total = total;
+                
+                products.push(product);
+            });
+            
+            // Calculate totals
+            const subtotal = products.reduce((sum, product) => sum + product.subtotal, 0);
+            const totalDiscount = products.reduce((sum, product) => sum + product.discountAmount, 0);
+            const totalTax = products.reduce((sum, product) => sum + product.taxAmount, 0);
+            const finalPrice = subtotal - totalDiscount + totalTax;
+            
+            // Create quotation object
+            const quotation = {
+                ...customerData,
+                products,
+                subtotal,
+                totalDiscount,
+                totalTax,
+                finalPrice
+            };
+            
+            // Check if we're editing an existing quotation
+            const editIndex = localStorage.getItem('editQuotationIndex');
+            let quotations = JSON.parse(localStorage.getItem('quotations')) || [];
+            
+            if (editIndex !== null) {
+                // Update existing quotation
+                quotations[editIndex] = quotation;
+                localStorage.removeItem('editQuotationIndex');
+                localStorage.removeItem('editQuotation');
+                showAlert('Quotation updated successfully!', 'success');
+            } else {
+                // Add new quotation
+                quotations.push(quotation);
+                showAlert('Quotation saved successfully!', 'success');
+            }
+            
+            // Save to localStorage
+            localStorage.setItem('quotations', JSON.stringify(quotations));
+            
+            // Reset form
+            resetForm();
+            
+            // Redirect to quotation list after a delay
+            setTimeout(() => {
+                window.location.href = 'Trial_quotation-list .html';
+            }, 2000);
+        }
+        
+        // Validate form
+        function validateForm() {
+            let isValid = true;
+            
+            // Check customer information
+            const requiredFields = ['customerName', 'customerEmail', 'customerPhone', 'quotationDate'];
+            requiredFields.forEach(field => {
+                const input = document.getElementById(field);
+                if (!input.value.trim()) {
+                    input.classList.add('is-invalid');
+                    isValid = false;
+                } else {
+                    input.classList.remove('is-invalid');
+                }
+            });
+            
+            // Check product information
+            const productItems = document.querySelectorAll('.product-item');
+            productItems.forEach(item => {
+                const nameInput = item.querySelector('.product-name');
+                const quantityInput = item.querySelector('.product-quantity');
+                const priceInput = item.querySelector('.product-price');
+                
+                if (!nameInput.value.trim()) {
+                    nameInput.classList.add('is-invalid');
+                    isValid = false;
+                } else {
+                    nameInput.classList.remove('is-invalid');
+                }
+                
+                if (!quantityInput.value || parseInt(quantityInput.value) <= 0) {
+                    quantityInput.classList.add('is-invalid');
+                    isValid = false;
+                } else {
+                    quantityInput.classList.remove('is-invalid');
+                }
+                
+                if (!priceInput.value || parseFloat(priceInput.value) <= 0) {
+                    priceInput.classList.add('is-invalid');
+                    isValid = false;
+                } else {
+                    priceInput.classList.remove('is-invalid');
+                }
+            });
+            
+            if (!isValid) {
+                showAlert('Please fill in all required fields correctly', 'danger');
+            }
+            
+            return isValid;
+        }
+        
+        // Add product item
+        function addProductItem() {
+            const productContainer = document.getElementById('productContainer');
+            const productItems = document.querySelectorAll('.product-item');
+            const newIndex = productItems.length;
+            
+            const productItem = document.createElement('div');
+            productItem.className = 'product-item';
+            productItem.dataset.index = newIndex;
+            
+            productItem.innerHTML = `
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <h6 class="mb-0">Product #${newIndex + 1}</h6>
+                    <button type="button" class="btn btn-sm btn-outline-danger remove-product" onclick="removeProductItem(${newIndex})">
+                        <i class="fas fa-times"></i> Remove
+                    </button>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control product-name" placeholder="Product Name" required>
+                            <label>Product Name</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-floating mb-3">
+                            <select class="form-select product-category">
+                                <option value="">Select Category</option>
+                                <option value="Electronics">Electronics</option>
+                                <option value="Furniture">Furniture</option>
+                                <option value="Clothing">Clothing</option>
+                                <option value="Software">Software</option>
+                                <option value="Services">Services</option>
+                            </select>
+                            <label>Category (Optional)</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-floating mb-3">
+                            <textarea class="form-control product-description" placeholder="Product Description" style="height: 100px"></textarea>
+                            <label>Product Description</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-floating mb-3">
+                            <input type="number" class="form-control product-quantity" placeholder="Quantity" value="1" min="1" required>
+                            <label>Quantity</label>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-floating mb-3">
+                            <input type="number" class="form-control product-price" placeholder="Unit Price" step="0.01" min="0" required>
+                            <label>Unit Price ($)</label>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-floating mb-3">
+                            <input type="number" class="form-control product-discount" placeholder="Discount" value="0" min="0" max="100">
+                            <label>Discount (%)</label>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-floating mb-3">
+                            <input type="number" class="form-control product-tax" placeholder="Tax" value="0" min="0" max="100">
+                            <label>Tax (%)</label>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            productContainer.appendChild(productItem);
+            
+            // Add event listeners for calculation
+            productItem.querySelectorAll('.product-quantity, .product-price, .product-discount, .product-tax').forEach(input => {
+                input.addEventListener('input', updateCalculations);
+            });
+            
+            // Update calculations
+            updateCalculations();
+        }
+        
+        // Remove product item
+        function removeProductItem(index) {
+            const productItems = document.querySelectorAll('.product-item');
+            if (productItems.length <= 1) {
+                showAlert('At least one product is required', 'warning');
+                return;
+            }
+            
+            const itemToRemove = document.querySelector(`.product-item[data-index="${index}"]`);
+            if (itemToRemove) {
+                itemToRemove.remove();
+                
+                // Renumber remaining items
+                document.querySelectorAll('.product-item').forEach((item, idx) => {
+                    item.dataset.index = idx;
+                    const titleElement = item.querySelector('h6');
+                    if (titleElement) {
+                        titleElement.textContent = `Product #${idx + 1}`;
+                    }
+                    
+                    const removeButton = item.querySelector('.remove-product');
+                    if (removeButton) {
+                        removeButton.setAttribute('onclick', `removeProductItem(${idx})`);
+                    }
+                });
+                
+                // Update calculations
+                updateCalculations();
+            }
+        }
+        
+        // Update calculations
+        function updateCalculations() {
+            let subtotal = 0;
+            let totalDiscount = 0;
+            let totalTax = 0;
+            
+            // Clear product summary
+            const productSummary = document.getElementById('productSummary');
+            productSummary.innerHTML = '';
+            
+            // Calculate for each product
+            document.querySelectorAll('.product-item').forEach((item, index) => {
+                const quantity = parseInt(item.querySelector('.product-quantity').value) || 0;
+                const price = parseFloat(item.querySelector('.product-price').value) || 0;
+                const discount = parseFloat(item.querySelector('.product-discount').value) || 0;
+                const tax = parseFloat(item.querySelector('.product-tax').value) || 0;
+                
+                const productSubtotal = quantity * price;
+                const productDiscount = (productSubtotal * discount) / 100;
+                const productTax = ((productSubtotal - productDiscount) * tax) / 100;
+                const productTotal = productSubtotal - productDiscount + productTax;
+                
+                subtotal += productSubtotal;
+                totalDiscount += productDiscount;
+                totalTax += productTax;
+                
+                // Add to product summary
+                const productName = item.querySelector('.product-name').value.trim() || `Product #${index + 1}`;
+                const summaryItem = document.createElement('div');
+                summaryItem.className = 'summary-item';
+                summaryItem.innerHTML = `
+                    <span>${productName} (x${quantity}):</span>
+                    <span>$${productTotal.toFixed(2)}</span>
+                `;
+                productSummary.appendChild(summaryItem);
+            });
+            
+            const grandTotal = subtotal - totalDiscount + totalTax;
+            
+            // Update summary display
+            document.getElementById('subtotal').textContent = `$${subtotal.toFixed(2)}`;
+            document.getElementById('totalDiscount').textContent = `$${totalDiscount.toFixed(2)}`;
+            document.getElementById('totalTax').textContent = `$${totalTax.toFixed(2)}`;
+            document.getElementById('grandTotal').textContent = `$${grandTotal.toFixed(2)}`;
+        }
+        
+        // Reset form
+        function resetForm() {
+            if (confirm('Are you sure you want to reset the form? All unsaved data will be lost.')) {
+                document.getElementById('TrialQuotationForm').reset();
+                
+                // Reset dates
+                const today = new Date().toISOString().split('T')[0];
+                document.getElementById('quotationDate').value = today;
+                
+                const validUntil = new Date();
+                validUntil.setDate(validUntil.getDate() + 30);
+                document.getElementById('validUntil').value = validUntil.toISOString().split('T')[0];
+                
+                // Reset product container
+                const productContainer = document.getElementById('productContainer');
+                productContainer.innerHTML = `
+                    <div class="product-item" data-index="0">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control product-name" placeholder="Product Name" required>
+                                    <label>Product Name</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-floating mb-3">
+                                    <select class="form-select product-category">
+                                        <option value="">Select Category</option>
+                                        <option value="Electronics">Electronics</option>
+                                        <option value="Furniture">Furniture</option>
+                                        <option value="Clothing">Clothing</option>
+                                        <option value="Software">Software</option>
+                                        <option value="Services">Services</option>
+                                    </select>
+                                    <label>Category (Optional)</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-floating mb-3">
+                                    <textarea class="form-control product-description" placeholder="Product Description" style="height: 100px"></textarea>
+                                    <label>Product Description</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-floating mb-3">
+                                    <input type="number" class="form-control product-quantity" placeholder="Quantity" value="1" min="1" required>
+                                    <label>Quantity</label>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-floating mb-3">
+                                    <input type="number" class="form-control product-price" placeholder="Unit Price" step="0.01" min="0" required>
+                                    <label>Unit Price ($)</label>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-floating mb-3">
+                                    <input type="number" class="form-control product-discount" placeholder="Discount" value="0" min="0" max="100">
+                                    <label>Discount (%)</label>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-floating mb-3">
+                                    <input type="number" class="form-control product-tax" placeholder="Tax" value="0" min="0" max="100">
+                                    <label>Tax (%)</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                // Add event listeners for calculation
+                document.querySelectorAll('.product-quantity, .product-price, .product-discount, .product-tax').forEach(input => {
+                    input.addEventListener('input', updateCalculations);
+                });
+                
+                // Clear edit mode
+                localStorage.removeItem('editQuotationIndex');
+                localStorage.removeItem('editQuotation');
+                
+                // Update calculations
+                updateCalculations();
+                
+                showAlert('Form has been reset', 'warning');
+            }
+        }
+        
+        // Populate form for edit
+        function populateFormForEdit(quotation) {
+            // Set customer information
+            document.getElementById('quotationDate').value = quotation.quotationDate;
+            document.getElementById('customerName').value = quotation.customer;
+            document.getElementById('customerEmail').value = quotation.email;
+            document.getElementById('customerPhone').value = quotation.phone;
+            document.getElementById('customerAddress').value = quotation.address || '';
+            document.getElementById('paymentTerms').value = quotation.paymentTerms || 'Net 30';
+            document.getElementById('validUntil').value = quotation.validUntil || '';
+            document.getElementById('notes').value = quotation.notes || '';
+            
+            // Set product information
+            const productContainer = document.getElementById('productContainer');
+            productContainer.innerHTML = '';
+            
+            if (quotation.products && quotation.products.length > 0) {
+                quotation.products.forEach((product, index) => {
+                    const productItem = document.createElement('div');
+                    productItem.className = 'product-item';
+                    productItem.dataset.index = index;
+                    
+                    const removeButton = index > 0 ? `
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <h6 class="mb-0">Product #${index + 1}</h6>
+                            <button type="button" class="btn btn-sm btn-outline-danger remove-product" onclick="removeProductItem(${index})">
+                                <i class="fas fa-times"></i> Remove
+                            </button>
+                        </div>
+                    ` : '';
+                    
+                    productItem.innerHTML = `
+                        ${removeButton}
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control product-name" placeholder="Product Name" value="${product.name || ''}" required>
+                                    <label>Product Name</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-floating mb-3">
+                                    <select class="form-select product-category">
+                                        <option value="">Select Category</option>
+                                        <option value="Electronics" ${product.category === 'Electronics' ? 'selected' : ''}>Electronics</option>
+                                        <option value="Furniture" ${product.category === 'Furniture' ? 'selected' : ''}>Furniture</option>
+                                        <option value="Clothing" ${product.category === 'Clothing' ? 'selected' : ''}>Clothing</option>
+                                        <option value="Software" ${product.category === 'Software' ? 'selected' : ''}>Software</option>
+                                        <option value="Services" ${product.category === 'Services' ? 'selected' : ''}>Services</option>
+                                    </select>
+                                    <label>Category (Optional)</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-floating mb-3">
+                                    <textarea class="form-control product-description" placeholder="Product Description" style="height: 100px">${product.description || ''}</textarea>
+                                    <label>Product Description</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-floating mb-3">
+                                    <input type="number" class="form-control product-quantity" placeholder="Quantity" value="${product.quantity || 1}" min="1" required>
+                                    <label>Quantity</label>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-floating mb-3">
+                                    <input type="number" class="form-control product-price" placeholder="Unit Price" step="0.01" min="0" value="${product.price || 0}" required>
+                                    <label>Unit Price ($)</label>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-floating mb-3">
+                                    <input type="number" class="form-control product-discount" placeholder="Discount" value="${product.discount || 0}" min="0" max="100">
+                                    <label>Discount (%)</label>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-floating mb-3">
+                                    <input type="number" class="form-control product-tax" placeholder="Tax" value="${product.tax || 0}" min="0" max="100">
+                                    <label>Tax (%)</label>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    
+                    productContainer.appendChild(productItem);
+                });
+            } else {
+                // If no products, add a default product item
+                const productItem = document.createElement('div');
+                productItem.className = 'product-item';
+                productItem.dataset.index = 0;
+                
+                productItem.innerHTML = `
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control product-name" placeholder="Product Name" required>
+                                <label>Product Name</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-floating mb-3">
+                                <select class="form-select product-category">
+                                    <option value="">Select Category</option>
+                                    <option value="Electronics">Electronics</option>
+                                    <option value="Furniture">Furniture</option>
+                                    <option value="Clothing">Clothing</option>
+                                    <option value="Software">Software</option>
+                                    <option value="Services">Services</option>
+                                </select>
+                                <label>Category (Optional)</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-floating mb-3">
+                                <textarea class="form-control product-description" placeholder="Product Description" style="height: 100px"></textarea>
+                                <label>Product Description</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-floating mb-3">
+                                <input type="number" class="form-control product-quantity" placeholder="Quantity" value="1" min="1" required>
+                                <label>Quantity</label>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-floating mb-3">
+                                <input type="number" class="form-control product-price" placeholder="Unit Price" step="0.01" min="0" required>
+                                <label>Unit Price ($)</label>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-floating mb-3">
+                                <input type="number" class="form-control product-discount" placeholder="Discount" value="0" min="0" max="100">
+                                <label>Discount (%)</label>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-floating mb-3">
+                                <input type="number" class="form-control product-tax" placeholder="Tax" value="0" min="0" max="100">
+                                <label>Tax (%)</label>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                productContainer.appendChild(productItem);
+            }
+            
+            // Add event listeners for calculation
+            document.querySelectorAll('.product-quantity, .product-price, .product-discount, .product-tax').forEach(input => {
+                input.addEventListener('input', updateCalculations);
+            });
+            
+            // Update calculations
+            updateCalculations();
+        }
+        
+        // Show preview
+        function showPreview() {
+            // Validate form
+            if (!validateForm()) {
+                return;
+            }
+            
+            // Collect customer data
+            const customerName = document.getElementById('customerName').value.trim();
+            const customerEmail = document.getElementById('customerEmail').value.trim();
+            const customerPhone = document.getElementById('customerPhone').value.trim();
+            const customerAddress = document.getElementById('customerAddress').value.trim();
+            const quotationDate = document.getElementById('quotationDate').value;
+            const validUntil = document.getElementById('validUntil').value;
+            const paymentTerms = document.getElementById('paymentTerms').value;
+            const notes = document.getElementById('notes').value.trim();
+            
+            // Collect products data
+            const products = [];
+            let subtotal = 0;
+            let totalDiscount = 0;
+            let totalTax = 0;
+            
+            document.querySelectorAll('.product-item').forEach(item => {
+                const name = item.querySelector('.product-name').value.trim();
+                const description = item.querySelector('.product-description').value.trim();
+                const category = item.querySelector('.product-category').value;
+                const quantity = parseInt(item.querySelector('.product-quantity').value) || 0;
+                const price = parseFloat(item.querySelector('.product-price').value) || 0;
+                const discount = parseFloat(item.querySelector('.product-discount').value) || 0;
+                const tax = parseFloat(item.querySelector('.product-tax').value) || 0;
+                
+                const productSubtotal = quantity * price;
+                const productDiscount = (productSubtotal * discount) / 100;
+                const productTax = ((productSubtotal - productDiscount) * tax) / 100;
+                const productTotal = productSubtotal - productDiscount + productTax;
+                
+                subtotal += productSubtotal;
+                totalDiscount += productDiscount;
+                totalTax += productTax;
+                
+                products.push({
+                    name,
+                    description,
+                    category,
+                    quantity,
+                    price,
+                    discount,
+                    tax,
+                    productSubtotal,
+                    productDiscount,
+                    productTax,
+                    productTotal
+                });
+            });
+            
+            const grandTotal = subtotal - totalDiscount + totalTax;
+            
+            // Generate preview HTML
+            const previewContent = document.getElementById('previewContent');
+            previewContent.innerHTML = `
+                <div class="container-fluid">
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <h2 class="mb-3">QUOTATION</h2>
+                            <p class="mb-1"><strong>Date:</strong> ${formatDate(quotationDate)}</p>
+                            <p class="mb-1"><strong>Valid Until:</strong> ${formatDate(validUntil)}</p>
+                            <p class="mb-1"><strong>Payment Terms:</strong> ${paymentTerms}</p>
+                        </div>
+                        <div class="col-md-6 text-md-end">
+                            <h4 class="mb-3">Your Company Name</h4>
+                            <p class="mb-1">123 Company Street</p>
+                            <p class="mb-1">Business City, ST 12345</p>
+                            <p class="mb-1">Phone: (123) 456-7890</p>
+                            <p class="mb-1">Email: info@yourcompany.com</p>
+                        </div>
+                    </div>
+                    
+                    <hr class="my-4">
+                    
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <h5 class="mb-3">Bill To:</h5>
+                            <p class="mb-1"><strong>${customerName}</strong></p>
+                            <p class="mb-1">${customerAddress}</p>
+                            <p class="mb-1">Phone: ${customerPhone}</p>
+                            <p class="mb-1">Email: ${customerEmail}</p>
+                        </div>
+                    </div>
+                    
+                    <div class="table-responsive mb-4">
+                        <table class="table table-bordered">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>#</th>
+                                    <th>Product/Service</th>
+                                    <th>Description</th>
+                                    <th class="text-end">Qty</th>
+                                    <th class="text-end">Unit Price</th>
+                                    <th class="text-end">Discount</th>
+                                    <th class="text-end">Tax</th>
+                                    <th class="text-end">Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${products.map((product, index) => `
+                                    <tr>
+                                        <td>${index + 1}</td>
+                                        <td>${product.name}</td>
+                                        <td>${product.description}</td>
+                                        <td class="text-end">${product.quantity}</td>
+                                        <td class="text-end">$${product.price.toFixed(2)}</td>
+                                        <td class="text-end">${product.discount}%</td>
+                                        <td class="text-end">${product.tax}%</td>
+                                        <td class="text-end">$${product.productTotal.toFixed(2)}</td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="mb-0">Notes</h5>
+                                </div>
+                                <div class="card-body">
+                                    <p>${notes || 'No additional notes.'}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="mb-0">Summary</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between mb-2">
+                                        <span>Subtotal:</span>
+                                        <span>$${subtotal.toFixed(2)}</span>
+                                    </div>
+                                    <div class="d-flex justify-content-between mb-2">
+                                        <span>Discount:</span>
+                                        <span>$${totalDiscount.toFixed(2)}</span>
+                                    </div>
+                                    <div class="d-flex justify-content-between mb-2">
+                                        <span>Tax:</span>
+                                        <span>$${totalTax.toFixed(2)}</span>
+                                    </div>
+                                    <hr>
+                                    <div class="d-flex justify-content-between">
+                                        <h5 class="mb-0">Total:</h5>
+                                        <h5 class="mb-0">$${grandTotal.toFixed(2)}</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row mt-4">
+                        <div class="col-md-12 text-center">
+                            <p>Thank you for your business!</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            // Show modal
+            const previewModal = new bootstrap.Modal(document.getElementById('previewModal'));
+            previewModal.show();
+        }
+        
+        // Print preview
+        function printPreview() {
+            const printContents = document.getElementById('previewContent').innerHTML;
+            const originalContents = document.body.innerHTML;
+            
+            document.body.innerHTML = `
+                <div style="padding: 20px;">
+                    ${printContents}
+                </div>
+            `;
+            
+            window.print();
+            document.body.innerHTML = originalContents;
+            
+            // Reinitialize event listeners
+            document.getElementById('TrialQuotationForm').addEventListener('submit', handleFormSubmit);
+            document.getElementById('addProductBtn').addEventListener('click', addProductItem);
+            document.getElementById('resetBtn').addEventListener('click', resetForm);
+            document.getElementById('previewBtn').addEventListener('click', showPreview);
+            document.getElementById('printPreviewBtn').addEventListener('click', printPreview);
+            
+            document.querySelectorAll('.product-quantity, .product-price, .product-discount, .product-tax').forEach(input => {
+                input.addEventListener('input', updateCalculations);
+            });
+            
+            // Show modal again
+            const previewModal = new bootstrap.Modal(document.getElementById('previewModal'));
+            previewModal.show();
+        }
+        
+        // Format date
+        function formatDate(dateString) {
+            if (!dateString) return '';
+            
+            const date = new Date(dateString);
+            return date.toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+        }
+        
+        // Show alert
+        function showAlert(message, type) {
+            const alertContainer = document.getElementById('alertContainer');
+            const alertId = 'alert-' + Date.now();
+            
+            const alertElement = document.createElement('div');
+            alertElement.className = `custom-alert alert-${type}`;
+            alertElement.id = alertId;
+            alertElement.innerHTML = `
+                <div>${message}</div>
+                <button type="button" class="close-alert" onclick="closeAlert('${alertId}')">&times;</button>
+            `;
+            
+            alertContainer.appendChild(alertElement);
+            
+            // Auto close after 5 seconds
+            setTimeout(() => {
+                closeAlert(alertId);
+            }, 5000);
+        }
+        
+        // Close alert
+        function closeAlert(alertId) {
+            const alertElement = document.getElementById(alertId);
+            if (alertElement) {
+                alertElement.style.opacity = '0';
+                setTimeout(() => {
+                    alertElement.remove();
+                }, 500);
+            }
+        }
+    </script>
+
+        <!-- Bootstrap JS Bundle with Popper -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Chart.js -->
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <!-- Custom JS -->
+        <script src="../index.js"></script>
+</body>
+
+</html>

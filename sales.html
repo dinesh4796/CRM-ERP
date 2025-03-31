@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sales CRM Dashboard</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="sales.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="wrapper">
+        <!-- Sidebar -->
+        <nav id="sidebar" class="sidebar">
+            <div class="sidebar-header">
+                <h3>Management System</h3>
+                <button type="button" id="sidebarCollapse" class="btn d-md-none">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+
+            <ul class="list-unstyled components">
+                <li class="active">
+                    <a href="#" onclick="loadContent('dashboard')">
+                        <i class="fas fa-tachometer-alt"></i> Dashboard
+                    </a>
+                </li>
+                <li>
+                    <!-- <a href="#crmSubmenu" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        <i class="fas fa-users"></i> CRM Module -->
+                        <a href="#" class="dropdown-toggle" onclick="toggleDropdown(event)">
+                            <i class="fas fa-users"></i> CRM Module
+                    </a>
+                    <ul id="crmSubmenu" class="submenu">
+                        <li><a href="remainder.html">Customer Management & Reminders</a></li>
+                        <!-- <li><a href="proposal.html">2. Proposal Management</a></li> -->
+                        <li><a href="sales.html">Sales Management Reports</a></li>
+                        <li><a href="contracts.html">Contracts</a></li>
+                        <li><a href="project-management.html">Projects & Task Management</a></li>
+                        <!-- <li><a href="project-management.html">Task Management</a></li> -->
+                        <li><a href="utilities.html">Utilities</a></li>
+                        <li><a href="support.html">Support System & Expenses</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#inventorySubmenu" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        <i class="fas fa-boxes"></i> Inventory Module
+                    </a>
+
+                </li>
+                <li>
+                    <a href="#purchaseSubmenu" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        <i class="fas fa-shopping-cart"></i> Purchase Module
+                    </a>
+
+                </li>
+                <li>
+                    <a href="#salesSubmenu" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        <i class="fas fa-chart-line"></i> Sales Module
+                    </a>
+                    <ul class="collapse list-unstyled" id="salesSubmenu">
+                         <li><a href="Sales-Module/TrialQuotation.html"><i class="fas fa-file-alt"></i> Quotation </a></li>
+                             <li><a href="Sales-Module/orders_page.html"><i class="fas fa-shopping-cart"></i> Orders</a></li>
+                             <li><a href="Sales-Module/dispatch-page.html"><i class="fas fa-truck"></i> Dispatch</a></li>
+                             <li><a href="Sales-Module/invoice-page.html"><i class="fas fa-file-invoice"></i> Invoice </a></li>
+                             <li><a href="Sales-Module/crm.html"><i class="fas fa-chart-bar"></i> CRM and Reports</a></li>
+                             <!-- <li><a href="Sales-Module/Trial_quotation-list .html"><i class="fas fa-chart-bar"></i> Performance</a></li> -->
+                  </ul>
+                </li>
+                    
+                <li>
+                    <a href="#" onclick="loadContent('settings')">
+                        <i class="fas fa-cog"></i> Settings
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- Page Content -->
+        <div id="content">
+            <!-- Top Navigation -->
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <div class="container-fluid">
+                    <button type="button" id="sidebarCollapseBtn" class="btn">
+                        <i class="fas fa-align-left"></i>
+                    </button>
+                    <div class="ms-auto d-flex">
+                        <div class="dropdown me-3">
+                            <button class="btn position-relative" type="button" id="notificationDropdown"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fas fa-bell"></i>
+                                <span
+                                    class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                    3
+                                </span>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="notificationDropdown">
+                                <li><a class="dropdown-item" href="#">New purchase order #1234</a></li>
+                                <li><a class="dropdown-item" href="#">Supplier quotation updated</a></li>
+                                <li><a class="dropdown-item" href="#">Payment due for invoice #5678</a></li>
+                            </ul>
+                        </div>
+                        <div class="dropdown">
+                            <button class="btn d-flex align-items-center" type="button" id="userDropdown"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                <img src="https://via.placeholder.com/30" class="rounded-circle me-2">
+                                <span>Admin</span>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                                <li><a class="dropdown-item" href="#">Profile</a></li>
+                                <li><a class="dropdown-item" href="#">Settings</a></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li><a class="dropdown-item" href="#">Logout</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+
+            <!-- Main Content Area -->
+            <div id="main-content" class="container-fluid">
+                <!-- Dashboard content will be loaded here by default -->
+                <div id="dashboard-content">
+                    <!-- <header class="header">
+                        <div class="container header-container">
+                            <h1 class="logo">Sales CRM</h1> 
+                            <div class="date-picker">
+                                <input type="date" id="start-date" value="2023-01-01">
+                                <span>to</span>
+                                <input type="date" id="end-date" value="2023-10-31">
+                                <button id="apply-date" class="btn btn-primary">Apply</button>
+                            </div>
+                        </div>
+                    </header> -->
+                
+                    <main class="main-content">
+                        <div class="container">
+                            <div class="dashboard-header">
+                                <h2 class="dashboard-title">Sales Reports</h2>
+                            </div>
+                
+                            <div class="tabs">
+                                <div class="tab-header">
+                                    <button class="tab-btn active" data-tab="overview">Overview</button>
+                                    <button class="tab-btn" data-tab="analytics">Analytics</button>
+                                    <button class="tab-btn" data-tab="reports">Reports</button>
+                                    <button class="tab-btn" data-tab="team">Team</button>
+                                </div>
+                
+                                <div class="tab-content">
+                                    <!-- Overview Tab -->
+                                    <div class="tab-pane active" id="overview">
+                                        <!-- KPI Cards -->
+                                        <div class="kpi-cards">
+                                            <div class="card kpi-card">
+                                                <div class="card-header">
+                                                    <h3 class="card-title">Total Revenue</h3>
+                                                    <span class="card-icon">₹</span>
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="kpi-value">₹35,18,542.50</div>
+                                                    <p class="kpi-change positive">
+                                                        +20.1% from last month
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <div class="card kpi-card">
+                                                <div class="card-header">
+                                                    <h3 class="card-title">New Customers</h3>
+                                                    <span class="card-icon">👥</span>
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="kpi-value">+2,350</div>
+                                                    <p class="kpi-change positive">
+                                                        +18.2% from last month
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <div class="card kpi-card">
+                                                <div class="card-header">
+                                                    <h3 class="card-title">Sales</h3>
+                                                    <span class="card-icon">🛒</span>
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="kpi-value">+12,234</div>
+                                                    <p class="kpi-change positive">
+                                                        +12.2% from last month
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <div class="card kpi-card">
+                                                <div class="card-header">
+                                                    <h3 class="card-title">Active Deals</h3>
+                                                    <span class="card-icon">📈</span>
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="kpi-value">573</div>
+                                                    <p class="kpi-change negative">
+                                                        -4.5% from last month
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                
+                                        <!-- Charts Row 1 -->
+                                        <div class="charts-row">
+                                            <div class="card chart-card revenue-chart-card">
+                                                <div class="card-header">
+                                                    <h3 class="card-title">Revenue Over Time</h3>
+                                                    <p class="card-subtitle">Monthly revenue for the current year</p>
+                                                </div>
+                                                <div class="card-body">
+                                                    <canvas id="revenueChart"></canvas>
+                                                </div>
+                                            </div>
+                                            <div class="card chart-card region-chart-card">
+                                                <div class="card-header">
+                                                    <h3 class="card-title">Sales by Region</h3>
+                                                    <p class="card-subtitle">Distribution of sales across regions</p>
+                                                </div>
+                                                <div class="card-body">
+                                                    <canvas id="regionChart"></canvas>
+                                                </div>
+                                            </div>
+                                        </div>
+                
+                                        <!-- Charts Row 2 -->
+                                        <div class="charts-row">
+                                            <div class="card chart-card funnel-chart-card">
+                                                <div class="card-header">
+                                                    <h3 class="card-title">Sales Funnel</h3>
+                                                    <p class="card-subtitle">Conversion rates through sales stages</p>
+                                                </div>
+                                                <div class="card-body">
+                                                    <canvas id="funnelChart"></canvas>
+                                                </div>
+                                            </div>
+                                            <div class="card table-card">
+                                                <div class="card-header">
+                                                    <h3 class="card-title">Recent Sales</h3>
+                                                    <p class="card-subtitle">Latest transactions and status</p>
+                                                </div>
+                                                <div class="card-body">
+                                                    <table class="sales-table">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Invoice</th>
+                                                                <th>Customer</th>
+                                                                <th>Amount</th>
+                                                                <th>Date</th>
+                                                                <th>Status</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody id="salesTableBody">
+                                                            <!-- Table rows will be added by JavaScript -->
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                
+                                    <!-- Analytics Tab -->
+                                    <div class="tab-pane" id="analytics">
+                                        <!-- KPI Cards for Analytics -->
+                                        <div class="kpi-cards">
+                                            <div class="card kpi-card">
+                                                <div class="card-header">
+                                                    <h3 class="card-title">Conversion Rate</h3>
+                                                    <span class="card-icon">%</span>
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="kpi-value">23.4%</div>
+                                                    <p class="kpi-change positive">
+                                                        +3.2% from last month
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <div class="card kpi-card">
+                                                <div class="card-header">
+                                                    <h3 class="card-title">Avg. Deal Size</h3>
+                                                    <span class="card-icon">₹</span>
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="kpi-value">₹2,85,000</div>
+                                                    <p class="kpi-change positive">
+                                                        +5.7% from last month
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <div class="card kpi-card">
+                                                <div class="card-header">
+                                                    <h3 class="card-title">CAC</h3>
+                                                    <span class="card-icon">₹</span>
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="kpi-value">₹12,500</div>
+                                                    <p class="kpi-change negative">
+                                                        +2.3% from last month
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <div class="card kpi-card">
+                                                <div class="card-header">
+                                                    <h3 class="card-title">CLV</h3>
+                                                    <span class="card-icon">₹</span>
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="kpi-value">₹8,75,000</div>
+                                                    <p class="kpi-change positive">
+                                                        +1.8% from last month
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                
+                                        <!-- Charts Row 1 -->
+                                        <div class="charts-row">
+                                            <div class="card chart-card">
+                                                <div class="card-header">
+                                                    <h3 class="card-title">Sales by Product Category</h3>
+                                                    <p class="card-subtitle">Distribution across product categories</p>
+                                                </div>
+                                                <div class="card-body">
+                                                    <canvas id="productCategoryChart"></canvas>
+                                                </div>
+                                            </div>
+                                            <div class="card chart-card">
+                                                <div class="card-header">
+                                                    <h3 class="card-title">Customer Acquisition Trend</h3>
+                                                    <p class="card-subtitle">New customers vs acquisition cost</p>
+                                                </div>
+                                                <div class="card-body">
+                                                    <canvas id="acquisitionChart"></canvas>
+                                                </div>
+                                            </div>
+                                        </div>
+                
+                                        <!-- Charts Row 2 -->
+                                        <div class="charts-row">
+                                            <div class="card chart-card">
+                                                <div class="card-header">
+                                                    <h3 class="card-title">Sales Cycle Length</h3>
+                                                    <p class="card-subtitle">Average days to close by deal size</p>
+                                                </div>
+                                                <div class="card-body">
+                                                    <canvas id="salesCycleChart"></canvas>
+                                                </div>
+                                            </div>
+                                            <div class="card chart-card">
+                                                <div class="card-header">
+                                                    <h3 class="card-title">Customer Retention</h3>
+                                                    <p class="card-subtitle">Retention rate over time</p>
+                                                </div>
+                                                <div class="card-body">
+                                                    <canvas id="retentionChart"></canvas>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                
+                                    <!-- Reports Tab -->
+<div class="tab-pane" id="reports">
+    <div class="reports-controls">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Generate Reports</h3>
+                <p class="card-subtitle">Select parameters and export</p>
+            </div>
+            <div class="card-body">
+                <form id="report-form" class="report-form">
+                    <div class="form-group">
+                        <label for="report-type">Report Type</label>
+                        <select id="report-type" class="form-control">
+                            <option value="sales">Sales Report</option>
+                            <option value="revenue">Revenue Report</option>
+                            <option value="product">Product Performance</option>
+                            <option value="team">Team Performance</option>
+                            <option value="customer">Customer Analysis</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="report-period">Time Period</label>
+                        <select id="report-period" class="form-control">
+                            <option value="daily">Daily</option>
+                            <option value="weekly">Weekly</option>
+                            <option value="monthly" selected>Monthly</option>
+                            <option value="quarterly">Quarterly</option>
+                            <option value="yearly">Yearly</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="report-format">Export Format</label>
+                        <select id="report-format" class="form-control">
+                            <option value="pdf">PDF</option>
+                            <option value="excel">Excel</option>
+                            <option value="csv">CSV</option>
+                        </select>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" id="generate-report" class="btn btn-primary">Generate Report</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Saved Reports -->
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Saved Reports</h3>
+            <p class="card-subtitle">Previously generated reports</p>
+        </div>
+        <div class="card-body">
+            <table class="sales-table table">
+                <thead>
+                    <tr>
+                        <th>Report Name</th>
+                        <th>Type</th>
+                        <th>Generated On</th>
+                        <th>Format</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="savedReportsTable">
+                    <!-- Will be populated by JavaScript -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Report Preview -->
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Report Preview</h3>
+            <p class="card-subtitle" id="report-preview-subtitle">Select a report to preview</p>
+        </div>
+        <div class="card-body">
+            <div id="report-preview" class="report-preview">
+                <p class="placeholder-text">Select a report to preview its contents here</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+                                    <!-- Team Tab -->
+                                    <div class="tab-pane" id="team">
+                                        <!-- Team Performance Overview -->
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <h3 class="card-title">Team Performance</h3>
+                                                <p class="card-subtitle">Overall team metrics</p>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="team-stats">
+                                                    <div class="team-stat">
+                                                        <div class="stat-label">Team Size</div>
+                                                        <div class="stat-value">12</div>
+                                                    </div>
+                                                    <div class="team-stat">
+                                                        <div class="stat-label">Avg. Sales/Rep</div>
+                                                        <div class="stat-value">₹28.5L</div>
+                                                    </div>
+                                                    <div class="team-stat">
+                                                        <div class="stat-label">Quota Attainment</div>
+                                                        <div class="stat-value">87%</div>
+                                                    </div>
+                                                    <div class="team-stat">
+                                                        <div class="stat-label">Avg. Deal Closure</div>
+                                                        <div class="stat-value">18 days</div>
+                                                    </div>
+                                                </div>
+                                                <div class="chart-container">
+                                                    <canvas id="teamPerformanceChart"></canvas>
+                                                </div>
+                                            </div>
+                                        </div>
+                
+                                        <!-- Team Leaderboard -->
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <h3 class="card-title">Sales Leaderboard</h3>
+                                                <p class="card-subtitle">Top performing sales representatives</p>
+                                            </div>
+                                            <div class="card-body">
+                                                <table class="sales-table" id="leaderboardTable">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Rank</th>
+                                                            <th>Representative</th>
+                                                            <th>Sales</th>
+                                                            <th>Deals Closed</th>
+                                                            <th>Quota Attainment</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="leaderboardTableBody">
+                                                        <!-- Will be populated by JavaScript -->
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                
+                                        <!-- Team Members -->
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <h3 class="card-title">Team Members</h3>
+                                                <p class="card-subtitle">Sales team profiles and performance</p>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="team-members" id="teamMembersContainer">
+                                                    <!-- Will be populated by JavaScript -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </main>
+                </div>
+            </div>
+            <script src="sales.js"></script>
+
+            <!-- Bootstrap JS Bundle with Popper -->
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+            <!-- Chart.js -->
+            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+            <!-- Custom JS -->
+            <script src="index.js"></script>
+</body>
+</html>

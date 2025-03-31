@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invoice Management</title>
+    <link rel="stylesheet" href="invoice-styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../index.css">
+</head>
+<body>
+    <div class="wrapper">
+        <!-- Sidebar -->
+        <nav id="sidebar" class="sidebar">
+            <div class="sidebar-header">
+                <h3>Management System</h3>
+                <button type="button" id="sidebarCollapse" class="btn d-md-none">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+
+            <ul class="list-unstyled components">
+                <li class="active">
+                    <a href="#" onclick="loadContent('dashboard')">
+                        <i class="fas fa-tachometer-alt"></i> Dashboard
+                    </a>
+                </li>
+                <li>
+                    <!-- <a href="#crmSubmenu" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        <i class="fas fa-users"></i> CRM Module -->
+                        <a href="#" class="dropdown-toggle" onclick="toggleDropdown(event)">
+                            <i class="fas fa-users"></i> CRM Module
+                    </a>
+                    <ul id="crmSubmenu" class="submenu">
+                        <li><a href="../remainder.html">Customer Management & Reminders</a></li>
+                        <!-- <li><a href="proposal.html">2. Proposal Management</a></li> -->
+                        <li><a href="../sales.html">Sales Management Reports</a></li>
+                        <li><a href="../contracts.html">Contracts</a></li>
+                        <li><a href="../project-management.html">Projects & Task Management</a></li>
+                        <!-- <li><a href="project-management.html">Task Management</a></li> -->
+                        <li><a href="../utilities.html">Utilities</a></li>
+                        <li><a href="../support.html">Support System & Expenses</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#inventorySubmenu" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        <i class="fas fa-boxes"></i> Inventory Module
+                    </a>
+
+                </li>
+                <li>
+                    <a href="#purchaseSubmenu" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        <i class="fas fa-shopping-cart"></i> Purchase Module
+                    </a>
+
+                </li>
+                <li>
+                    <a href="#salesSubmenu" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        <i class="fas fa-chart-line"></i> Sales Module
+                    </a>
+                    <ul class="collapse list-unstyled" id="salesSubmenu">
+                         <li><a href="/Sales-Module/TrialQuotation.html"><i class="fas fa-file-alt"></i> Quotation </a></li>
+                             <li><a href="/Sales-Module/orders_page.html"><i class="fas fa-shopping-cart"></i> Orders</a></li>
+                             <li><a href="/Sales-Module/dispatch-page.html"><i class="fas fa-truck"></i> Dispatch</a></li>
+                             <li><a href="/Sales-Module/invoice-page.html"><i class="fas fa-file-invoice"></i> Invoice </a></li>
+                             <li><a href="/Sales-Module/crm.html"><i class="fas fa-chart-bar"></i> CRM and Reports</a></li>
+                             <!-- <li><a href="Sales-Module/Trial_quotation-list .html"><i class="fas fa-chart-bar"></i> Performance</a></li> -->
+                  </ul>
+                </li>
+                    
+                <li>
+                    <a href="#" onclick="loadContent('settings')">
+                        <i class="fas fa-cog"></i> Settings
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- Page Content -->
+        <div id="content">
+            <!-- Top Navigation -->
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <div class="container-fluid">
+                    <button type="button" id="sidebarCollapseBtn" class="btn">
+                        <i class="fas fa-align-left"></i>
+                    </button>
+                    <div class="ms-auto d-flex">
+                        <div class="dropdown me-3">
+                            <button class="btn position-relative" type="button" id="notificationDropdown"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fas fa-bell"></i>
+                                <span
+                                    class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                    3
+                                </span>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="notificationDropdown">
+                                <li><a class="dropdown-item" href="#">New purchase order #1234</a></li>
+                                <li><a class="dropdown-item" href="#">Supplier quotation updated</a></li>
+                                <li><a class="dropdown-item" href="#">Payment due for invoice #5678</a></li>
+                            </ul>
+                        </div>
+                        <div class="dropdown">
+                            <button class="btn d-flex align-items-center" type="button" id="userDropdown"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                <img src="https://via.placeholder.com/30" class="rounded-circle me-2">
+                                <span>Admin</span>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                                <li><a class="dropdown-item" href="#">Profile</a></li>
+                                <li><a class="dropdown-item" href="#">Settings</a></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li><a class="dropdown-item" href="#">Logout</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+
+            <!-- Main Content Area -->
+            <div id="main-content" class="container-fluid">
+                <!-- Dashboard content will be loaded here by default -->
+                <div id="dashboard-content">
+                    <div class="container">
+                        <div class="page-header">
+                            <h1><strong>Invoice Management</strong></h1>
+                            <div class="header-actions">
+                                <button class="btn btn-primary" id="newInvoiceBtn"><i class="fas fa-plus"></i> New Invoice</button>
+                                <div class="search-container">
+                                    <input type="text" id="searchInput" placeholder="Search invoices...">
+                                    <button class="search-btn"><i class="fas fa-search"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                
+                        <div class="content-wrapper">
+                            <div class="sidebar1">
+                                <div class="filter-section">
+                                    <h3>Filter Invoices</h3>
+                                    <div class="filter-group">
+                                        <label>Status</label>
+                                        <select id="statusFilter">
+                                            <option value="all">All</option>
+                                            <option value="draft">Draft</option>
+                                            <option value="pending">Pending</option>
+                                            <option value="paid">Paid</option>
+                                            <option value="overdue">Overdue</option>
+                                        </select>
+                                    </div>
+                                    <div class="filter-group">
+                                        <label>Date Range</label>
+                                        <input type="date" id="startDate">
+                                        <input type="date" id="endDate">
+                                    </div>
+                                    <div class="filter-group">
+                                        <label>Customer</label>
+                                        <select id="customerFilter">
+                                            <option value="all">All Customers</option>
+                                            <option value="customer1">Acme Corporation</option>
+                                            <option value="customer2">TechSolutions Inc.</option>
+                                            <option value="customer3">Global Traders</option>
+                                            <option value="customer4">Innovative Systems</option>
+                                        </select>
+                                    </div>
+                                    <button class="btn btn-secondary" id="applyFiltersBtn">Apply Filters</button>
+                                    <button class="btn btn-outline" id="resetFiltersBtn">Reset</button>
+                                </div>
+                                <div class="quick-stats">
+                                    <h3>Invoice Summary</h3>
+                                    <div class="stat-item">
+                                        <span class="stat-label">Total Invoices</span>
+                                        <span class="stat-value">42</span>
+                                    </div>
+                                    <div class="stat-item">
+                                        <span class="stat-label">Pending Payment</span>
+                                        <span class="stat-value">15</span>
+                                    </div>
+                                    <div class="stat-item">
+                                        <span class="stat-label">Overdue</span>
+                                        <span class="stat-value">7</span>
+                                    </div>
+                                    <div class="stat-item">
+                                        <span class="stat-label">Total Amount Due</span>
+                                        <span class="stat-value">$24,850.00</span>
+                                    </div>
+                                </div>
+                            </div> 
+                
+                            <div class="main-content">
+                                <div class="tabs">
+                                    <button class="tab-btn active" data-tab="invoices">Invoices</button>
+                                    <button class="tab-btn" data-tab="service-invoices">Service Invoices</button>
+                                    <button class="tab-btn" data-tab="reports">Reports</button>
+                                </div>
+                
+                                <div class="tab-content active" id="invoices-tab">
+                                    <div class="table-responsive">
+                                        <table class="data-table">
+                                            <thead>
+                                                <tr>
+                                                    <th>Invoice #</th>
+                                                    <th>Customer</th>
+                                                    <th>Issue Date</th>
+                                                    <th>Due Date</th>
+                                                    <th>Amount</th>
+                                                    <th>Status</th>
+                                                    <th>Actions</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="invoiceTableBody">
+                                                <tr>
+                                                    <td>INV-2023-001</td>
+                                                    <td>Acme Corporation</td>
+                                                    <td>2023-06-01</td>
+                                                    <td>2023-07-01</td>
+                                                    <td>$5,250.00</td>
+                                                    <td><span class="status-badge paid">Paid</span></td>
+                                                    <td>
+                                                        <div class="action-buttons">
+                                                            <button class="action-btn view-btn" title="View"><i class="fas fa-eye"></i></button>
+                                                            <button class="action-btn print-btn" title="Print"><i class="fas fa-print"></i></button>
+                                                            <button class="action-btn download-btn" title="Download"><i class="fas fa-download"></i></button>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>INV-2023-002</td>
+                                                    <td>TechSolutions Inc.</td>
+                                                    <td>2023-06-05</td>
+                                                    <td>2023-07-05</td>
+                                                    <td>$3,750.00</td>
+                                                    <td><span class="status-badge pending">Pending</span></td>
+                                                    <td>
+                                                        <div class="action-buttons">
+                                                            <button class="action-btn view-btn" title="View"><i class="fas fa-eye"></i></button>
+                                                            <button class="action-btn edit-btn" title="Edit"><i class="fas fa-edit"></i></button>
+                                                            <button class="action-btn print-btn" title="Print"><i class="fas fa-print"></i></button>
+                                                            <button class="action-btn download-btn" title="Download"><i class="fas fa-download"></i></button>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>INV-2023-003</td>
+                                                    <td>Global Traders</td>
+                                                    <td>2023-06-10</td>
+                                                    <td>2023-06-25</td>
+                                                    <td>$8,500.00</td>
+                                                    <td><span class="status-badge overdue">Overdue</span></td>
+                                                    <td>
+                                                        <div class="action-buttons">
+                                                            <button class="action-btn view-btn" title="View"><i class="fas fa-eye"></i></button>
+                                                            <button class="action-btn edit-btn" title="Edit"><i class="fas fa-edit"></i></button>
+                                                            <button class="action-btn print-btn" title="Print"><i class="fas fa-print"></i></button>
+                                                            <button class="action-btn download-btn" title="Download"><i class="fas fa-download"></i></button>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>INV-2023-004</td>
+                                                    <td>Innovative Systems</td>
+                                                    <td>2023-06-15</td>
+                                                    <td>2023-07-15</td>
+                                                    <td>$4,200.00</td>
+                                                    <td><span class="status-badge pending">Pending</span></td>
+                                                    <td>
+                                                        <div class="action-buttons">
+                                                            <button class="action-btn view-btn" title="View"><i class="fas fa-eye"></i></button>
+                                                            <button class="action-btn edit-btn" title="Edit"><i class="fas fa-edit"></i></button>
+                                                            <button class="action-btn print-btn" title="Print"><i class="fas fa-print"></i></button>
+                                                            <button class="action-btn download-btn" title="Download"><i class="fas fa-download"></i></button>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>INV-2023-005</td>
+                                                    <td>Acme Corporation</td>
+                                                    <td>2023-06-20</td>
+                                                    <td>2023-07-20</td>
+                                                    <td>$3,150.00</td>
+                                                    <td><span class="status-badge draft">Draft</span></td>
+                                                    <td>
+                                                        <div class="action-buttons">
+                                                            <button class="action-btn view-btn" title="View"><i class="fas fa-eye"></i></button>
+                                                            <button class="action-btn edit-btn" title="Edit"><i class="fas fa-edit"></i></button>
+                                                            <button class="action-btn print-btn" title="Print"><i class="fas fa-print"></i></button>
+                                                            <button class="action-btn download-btn" title="Download"><i class="fas fa-download"></i></button>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="pagination">
+                                        <button class="pagination-btn" id="prevPage"><i class="fas fa-chevron-left"></i></button>
+                                        <span class="page-info">Page <span id="currentPage">1</span> of <span id="totalPages">5</span></span>
+                                        <button class="pagination-btn" id="nextPage"><i class="fas fa-chevron-right"></i></button>
+                                    </div>
+                                </div>
+                
+                                <div class="tab-content" id="service-invoices-tab">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h2>Service Invoices</h2>
+                                            <button class="btn btn-primary" id="newServiceInvoiceBtn"><i class="fas fa-plus"></i> New Service Invoice</button>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="table-responsive">
+                                                <table class="data-table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Invoice #</th>
+                                                            <th>Customer</th>
+                                                            <th>Service Type</th>
+                                                            <th>Issue Date</th>
+                                                            <th>Amount</th>
+                                                            <th>Status</th>
+                                                            <th>Actions</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>SRV-2023-001</td>
+                                                            <td>TechSolutions Inc.</td>
+                                                            <td>Maintenance</td>
+                                                            <td>2023-06-05</td>
+                                                            <td>$1,200.00</td>
+                                                            <td><span class="status-badge paid">Paid</span></td>
+                                                            <td>
+                                                                <div class="action-buttons">
+                                                                    <button class="action-btn view-btn" title="View"><i class="fas fa-eye"></i></button>
+                                                                    <button class="action-btn print-btn" title="Print"><i class="fas fa-print"></i></button>
+                                                                    <button class="action-btn download-btn" title="Download"><i class="fas fa-download"></i></button>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>SRV-2023-002</td>
+                                                            <td>Global Traders</td>
+                                                            <td>Consultation</td>
+                                                            <td>2023-06-10</td>
+                                                            <td>$2,500.00</td>
+                                                            <td><span class="status-badge pending">Pending</span></td>
+                                                            <td>
+                                                                <div class="action-buttons">
+                                                                    <button class="action-btn view-btn" title="View"><i class="fas fa-eye"></i></button>
+                                                                    <button class="action-btn edit-btn" title="Edit"><i class="fas fa-edit"></i></button>
+                                                                    <button class="action-btn print-btn" title="Print"><i class="fas fa-print"></i></button>
+                                                                    <button class="action-btn download-btn" title="Download"><i class="fas fa-download"></i></button>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>SRV-2023-003</td>
+                                                            <td>Innovative Systems</td>
+                                                            <td>Installation</td>
+                                                            <td>2023-06-15</td>
+                                                            <td>$3,800.00</td>
+                                                            <td><span class="status-badge overdue">Overdue</span></td>
+                                                            <td>
+                                                                <div class="action-buttons">
+                                                                    <button class="action-btn view-btn" title="View"><i class="fas fa-eye"></i></button>
+                                                                    <button class="action-btn edit-btn" title="Edit"><i class="fas fa-edit"></i></button>
+                                                                    <button class="action-btn print-btn" title="Print"><i class="fas fa-print"></i></button>
+                                                                    <button class="action-btn download-btn" title="Download"><i class="fas fa-download"></i></button>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                
+                                <div class="tab-content" id="reports-tab">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h2>Invoice Reports</h2>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="report-grid">
+                                                <div class="report-card">
+                                                    <div class="report-card-header">
+                                                        <h3>Invoice Summary</h3>
+                                                        <button class="btn btn-outline btn-sm"><i class="fas fa-download"></i> Export</button>
+                                                    </div>
+                                                    <div class="report-card-body">
+                                                        <div class="chart-container">
+                                                            <div class="chart-placeholder">
+                                                                <i class="fas fa-chart-pie"></i>
+                                                                <span>Invoice Status Distribution</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="report-stats">
+                                                            <div class="report-stat-item">
+                                                                <span class="stat-label">Paid</span>
+                                                                <span class="stat-value">65%</span>
+                                                            </div>
+                                                            <div class="report-stat-item">
+                                                                <span class="stat-label">Pending</span>
+                                                                <span class="stat-value">25%</span>
+                                                            </div>
+                                                            <div class="report-stat-item">
+                                                                <span class="stat-label">Overdue</span>
+                                                                <span class="stat-value">10%</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="report-card">
+                                                    <div class="report-card-header">
+                                                        <h3>Monthly Revenue</h3>
+                                                        <button class="btn btn-outline btn-sm"><i class="fas fa-download"></i> Export</button>
+                                                    </div>
+                                                    <div class="report-card-body">
+                                                        <div class="chart-container">
+                                                            <div class="chart-placeholder">
+                                                                <i class="fas fa-chart-line"></i>
+                                                                <span>Revenue Trend</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="report-card">
+                                                    <div class="report-card-header">
+                                                        <h3>Top Customers</h3>
+                                                        <button class="btn btn-outline btn-sm"><i class="fas fa-download"></i> Export</button>
+                                                    </div>
+                                                    <div class="report-card-body">
+                                                        <div class="table-responsive">
+                                                            <table class="data-table">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>Customer</th>
+                                                                        <th>Invoices</th>
+                                                                        <th>Total Amount</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td>Acme Corporation</td>
+                                                                        <td>12</td>
+                                                                        <td>$45,250.00</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>TechSolutions Inc.</td>
+                                                                        <td>8</td>
+                                                                        <td>$32,750.00</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Global Traders</td>
+                                                                        <td>10</td>
+                                                                        <td>$28,500.00</td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="report-card">
+                                                    <div class="report-card-header">
+                                                        <h3>Variance Report</h3>
+                                                        <button class="btn btn-outline btn-sm"><i class="fas fa-download"></i> Export</button>
+                                                    </div>
+                                                    <div class="report-card-body">
+                                                        <div class="table-responsive">
+                                                            <table class="data-table">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>Month</th>
+                                                                        <th>Target</th>
+                                                                        <th>Actual</th>
+                                                                        <th>Variance</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td>January</td>
+                                                                        <td>$50,000.00</td>
+                                                                        <td>$48,250.00</td>
+                                                                        <td class="negative-variance">-3.5%</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>February</td>
+                                                                        <td>$55,000.00</td>
+                                                                        <td>$57,800.00</td>
+                                                                        <td class="positive-variance">+5.1%</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>March</td>
+                                                                        <td>$60,000.00</td>
+                                                                        <td>$62,500.00</td>
+                                                                        <td class="positive-variance">+4.2%</td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <!-- Modal for New Invoice -->
+                    <div class="modal" id="invoiceModal">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h2>Create New Invoice</h2>
+                                <button class="close-btn" id="closeInvoiceModal">&times;</button>
+                            </div>
+                            <div class="modal-body">
+                                <form id="invoiceForm">
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label for="customer">Customer</label>
+                                            <select id="customer" required>
+                                                <option value="">Select Customer</option>
+                                                <option value="customer1">Acme Corporation</option>
+                                                <option value="customer2">TechSolutions Inc.</option>
+                                                <option value="customer3">Global Traders</option>
+                                                <option value="customer4">Innovative Systems</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="salesOrder">Sales Order (Optional)</label>
+                                            <select id="salesOrder">
+                                                <option value="">Select Sales Order</option>
+                                                <option value="SO-2023-1001">SO-2023-1001</option>
+                                                <option value="SO-2023-1002">SO-2023-1002</option>
+                                                <option value="SO-2023-1003">SO-2023-1003</option>
+                                                <option value="SO-2023-1004">SO-2023-1004</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label for="issueDate">Issue Date</label>
+                                            <input type="date" id="issueDate" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="dueDate">Due Date</label>
+                                            <input type="date" id="dueDate" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Invoice Items</label>
+                                        <div class="table-responsive">
+                                            <table class="data-table" id="invoiceItemsTable">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Product</th>
+                                                        <th>Description</th>
+                                                        <th>Quantity</th>
+                                                        <th>Unit Price</th>
+                                                        <th>Discount</th>
+                                                        <th>Total</th>
+                                                        <th>Actions</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr id="addItemRow">
+                                                        <td colspan="7">
+                                                            <button type="button" class="btn btn-outline btn-sm" id="addItemBtn">
+                                                                <i class="fas fa-plus"></i> Add Item
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                                <tfoot>
+                                                    <tr>
+                                                        <td colspan="5" class="text-right"><strong>Subtotal:</strong></td>
+                                                        <td id="subtotal">$0.00</td>
+                                                        <td></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td colspan="5" class="text-right"><strong>Tax (10%):</strong></td>
+                                                        <td id="tax">$0.00</td>
+                                                        <td></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td colspan="5" class="text-right"><strong>Total:</strong></td>
+                                                        <td id="total">$0.00</td>
+                                                        <td></td>
+                                                    </tr>
+                                                </tfoot>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label for="paymentTerms">Payment Terms</label>
+                                            <select id="paymentTerms">
+                                                <option value="net30">Net 30</option>
+                                                <option value="net15">Net 15</option>
+                                                <option value="net7">Net 7</option>
+                                                <option value="due-receipt">Due on Receipt</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="invoiceStatus">Status</label>
+                                            <select id="invoiceStatus">
+                                                <option value="draft">Draft</option>
+                                                <option value="pending">Pending</option>
+                                                <option value="sent">Sent</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="notes">Notes</label>
+                                        <textarea id="notes" rows="3"></textarea>
+                                    </div>
+                                    <div class="form-actions">
+                                        <button type="button" class="btn btn-outline" id="cancelInvoice">Cancel</button>
+                                        <button type="button" class="btn btn-secondary" id="saveAsDraft">Save as Draft</button>
+                                        <button type="submit" class="btn btn-primary">Create Invoice</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <!-- Modal for Service Invoice -->
+                    <div class="modal" id="serviceInvoiceModal">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h2>Create Service Invoice</h2>
+                                <button class="close-btn" id="closeServiceInvoiceModal">&times;</button>
+                            </div>
+                            <div class="modal-body">
+                                <form id="serviceInvoiceForm">
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label for="serviceCustomer">Customer</label>
+                                            <select id="serviceCustomer" required>
+                                                <option value="">Select Customer</option>
+                                                <option value="customer1">Acme Corporation</option>
+                                                <option value="customer2">TechSolutions Inc.</option>
+                                                <option value="customer3">Global Traders</option>
+                                                <option value="customer4">Innovative Systems</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="serviceType">Service Type</label>
+                                            <select id="serviceType" required>
+                                                <option value="">Select Service Type</option>
+                                                <option value="maintenance">Maintenance</option>
+                                                <option value="installation">Installation</option>
+                                                <option value="consultation">Consultation</option>
+                                                <option value="training">Training</option>
+                                                <option value="support">Technical Support</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label for="serviceDate">Service Date</label>
+                                            <input type="date" id="serviceDate" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="serviceDueDate">Due Date</label>
+                                            <input type="date" id="serviceDueDate" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Service Details</label>
+                                        <div class="table-responsive">
+                                            <table class="data-table" id="serviceItemsTable">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Service Description</th>
+                                                        <th>Hours/Qty</th>
+                                                        <th>Rate</th>
+                                                        <th>Total</th>
+                                                        <th>Actions</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr id="addServiceRow">
+                                                        <td colspan="5">
+                                                            <button type="button" class="btn btn-outline btn-sm" id="addServiceBtn">
+                                                                <i class="fas fa-plus"></i> Add Service
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                                <tfoot>
+                                                    <tr>
+                                                        <td colspan="3" class="text-right"><strong>Subtotal:</strong></td>
+                                                        <td id="serviceSubtotal">$0.00</td>
+                                                        <td></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td colspan="3" class="text-right"><strong>Tax (10%):</strong></td>
+                                                        <td id="serviceTax">$0.00</td>
+                                                        <td></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td colspan="3" class="text-right"><strong>Total:</strong></td>
+                                                        <td id="serviceTotal">$0.00</td>
+                                                        <td></td>
+                                                    </tr>
+                                                </tfoot>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="serviceNotes">Notes</label>
+                                        <textarea id="serviceNotes" rows="3"></textarea>
+                                    </div>
+                                    <div class="form-actions">
+                                        <button type="button" class="btn btn-outline" id="cancelServiceInvoice">Cancel</button>
+                                        <button type="button" class="btn btn-secondary" id="saveServiceAsDraft">Save as Draft</button>
+                                        <button type="submit" class="btn btn-primary">Create Service Invoice</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+             <!-- Bootstrap JS Bundle with Popper -->
+             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+             <!-- Chart.js -->
+             <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+             <!-- Custom JS -->
+             <script src="../index.js"></script>
+
+
+    <script src="invoice-script.js"></script>
+</body>
+</html>
+

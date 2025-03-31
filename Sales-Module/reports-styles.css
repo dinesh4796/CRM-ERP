@@ -1,0 +1,339 @@
+/* Reports Module specific styles */
+
+/* Report Cards */
+.report-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.report-card {
+    background-color: var(--card-background);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.report-card-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.report-card-title h3 {
+    margin: 0;
+    font-size: 1rem;
+}
+
+.report-card-title .btn-icon {
+    width: 1.75rem;
+    height: 1.75rem;
+}
+
+.report-card-value {
+    font-size: 1.75rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: var(--text-dark);
+}
+
+.report-card-change {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-size: 0.875rem;
+}
+
+.report-card-change.positive {
+    color: var(--success-color);
+}
+
+.report-card-change.negative {
+    color: var(--danger-color);
+}
+
+/* Report Row Layout */
+.report-row {
+    margin-bottom: 1.5rem;
+    display: flex;
+    gap: 1.5rem;
+}
+
+.report-chart {
+    background-color: var(--card-background);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    padding: 1.25rem;
+    flex: 1;
+}
+
+.report-chart.half {
+    flex: 1;
+}
+
+.report-chart-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.report-chart-header h3 {
+    margin: 0;
+    font-size: 1rem;
+}
+
+.report-chart-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.report-chart-container {
+    height: 300px;
+    width: 100%;
+    position: relative;
+}
+
+.placeholder-chart {
+    width: 100%;
+    height: 100%;
+    background-color: var(--light-color);
+    border-radius: var(--border-radius);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-light);
+    font-size: 0.875rem;
+}
+
+/* Report Table */
+.report-table {
+    background-color: var(--card-background);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    padding: 1.25rem;
+    width: 100%;
+}
+
+.report-table-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.report-table-header h3 {
+    margin: 0;
+    font-size: 1rem;
+}
+
+.report-table-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+/* Growth Indicators */
+.growth-positive {
+    color: var(--success-color);
+}
+
+.growth-negative {
+    color: var(--danger-color);
+}
+
+/* Saved Reports */
+.saved-reports {
+    background-color: var(--card-background);
+    border-radius: var(--border-radius-md);
+    box-shadow: var(--shadow);
+    padding: 1.25rem;
+}
+
+.saved-reports h3 {
+    margin-bottom: 1rem;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.saved-reports-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.saved-report-item {
+    display: flex;
+    padding: 0.75rem;
+    background-color: var(--light-color);
+    border-radius: var(--border-radius);
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.saved-report-icon {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    background-color: var(--primary-light);
+    color: var(--primary-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.saved-report-details {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.saved-report-name {
+    font-weight: 500;
+    color: var(--text-dark);
+}
+
+.saved-report-date {
+    font-size: 0.75rem;
+    color: var(--text-light);
+}
+
+/* Report Actions */
+.report-actions {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    background-color: var(--light-color);
+    padding: 1rem;
+    border-radius: var(--border-radius);
+    align-items: center;
+}
+
+.report-selection, .report-timeframe, .report-warehouse {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.report-selection label, .report-timeframe label, .report-warehouse label {
+    margin: 0;
+    white-space: nowrap;
+}
+
+.report-selection {
+    flex: 2;
+}
+
+.report-timeframe, .report-warehouse {
+    flex: 1;
+}
+
+/* Report Container */
+.report-container {
+    background-color: var(--card-background);
+    border-radius: var(--border-radius-md);
+    box-shadow: var(--shadow);
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.report-header {
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 1rem;
+}
+
+.report-header h2 {
+    margin-bottom: 0.25rem;
+}
+
+.report-header p {
+    margin: 0;
+    color: var(--text-light);
+}
+
+/* Progress Bar */
+.progress-bar {
+    width: 100%;
+    height: 0.75rem;
+    background-color: var(--light-color);
+    border-radius: 20px;
+    overflow: hidden;
+    position: relative;
+}
+
+.progress {
+    height: 100%;
+    background-color: var(--primary-color);
+    border-radius: 20px;
+}
+
+.progress-bar span {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--text-dark);
+}
+
+/* Custom Report Builder */
+.custom-report-builder {
+    background-color: var(--card-background);
+    border-radius: var(--border-radius-md);
+    box-shadow: var(--shadow);
+    padding: 1.5rem;
+}
+
+.custom-report-header {
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 1rem;
+}
+
+.custom-report-header h2 {
+    margin-bottom: 0.25rem;
+}
+
+.custom-report-header p {
+    margin: 0;
+    color: var(--text-light);
+}
+
+.custom-report-form {
+    max-width: 800px;
+}
+
+.checkbox-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 0.5rem;
+}
+
+.checkbox-label, .radio-label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    font-weight: normal;
+    margin-bottom: 0;
+}
+
+.radio-group {
+    display: flex;
+    gap: 1.5rem;
+    margin-top: 0.5rem;
+}
+
+/* Form control sizes */
+.form-control-sm {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.75rem;
+}
